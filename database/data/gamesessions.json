@@ -1,0 +1,80 @@
+[
+  {
+    "_id": "gs_001",
+    "userId": "507f1f77bcf86cd799439011",
+    "gameType": "slots",
+    "betAmount": 2000,
+    "winAmount": 5000,
+    "result": "win",
+    "timestamp": "2024-01-05T10:30:00.000Z",
+    "provablyFair": {
+      "seed": "abc123",
+      "hash": "def456"
+    }
+  },
+  {
+    "_id": "gs_002",
+    "userId": "507f1f77bcf86cd799439011",
+    "gameType": "roulette",
+    "betAmount": 1000,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2024-01-05T11:15:00.000Z",
+    "provablyFair": {
+      "seed": "xyz789",
+      "hash": "uvw012"
+    }
+  },
+  {
+    "_id": "gs_003",
+    "userId": "507f1f77bcf86cd799439011",
+    "gameType": "blackjack",
+    "betAmount": 3000,
+    "winAmount": 6000,
+    "result": "win",
+    "timestamp": "2024-01-06T09:20:00.000Z",
+    "provablyFair": {
+      "seed": "mno345",
+      "hash": "pqr678"
+    }
+  },
+  {
+    "userId": "user_001",
+    "gameType": "slots",
+    "betAmount": 100,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-04T11:07:10.970Z",
+    "provablyFair": {
+      "seed": "mv2fslfhp6chgqkyr03d2",
+      "hash": "mv2fslfhp6chgqkyr03d2"
+    },
+    "_id": "1762254430970_dbl718qi6"
+  },
+  {
+    "userId": "user_001",
+    "gameType": "slots",
+    "betAmount": 100,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-04T11:07:12.299Z",
+    "provablyFair": {
+      "seed": "tau881hu2drljh0jrglaaf",
+      "hash": "tau881hu2drljh0jrglaaf"
+    },
+    "_id": "1762254432299_rpwbmnfg2"
+  },
+  {
+    "userId": "user_001",
+    "gameType": "slots",
+    "betAmount": 100,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-04T11:07:13.664Z",
+    "provablyFair": {
+      "seed": "603fk3mh79tlo01fwepyu",
+      "hash": "603fk3mh79tlo01fwepyu"
+    },
+    "_id": "1762254433664_g19ljijc0"
+  }
+]

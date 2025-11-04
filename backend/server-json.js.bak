@@ -1,0 +1,686 @@
+const express = require('express');
+const cors = require('cors');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const DB = require('../database/JSONDatabase');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const JWT_SECRET = 'cmx-platform-secret-key-2024';
+
+// Helper function to generate JWT
+function generateToken(user) {
+  return jwt.sign(
+    { userId: user._id, email: user.email, isAdmin: user.isAdmin },
+    JWT_SECRET,
+    { expiresIn: '7d' }
+  );
+}
+
+// Middleware to authenticate requests
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: 'No token provided' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ success: false, message: 'Invalid token' });
+    }
+    req.user = user;
+    next();
+  });
+}
+
+// Authentication Routes
+app.post('/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Email and password required' });
+    }
+
+    // Find user
+    const user = DB.users.findByEmail(email);
+    
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+    }
+
+    // Check password using bcrypt
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+    if (!isPasswordValid) {
+      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+    }
+
+    // Generate token
+    const token = generateToken(user);
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      data: {
+        token,
+        user: {
+          _id: user._id,
+          email: user.email,
+          username: user.username,
+          tier: user.tier,
+          isAdmin: user.isAdmin,
+          balance: user.balance
+        }
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+app.post('/auth/register', async (req, res) => {
+  try {
+    const { email, username, password } = req.body;
+    
+    if (!email || !username || !password) {
+      return res.status(400).json({ success: false, message: 'All fields required' });
+    }
+
+    // Check if user exists
+    const existingUser = DB.users.findByEmail(email);
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: 'User already exists' });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user
+    const newUser = DB.users.create({
+      email,
+      username,
+      password: hashedPassword,
+      tier: 1,
+      isAdmin: false,
+      balance: 10000,
+      totalEarned: 0,
+      totalWithdrawn: 0,
+      gamesPlayed: 0,
+      gamesWon: 0,
+      tasksCompleted: 0
+    });
+
+    const token = generateToken(newUser);
+
+    res.json({
+      success: true,
+      message: 'Registration successful',
+      data: {
+        token,
+        user: {
+          _id: newUser._id,
+          email: newUser.email,
+          username: newUser.username,
+          tier: newUser.tier,
+          isAdmin: newUser.isAdmin,
+          balance: newUser.balance
+        }
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// Wallet Routes
+app.get('/wallet/balance', authenticateToken, (req, res) => {
+  const user = DB.users.findById(req.user.userId);
+  res.json({
+    success: true,
+    data: { balance: user.balance }
+  });
+});
+
+app.get('/wallet/transactions', authenticateToken, (req, res) => {
+  const transactions = DB.transactions.findByUserId(req.user.userId);
+  res.json({
+    success: true,
+    data: transactions
+  });
+});
+
+app.post('/wallet/withdraw', authenticateToken, (req, res) => {
+  const { amount, address, network } = req.body;
+  const user = DB.users.findById(req.user.userId);
+
+  if (amount > user.balance) {
+    return res.status(400).json({ success: false, message: 'Insufficient balance' });
+  }
+
+  if (amount < 10000) {
+    return res.status(400).json({ success: false, message: 'Minimum withdrawal is 10,000 CMX' });
+  }
+
+  // Create withdrawal
+  const withdrawal = DB.withdrawals.create({
+    userId: req.user.userId,
+    amount,
+    address,
+    network,
+    status: 'pending',
+    timestamp: new Date().toISOString()
+  });
+
+  // Update balance
+  DB.users.update(req.user.userId, {
+    balance: user.balance - amount,
+    totalWithdrawn: user.totalWithdrawn + amount
+  });
+
+  res.json({
+    success: true,
+    message: 'Withdrawal request submitted',
+    data: withdrawal
+  });
+});
+
+// Tasks Routes
+app.get('/tasks', authenticateToken, (req, res) => {
+  const tasks = DB.tasks.findAll();
+  res.json({
+    success: true,
+    data: tasks
+  });
+});
+
+app.post('/tasks/complete', authenticateToken, (req, res) => {
+  const { taskId } = req.body;
+  const task = DB.tasks.findById(taskId);
+  
+  if (!task) {
+    return res.status(404).json({ success: false, message: 'Task not found' });
+  }
+
+  const user = DB.users.findById(req.user.userId);
+  
+  // Update user balance
+  DB.users.update(req.user.userId, {
+    balance: user.balance + task.reward,
+    totalEarned: user.totalEarned + task.reward,
+    tasksCompleted: user.tasksCompleted + 1
+  });
+
+  // Create transaction
+  DB.transactions.create({
+    userId: req.user.userId,
+    type: 'credit',
+    amount: task.reward,
+    description: `Completed task: ${task.title}`,
+    timestamp: new Date().toISOString()
+  });
+
+  res.json({
+    success: true,
+    message: 'Task completed!',
+    data: {
+      reward: task.reward,
+      newBalance: user.balance + task.reward
+    }
+  });
+});
+
+// Helper function to generate random seed for provably fair
+function generateSeed() {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
+
+// Helper function for fair random (simple implementation)
+function generateFairRandom(seed, max) {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+    hash = hash & hash;
+  }
+  return Math.abs(hash) % (max + 1);
+}
+
+// Slots symbols and payouts
+const SLOTS_SYMBOLS = ['🍒', '🍋', '🍊', '⭐', '💎', '7️⃣'];
+const SLOTS_PAYOUTS = {
+  '💎💎💎': 100,
+  '⭐⭐⭐': 50,
+  '7️⃣7️⃣7️⃣': 25,
+  '🍒🍒🍒': 10,
+  '🍋🍋🍋': 8,
+  '🍊🍊🍊': 5
+};
+
+// Games Routes - Slots
+app.post('/games/slots/spin', authenticateToken, (req, res) => {
+  const { betAmount } = req.body;
+  const user = DB.users.findById(req.user.userId);
+
+  if (!betAmount || betAmount < 10) {
+    return res.status(400).json({ success: false, message: 'Minimum bet is 10 CMX' });
+  }
+
+  if (betAmount > user.balance) {
+    return res.status(400).json({ success: false, message: 'Insufficient balance' });
+  }
+
+  const seed = generateSeed();
+  const reels = [
+    SLOTS_SYMBOLS[generateFairRandom(seed + '1', SLOTS_SYMBOLS.length - 1)],
+    SLOTS_SYMBOLS[generateFairRandom(seed + '2', SLOTS_SYMBOLS.length - 1)],
+    SLOTS_SYMBOLS[generateFairRandom(seed + '3', SLOTS_SYMBOLS.length - 1)]
+  ];
+  
+  const winCombination = reels.join('');
+  const multiplier = SLOTS_PAYOUTS[winCombination] || 0;
+  const winAmount = multiplier > 0 ? Math.floor(betAmount * multiplier * 0.95) : 0;
+  const netWin = winAmount - betAmount;
+  const newBalance = user.balance - betAmount + winAmount;
+
+  // Update user
+  DB.users.update(req.user.userId, {
+    balance: newBalance,
+    gamesPlayed: user.gamesPlayed + 1,
+    gamesWon: winAmount > 0 ? user.gamesWon + 1 : user.gamesWon,
+    totalEarned: user.totalEarned + (winAmount || 0)
+  });
+
+  // Create transaction
+  DB.transactions.create({
+    userId: req.user.userId,
+    type: netWin >= 0 ? 'game_win' : 'game_loss',
+    amount: netWin,
+    description: `Slots: ${winAmount > 0 ? `Won ${winAmount} CMX` : `Lost ${betAmount} CMX`} - ${winCombination}`,
+    timestamp: new Date().toISOString()
+  });
+
+  res.json({
+    success: true,
+    data: {
+      reels,
+      winCombination,
+      multiplier,
+      winAmount,
+      netWin,
+      newBalance,
+      result: winAmount > 0 ? 'win' : 'loss'
+    }
+  });
+});
+
+// Games Routes - Roulette
+app.post('/games/roulette/spin', authenticateToken, (req, res) => {
+  const { betAmount, betNumber, betType } = req.body;
+  const user = DB.users.findById(req.user.userId);
+
+  if (!betAmount || betAmount < 10) {
+    return res.status(400).json({ success: false, message: 'Minimum bet is 10 CMX' });
+  }
+
+  if (betAmount > user.balance) {
+    return res.status(400).json({ success: false, message: 'Insufficient balance' });
+  }
+
+  const seed = generateSeed();
+  const winningNumber = generateFairRandom(seed, 36);
+  const isRed = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36].includes(winningNumber);
+  const isBlack = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35].includes(winningNumber);
+  
+  let winAmount = 0;
+  let result = 'loss';
+  
+  if (betType === 'number') {
+    if (betNumber === winningNumber) {
+      winAmount = Math.floor(betAmount * 35 * 0.95);
+      result = 'win';
+    }
+  } else if (betType === 'color') {
+    if ((betNumber === 1 && isRed) || (betNumber === 2 && isBlack)) {
+      winAmount = Math.floor(betAmount * 2 * 0.95);
+      result = 'win';
+    }
+  }
+  
+  const netWin = winAmount - betAmount;
+  const newBalance = user.balance - betAmount + winAmount;
+
+  DB.users.update(req.user.userId, {
+    balance: newBalance,
+    gamesPlayed: user.gamesPlayed + 1,
+    gamesWon: winAmount > 0 ? user.gamesWon + 1 : user.gamesWon,
+    totalEarned: user.totalEarned + (winAmount || 0)
+  });
+
+  DB.transactions.create({
+    userId: req.user.userId,
+    type: netWin >= 0 ? 'game_win' : 'game_loss',
+    amount: netWin,
+    description: `Roulette: ${winAmount > 0 ? `Won ${winAmount} CMX` : `Lost ${betAmount} CMX`} - Number: ${winningNumber}`,
+    timestamp: new Date().toISOString()
+  });
+
+  res.json({
+    success: true,
+    data: {
+      winningNumber,
+      isRed,
+      isBlack,
+      winAmount,
+      netWin,
+      newBalance,
+      result
+    }
+  });
+});
+
+// Middleware to check admin access
+function requireAdmin(req, res, next) {
+  if (!req.user.isAdmin) {
+    return res.status(403).json({ success: false, message: 'Admin access required' });
+  }
+  next();
+}
+
+// Admin Routes - Users List
+app.get('/admin/users', authenticateToken, requireAdmin, (req, res) => {
+  const users = DB.users.findAll().map(u => ({
+    _id: u._id,
+    email: u.email,
+    username: u.username,
+    tier: u.tier,
+    isAdmin: u.isAdmin,
+    isBanned: u.isBanned || false,
+    balance: u.balance,
+    gamesPlayed: u.gamesPlayed,
+    createdAt: u.createdAt,
+    lastLogin: u.lastLogin,
+    notes: u.notes || ''
+  }));
+
+  res.json({ success: true, data: users });
+});
+
+// Admin Routes - Get Single User (Full Details)
+app.get('/admin/user/:userId', authenticateToken, requireAdmin, (req, res) => {
+  const { userId } = req.params;
+  const user = DB.users.findById(userId);
+  
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
+
+  const transactions = DB.transactions.findByUserId(userId);
+  const withdrawals = DB.withdrawals.findByUserId(userId);
+  const gameSessions = DB.gameSessions.findByUserId(userId);
+
+  res.json({
+    success: true,
+    data: {
+      ...user,
+      transactions,
+      withdrawals,
+      gameSessions
+    }
+  });
+});
+
+// Admin Routes - Update User
+app.put('/admin/user/:userId', authenticateToken, requireAdmin, (req, res) => {
+  const { userId } = req.params;
+  const { balance, tier, notes, isBanned } = req.body;
+
+  const user = DB.users.findById(userId);
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
+
+  const updates = {};
+  if (balance !== undefined) updates.balance = balance;
+  if (tier !== undefined) updates.tier = tier;
+  if (notes !== undefined) updates.notes = notes;
+  if (isBanned !== undefined) updates.isBanned = isBanned;
+
+  const updatedUser = DB.users.update(userId, updates);
+
+  res.json({
+    success: true,
+    message: 'User updated successfully',
+    data: updatedUser
+  });
+});
+
+// Admin Routes - Ban User
+app.post('/admin/user/:userId/ban', authenticateToken, requireAdmin, (req, res) => {
+  const { userId } = req.params;
+  const user = DB.users.findById(userId);
+  
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
+
+  if (user.isAdmin) {
+    return res.status(400).json({ success: false, message: 'Cannot ban admin users' });
+  }
+
+  DB.users.update(userId, { isBanned: true });
+  
+  res.json({
+    success: true,
+    message: 'User banned successfully'
+  });
+});
+
+// Admin Routes - Unban User
+app.post('/admin/user/:userId/unban', authenticateToken, requireAdmin, (req, res) => {
+  const { userId } = req.params;
+  const user = DB.users.findById(userId);
+  
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
+
+  DB.users.update(userId, { isBanned: false });
+  
+  res.json({
+    success: true,
+    message: 'User unbanned successfully'
+  });
+});
+
+// Admin Routes - Delete User
+app.delete('/admin/user/:userId', authenticateToken, requireAdmin, (req, res) => {
+  const { userId } = req.params;
+  const user = DB.users.findById(userId);
+  
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
+
+  if (user.isAdmin) {
+    return res.status(400).json({ success: false, message: 'Cannot delete admin users' });
+  }
+
+  // In a real system, you'd archive or soft-delete
+  // For now, we'll just remove from the list
+  const users = DB.users.findAll().filter(u => u._id !== userId);
+  
+  // Write updated list back to file
+  const fs = require('fs');
+  const path = require('path');
+  fs.writeFileSync(
+    path.join(__dirname, '../database/data/users.json'),
+    JSON.stringify(users, null, 2)
+  );
+  
+  res.json({
+    success: true,
+    message: 'User deleted successfully'
+  });
+});
+
+// Admin Routes - Adjust User Balance
+app.post('/admin/user/:userId/adjust-balance', authenticateToken, requireAdmin, (req, res) => {
+  const { userId } = req.params;
+  const { amount, reason } = req.body;
+
+  const user = DB.users.findById(userId);
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
+
+  const newBalance = user.balance + amount;
+  
+  DB.users.update(userId, { balance: newBalance });
+
+  DB.transactions.create({
+    userId,
+    type: amount >= 0 ? 'admin_credit' : 'admin_debit',
+    amount,
+    description: reason || `Admin balance adjustment: ${amount >= 0 ? '+' : ''}${amount} CMX`,
+    timestamp: new Date().toISOString()
+  });
+
+  res.json({
+    success: true,
+    message: 'Balance adjusted successfully',
+    data: { newBalance }
+  });
+});
+
+// Admin Routes - Get User Transactions
+app.get('/admin/user/:userId/transactions', authenticateToken, requireAdmin, (req, res) => {
+  const { userId } = req.params;
+  const transactions = DB.transactions.findByUserId(userId);
+  
+  res.json({
+    success: true,
+    data: transactions
+  });
+});
+
+// Admin Routes - Get All Transactions
+app.get('/admin/transactions', authenticateToken, requireAdmin, (req, res) => {
+  const { limit = 100, offset = 0 } = req.query;
+  const transactions = DB.transactions.findAll()
+    .slice(parseInt(offset), parseInt(offset) + parseInt(limit));
+  
+  res.json({
+    success: true,
+    data: transactions,
+    total: DB.transactions.findAll().length
+  });
+});
+
+// Admin Routes - Get All Withdrawals
+app.get('/admin/withdrawals', authenticateToken, requireAdmin, (req, res) => {
+  const withdrawals = DB.withdrawals.findAll();
+  
+  res.json({
+    success: true,
+    data: withdrawals
+  });
+});
+
+// Admin Routes - Approve Withdrawal
+app.post('/admin/withdrawal/:id/approve', authenticateToken, requireAdmin, (req, res) => {
+  const { id } = req.params;
+  const withdrawal = DB.withdrawals.update(id, { status: 'approved' });
+  
+  if (!withdrawal) {
+    return res.status(404).json({ success: false, message: 'Withdrawal not found' });
+  }
+
+  res.json({
+    success: true,
+    message: 'Withdrawal approved',
+    data: withdrawal
+  });
+});
+
+// Admin Routes - Reject Withdrawal
+app.post('/admin/withdrawal/:id/reject', authenticateToken, requireAdmin, (req, res) => {
+  const { id } = req.params;
+  const { reason } = req.body;
+  
+  const withdrawal = DB.withdrawals.findById(id);
+  if (!withdrawal) {
+    return res.status(404).json({ success: false, message: 'Withdrawal not found' });
+  }
+
+  // Refund balance to user
+  const user = DB.users.findById(withdrawal.userId);
+  DB.users.update(withdrawal.userId, { balance: user.balance + withdrawal.amount });
+
+  DB.withdrawals.update(id, { status: 'rejected', reason });
+
+  res.json({
+    success: true,
+    message: 'Withdrawal rejected and balance refunded',
+    data: withdrawal
+  });
+});
+
+// Admin Routes - Search Users
+app.get('/admin/search', authenticateToken, requireAdmin, (req, res) => {
+  const { q } = req.query;
+  
+  if (!q) {
+    return res.json({ success: true, data: [] });
+  }
+
+  const users = DB.users.findAll().filter(u => 
+    u.email.toLowerCase().includes(q.toLowerCase()) ||
+    u.username.toLowerCase().includes(q.toLowerCase()) ||
+    u._id.toLowerCase().includes(q.toLowerCase())
+  );
+
+  res.json({
+    success: true,
+    data: users
+  });
+});
+
+// Admin Routes - Statistics
+app.get('/admin/stats', authenticateToken, requireAdmin, (req, res) => {
+  const users = DB.users.findAll();
+  const transactions = DB.transactions.findAll();
+  const withdrawals = DB.withdrawals.findAll();
+
+  const stats = {
+    totalUsers: users.length,
+    activeUsers: users.filter(u => !u.isBanned).length,
+    bannedUsers: users.filter(u => u.isBanned).length,
+    totalBalance: users.reduce((sum, u) => sum + u.balance, 0),
+    totalTransactions: transactions.length,
+    pendingWithdrawals: withdrawals.filter(w => w.status === 'pending').length,
+    totalWithdrawn: users.reduce((sum, u) => sum + u.totalWithdrawn, 0),
+    totalGamesPlayed: users.reduce((sum, u) => sum + (u.gamesPlayed || 0), 0)
+  };
+
+  res.json({
+    success: true,
+    data: stats
+  });
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'CMX Platform API is running' });
+});
+
+const PORT = 3001;
+app.listen(PORT, () => {
+  console.log(`✅ JSON Database Server running on http://localhost:${PORT}`);
+  console.log(`📊 Users: ${DB.users.findAll().length}`);
+  console.log(`💰 Ready to handle requests!`);
+});
+

@@ -1,0 +1,184 @@
+[
+  {
+    "_id": "tx_001",
+    "userId": "507f1f77bcf86cd799439011",
+    "type": "credit",
+    "amount": 25000,
+    "description": "Initial balance",
+    "timestamp": "2024-01-01T00:00:00.000Z",
+    "balanceAfter": 25000
+  },
+  {
+    "_id": "tx_002",
+    "userId": "507f1f77bcf86cd799439011",
+    "type": "game_win",
+    "amount": 5000,
+    "description": "Won at Slots",
+    "timestamp": "2024-01-05T10:30:00.000Z",
+    "balanceAfter": 30000
+  },
+  {
+    "_id": "tx_003",
+    "userId": "507f1f77bcf86cd799439011",
+    "type": "game_loss",
+    "amount": -2000,
+    "description": "Lost at Roulette",
+    "timestamp": "2024-01-05T11:15:00.000Z",
+    "balanceAfter": 28000
+  },
+  {
+    "_id": "tx_004",
+    "userId": "507f1f77bcf86cd799439011",
+    "type": "withdrawal",
+    "amount": -15000,
+    "description": "Withdrawal to wallet",
+    "timestamp": "2024-01-10T14:20:00.000Z",
+    "balanceAfter": 13000,
+    "status": "completed"
+  },
+  {
+    "_id": "tx_005",
+    "userId": "507f1f77bcf86cd799439012",
+    "type": "credit",
+    "amount": 100000,
+    "description": "Admin balance",
+    "timestamp": "2024-01-01T00:00:00.000Z",
+    "balanceAfter": 100000
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 12",
+    "timestamp": "2025-10-28T12:08:09.385Z",
+    "_id": "1761653289385_gax3355rj"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -5000,
+    "description": "Roulette: Lost 5000 CMX - Number: 34",
+    "timestamp": "2025-10-28T12:08:23.996Z",
+    "_id": "1761653303996_8vh4kbdde"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 1",
+    "timestamp": "2025-11-03T09:20:17.010Z",
+    "_id": "1762161617010_arxh4e4wy"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 21",
+    "timestamp": "2025-11-04T11:06:36.568Z",
+    "_id": "1762254396568_2dnvprbtl"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 10",
+    "timestamp": "2025-11-04T11:06:56.935Z",
+    "_id": "1762254416935_mszj4l1ef"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 7",
+    "timestamp": "2025-11-04T11:06:57.947Z",
+    "_id": "1762254417947_rqw2xeji0"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 18",
+    "timestamp": "2025-11-04T11:06:58.430Z",
+    "_id": "1762254418430_m1jgba4hm"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 33",
+    "timestamp": "2025-11-04T11:06:58.763Z",
+    "_id": "1762254418763_227spb5ha"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 5",
+    "timestamp": "2025-11-04T11:06:59.147Z",
+    "_id": "1762254419147_gi6hc8b48"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 34",
+    "timestamp": "2025-11-04T11:06:59.529Z",
+    "_id": "1762254419529_kysp9gsex"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 24",
+    "timestamp": "2025-11-04T11:06:59.862Z",
+    "_id": "1762254419862_70bf2ad2h"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 33",
+    "timestamp": "2025-11-04T11:07:00.178Z",
+    "_id": "1762254420178_jpmrs7d59"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 2",
+    "timestamp": "2025-11-04T11:07:00.578Z",
+    "_id": "1762254420578_lgn11fkkk"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 2",
+    "timestamp": "2025-11-04T11:07:00.928Z",
+    "_id": "1762254420928_9os29w8vk"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -100,
+    "description": "Slots: Lost 100 CMX - ⭐💎7️⃣",
+    "timestamp": "2025-11-04T11:07:10.970Z",
+    "_id": "1762254430970_58h3amyoz"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -100,
+    "description": "Slots: Lost 100 CMX - 🍒7️⃣💎",
+    "timestamp": "2025-11-04T11:07:12.299Z",
+    "_id": "1762254432299_ialig6rra"
+  },
+  {
+    "userId": "user_001",
+    "type": "game_loss",
+    "amount": -100,
+    "description": "Slots: Lost 100 CMX - 🍋🍊⭐",
+    "timestamp": "2025-11-04T11:07:13.663Z",
+    "_id": "1762254433663_9p54qq6vj"
+  }
+]

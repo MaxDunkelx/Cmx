@@ -1,0 +1,25 @@
+[
+  {
+    "_id": "wd_001",
+    "userId": "507f1f77bcf86cd799439011",
+    "amount": 15000,
+    "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+    "network": "BSC",
+    "status": "completed",
+    "timestamp": "2024-01-10T14:20:00.000Z",
+    "completedAt": "2024-01-10T14:25:00.000Z",
+    "transactionHash": "0xabc123def456"
+  },
+  {
+    "_id": "wd_002",
+    "userId": "507f1f77bcf86cd799439013",
+    "amount": 25000,
+    "address": "0x8ba1f109551bD432803012645Hac136c22C19d0",
+    "network": "ETH",
+    "status": "pending",
+    "timestamp": "2024-01-15T10:00:00.000Z",
+    "completedAt": null,
+    "transactionHash": null
+  }
+]
+

@@ -1,0 +1,53 @@
+[
+  {
+    "_id": "task_001",
+    "type": "survey",
+    "title": "Customer Satisfaction Survey",
+    "description": "Complete a quick 5-minute survey about your experience",
+    "reward": 500,
+    "duration": "5 min",
+    "icon": "📋",
+    "status": "active"
+  },
+  {
+    "_id": "task_002",
+    "type": "ad",
+    "title": "Watch Video Ad",
+    "description": "Watch this 30-second video ad",
+    "reward": 200,
+    "duration": "30 sec",
+    "icon": "📺",
+    "status": "active"
+  },
+  {
+    "_id": "task_003",
+    "type": "social",
+    "title": "Follow us on Twitter",
+    "description": "Follow CMX on Twitter and earn CMX",
+    "reward": 300,
+    "duration": "1 min",
+    "icon": "🐦",
+    "status": "active"
+  },
+  {
+    "_id": "task_004",
+    "type": "download",
+    "title": "Try New Game App",
+    "description": "Download and open this app",
+    "reward": 1000,
+    "duration": "2 min",
+    "icon": "📱",
+    "status": "active"
+  },
+  {
+    "_id": "task_005",
+    "type": "referral",
+    "title": "Invite Friends",
+    "description": "Get 1000 CMX for each friend that signs up",
+    "reward": 1000,
+    "duration": "instant",
+    "icon": "👥",
+    "status": "active"
+  }
+]
+

@@ -1,0 +1,26 @@
+{
+  "name": "cmx-platform-backend",
+  "version": "1.0.0",
+  "description": "Backend API for CMX Earning & Gaming Platform",
+  "main": "server-json.js",
+  "scripts": {
+    "dev": "nodemon server-json.js",
+    "start": "node server-json.js"
+  },
+  "keywords": [
+    "cmx",
+    "earning",
+    "gaming",
+    "platform"
+  ],
+  "author": "",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
