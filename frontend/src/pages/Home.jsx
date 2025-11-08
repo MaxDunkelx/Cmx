@@ -115,6 +115,50 @@ export default function Home() {
     setError('');
   };
 
+  const missionHighlights = [
+    {
+      icon: '🎯',
+      iconSize: '2.2rem',
+      title: 'Our Promise',
+      body: (
+        <>
+          Earn CMX through tasks and ads, then multiply it playing{' '}
+          <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>provably fair games</strong>. Everything is transparent, verifiable, and honest.
+        </>
+      )
+    },
+    {
+      icon: '🤝',
+      iconSize: '2.2rem',
+      title: 'Growing Together',
+      body: (
+        <>
+          We&apos;re building this <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>with you, not for you</strong>. Your feedback shapes our platform. We&apos;re here to learn, improve, and create something amazing together.
+        </>
+      )
+    },
+    {
+      icon: '✅',
+      iconSize: '1.9rem',
+      title: 'Fair & Transparent',
+      body: (
+        <>
+          No hidden fees, no tricks, no BS. <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>95% RTP on games</strong>, instant withdrawals, and complete transparency in every transaction. Live RTP tables, verifiable RNG hashes, and weekly profit-share reports show how every CMX token is allocated.
+        </>
+      )
+    },
+    {
+      icon: '👥',
+      iconSize: '2.2rem',
+      title: 'From the Founders',
+      body: (
+        <>
+          &quot;We&apos;re not a massive corporation or a crypto scheme. We&apos;re three guys who believe people deserve <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>fair compensation</strong> for their time and attention. Join us in building the future of online earning—one game, one task, one win at a time.&quot; 🚀
+        </>
+      )
+    }
+  ];
+
   if (user) {
     return (
       <div style={{
@@ -529,6 +573,168 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
+
+        {/* Earn · Play · Win Story */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          style={{ marginBottom: '2.75rem' }}
+        >
+          <div
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+              borderRadius: '28px',
+              padding: '3rem',
+              textAlign: 'center',
+              background: 'rgba(10, 13, 22, 0.85)',
+              border: '1px solid rgba(148, 163, 184, 0.22)',
+              boxShadow: '0 24px 60px rgba(2, 6, 23, 0.55)',
+              backdropFilter: 'blur(28px)'
+            }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              src={featureVideo}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                opacity: 0.35
+              }}
+            />
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  background: 'rgba(17, 24, 39, 0.7)',
+                  border: '1px solid rgba(148, 163, 184, 0.3)',
+                  borderRadius: '30px',
+                  padding: '0.75rem 2rem',
+                  marginBottom: '1.5rem',
+                  fontSize: '0.95rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(226, 232, 240, 0.85)'
+                }}
+              >
+                <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 6px rgba(148, 163, 184, 0.35))' }}>✨</span>
+                <span style={{ color: 'rgba(226, 232, 240, 0.9)', textShadow: '0 0 10px rgba(148, 163, 184, 0.3)' }}>CMX Platform</span>
+                <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 6px rgba(148, 163, 184, 0.35))' }}>✨</span>
+              </div>
+
+              <h2
+                style={{
+                  fontSize: '3rem',
+                  fontWeight: 900,
+                  marginBottom: '2rem',
+                  letterSpacing: '-0.5px',
+                  lineHeight: 1.2
+                }}
+              >
+                <span style={{ color: 'rgba(226, 232, 240, 0.95)', textShadow: '0 0 14px rgba(148, 163, 184, 0.35)' }}>Earn.</span>{' '}
+                <span style={{ color: 'rgba(165, 180, 252, 0.9)', textShadow: '0 0 14px rgba(129, 140, 248, 0.3)' }}>Play.</span>{' '}
+                <span style={{ color: 'rgba(134, 239, 172, 0.85)', textShadow: '0 0 12px rgba(34, 197, 94, 0.25)' }}>Win.</span>
+              </h2>
+
+              <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'left' }}>
+                <p
+                  style={{
+                    fontSize: '1.15rem',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    lineHeight: 1.8,
+                    marginBottom: '2rem',
+                    textAlign: 'center'
+                  }}
+                >
+                  We&apos;re{' '}
+                  <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>
+                    three friends
+                  </strong>{' '}
+                  building a simple cycle: complete sponsored tasks, videos, and surveys to earn CMX tokens, which are valued like real currency at{' '}
+                  <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>
+                    10,000 CMX = $1 USD
+                  </strong>
+                  . Jump into the gaming hub to play and multiply your balance, then cash out or route your earnings to a cause you believe in.
+                </p>
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                    gap: '1.5rem',
+                    marginBottom: '0.5rem',
+                    alignItems: 'stretch'
+                  }}
+                >
+                  {missionHighlights.map(({ icon, iconSize, title, body }, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        background: 'rgba(11, 16, 26, 0.72)',
+                        border: '1px solid rgba(71, 85, 105, 0.35)',
+                        borderRadius: '16px',
+                        padding: '1.75rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem',
+                        justifyContent: 'space-between',
+                        minHeight: '240px',
+                        height: '100%',
+                        alignItems: 'flex-start',
+                        transition: 'transform 0.3s ease, border-color 0.3s ease',
+                        boxShadow: '0 18px 44px rgba(2, 6, 23, 0.45)'
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: iconSize,
+                          textAlign: 'left',
+                          filter: 'drop-shadow(0 0 6px rgba(148, 163, 184, 0.25))'
+                        }}
+                      >
+                        {icon}
+                      </div>
+                      <div>
+                        <div
+                          style={{
+                            fontSize: '1.05rem',
+                            fontWeight: 700,
+                            color: 'rgba(226, 232, 240, 0.92)',
+                            marginBottom: '0.6rem',
+                            textAlign: 'left',
+                            letterSpacing: '0.25px'
+                          }}
+                        >
+                          {title}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: '0.95rem',
+                            color: 'rgba(203, 213, 225, 0.72)',
+                            lineHeight: 1.7,
+                            textAlign: 'left'
+                          }}
+                        >
+                          {body}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Bottom Features */}
         <motion.div
