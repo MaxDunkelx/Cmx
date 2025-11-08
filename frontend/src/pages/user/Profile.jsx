@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../../components/ThemeProvider';
 import { useAuth } from '../../context/AuthContext';
 import CMXLogo from '../../components/CMXLogo';
+import profileBackground from '../../assets/images/profile.jpg';
 
 export default function Profile() {
   const theme = useTheme();
@@ -16,23 +17,40 @@ export default function Profile() {
     5: '#f59e0b'
   };
 
+  const containerStyle = {
+    minHeight: '100vh',
+    color: '#fff',
+    padding: '2rem',
+    position: 'relative',
+    overflow: 'hidden'
+  };
+
+  const backgroundLayerStyle = {
+    position: 'absolute',
+    inset: 0,
+    backgroundImage: `linear-gradient(180deg, rgba(7, 11, 28, 0.55), rgba(7, 11, 28, 0.92)), url(${profileBackground})`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center top',
+    backgroundColor: '#050a1e',
+    filter: 'saturate(1.05)',
+    zIndex: 0
+  };
+
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: theme.gradients.background,
-      color: '#fff',
-      padding: '2rem'
-    }}>
-      <h1 style={{
-        fontSize: '3rem',
-        fontWeight: '800',
-        margin: '0 0 3rem 0',
-        background: theme.gradients.primary,
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent'
-      }}>
-        👤 Your Profile
-      </h1>
+    <div style={containerStyle}>
+      <div style={backgroundLayerStyle} />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <h1 style={{
+          fontSize: '3rem',
+          fontWeight: '800',
+          margin: '0 0 3rem 0',
+          background: theme.gradients.primary,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          👤 Your Profile
+        </h1>
 
       {/* Profile Card */}
       <motion.div
@@ -125,62 +143,63 @@ export default function Profile() {
       </motion.div>
 
       {/* Account Settings */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        style={{
-          background: theme.gradients.card,
-          backdropFilter: 'blur(40px)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          borderRadius: '24px',
-          padding: '2rem',
-          maxWidth: '800px'
-        }}
-      >
-        <h2 style={{
-          fontSize: '2rem',
-          fontWeight: '700',
-          marginBottom: '2rem'
-        }}>
-          ⚙️ Account Settings
-        </h2>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          style={{
+            background: theme.gradients.card,
+            backdropFilter: 'blur(40px)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '24px',
+            padding: '2rem',
+            maxWidth: '800px'
+          }}
+        >
+          <h2 style={{
+            fontSize: '2rem',
+            fontWeight: '700',
+            marginBottom: '2rem'
+          }}>
+            ⚙️ Account Settings
+          </h2>
 
-        <div style={{ display: 'grid', gap: '1.5rem' }}>
-          {[
-            { icon: '🔒', label: 'Change Password', action: 'Update' },
-            { icon: '📧', label: 'Email Notifications', action: 'Configure' },
-            { icon: '🔔', label: 'Notification Settings', action: 'Manage' },
-            { icon: '🎁', label: 'Referral Program', action: 'Invite' }
-          ].map((setting, idx) => (
-            <div key={idx} style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '1.5rem',
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '16px'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ fontSize: '2rem' }}>{setting.icon}</div>
-                <div style={{ fontWeight: '600' }}>{setting.label}</div>
-              </div>
-              <button style={{
-                padding: '0.75rem 1.5rem',
-                background: theme.colors.primary,
-                border: 'none',
-                borderRadius: '12px',
-                color: '#fff',
-                fontWeight: '600',
-                cursor: 'pointer'
+          <div style={{ display: 'grid', gap: '1.5rem' }}>
+            {[
+              { icon: '🔒', label: 'Change Password', action: 'Update' },
+              { icon: '📧', label: 'Email Notifications', action: 'Configure' },
+              { icon: '🔔', label: 'Notification Settings', action: 'Manage' },
+              { icon: '🎁', label: 'Referral Program', action: 'Invite' }
+            ].map((setting, idx) => (
+              <div key={idx} style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '1.5rem',
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '16px'
               }}>
-                {setting.action}
-              </button>
-            </div>
-          ))}
-        </div>
-      </motion.div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ fontSize: '2rem' }}>{setting.icon}</div>
+                  <div style={{ fontWeight: '600' }}>{setting.label}</div>
+                </div>
+                <button style={{
+                  padding: '0.75rem 1.5rem',
+                  background: theme.colors.primary,
+                  border: 'none',
+                  borderRadius: '12px',
+                  color: '#fff',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}>
+                  {setting.action}
+                </button>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 }

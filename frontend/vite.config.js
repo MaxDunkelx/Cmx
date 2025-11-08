@@ -9,26 +9,6 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3001',
         changeOrigin: true
-      },
-      '/auth': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      },
-      '/wallet': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      },
-      '/tasks': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      },
-      '/games': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      },
-      '/admin': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
       }
     }
   }

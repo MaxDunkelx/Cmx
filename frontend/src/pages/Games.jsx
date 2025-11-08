@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
 import RouletteGame from '../components/RouletteGame';
-import BlackjackGame from '../components/BlackjackGame';
 import PokerGame from '../components/PokerGame';
+import BlackjackExperience from '../components/games/blackjack/BlackjackExperience';
+import blackjackHero from '../assets/images/black-jack.webp';
 
 function Games() {
   const [activeGame, setActiveGame] = useState('slots');
@@ -68,21 +69,6 @@ function Games() {
     }
   };
 
-  const playBlackjack = async (gameData) => {
-    if (gameData.betAmount > balance) return;
-    setLoading(true);
-    setResult(null);
-    try {
-      const response = await api.post('/games/blackjack/play', gameData);
-      setResult(response.data.data);
-      setBalance(response.data.data.newBalance || balance);
-    } catch (error) {
-      setResult({ error: error.response?.data?.message || 'Game failed' });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const playPoker = async (gameData) => {
     if (gameData.betAmount > balance) return;
     setLoading(true);
@@ -104,7 +90,7 @@ function Games() {
       
       <div style={styles.balanceCard}>
         <div style={styles.balanceAmount}>{balance.toLocaleString()} CMX</div>
-        <div style={styles.balanceUSD}>≈ ${(balance / 10000 / 100).toFixed(2)} USD</div>
+        <div style={styles.balanceUSD}>≈ ${ (balance / 10000).toFixed(2) } USD</div>
       </div>
       
       <div style={styles.gameSelector}>
@@ -225,14 +211,18 @@ function Games() {
       )}
 
       {activeGame === 'blackjack' && (
-        <div style={styles.gameArea}>
-          <BlackjackGame 
-            onPlay={playBlackjack}
-            result={result}
-            loading={loading}
-            betAmount={betAmount}
-            setBetAmount={setBetAmount}
-            balance={balance}
+        <div
+          style={{
+            ...styles.gameArea,
+            backgroundImage: `linear-gradient(180deg, rgba(10, 14, 39, 0.82), rgba(10, 14, 39, 0.95)), url(${blackjackHero})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            border: '1px solid rgba(102, 126, 234, 0.45)',
+            boxShadow: '0 32px 48px rgba(10, 14, 39, 0.55)'
+          }}
+        >
+          <BlackjackExperience
+            onBalanceChange={(nextBalance) => setBalance(nextBalance)}
           />
         </div>
       )}
@@ -256,9 +246,12 @@ function Games() {
 const styles = {
   container: {
     padding: '2rem',
-    background: '#0a0e27',
-    color: '#fff',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    backgroundImage: `linear-gradient(160deg, rgba(4, 7, 20, 0.85), rgba(4, 7, 20, 0.92)), url(${blackjackHero})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    color: '#fff'
   },
   title: {
     fontSize: '2.5rem',

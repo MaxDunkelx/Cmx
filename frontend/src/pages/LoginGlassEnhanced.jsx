@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import CMXLogo from '../components/CMXLogo';
 import AnimatedHero3D from '../components/AnimatedHero3D';
-import ProfessionalSlotMachine from '../components/ProfessionalSlotMachine';
 import EnhancedReviewsCarousel from '../components/EnhancedReviewsCarousel';
 
 function Login() {
@@ -480,7 +479,7 @@ function Login() {
     { 
       name: 'The Nature Conservancy', 
       icon: '🌳',
-      image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1441974231531-20fa691ff6ca?w=400&h=300&fit=crop',
       desc: 'Planting trees and restoring forests'
     },
     { 
@@ -516,6 +515,46 @@ function Login() {
     { Icon: IconChart, title: 'Track Everything', desc: 'Real-time analytics & stats' },
     { Icon: IconGamepad, title: 'Fun Games', desc: 'Provably fair casino games' },
     { Icon: IconHeart, title: 'Give Back', desc: 'Donate to causes you care about' }
+  ];
+
+  const valueHighlights = [
+    {
+      icon: '🎯',
+      title: 'Our Promise',
+      body: (
+        <>
+          Earn CMX through tasks and ads, then multiply it playing <strong style={styles.strongText}>provably fair games</strong>. Everything is transparent, verifiable, and honest.
+        </>
+      )
+    },
+    {
+      icon: '🤝',
+      title: 'Growing Together',
+      body: (
+        <>
+          We're building this <strong style={styles.strongText}>with you, not for you</strong>. Your feedback shapes our platform. We're here to learn, improve, and create something amazing together.
+        </>
+      )
+    },
+    {
+      icon: '✅',
+      iconSize: '1.75rem',
+      title: 'Fair & Transparent',
+      body: (
+        <>
+          No hidden fees, no tricks, no BS. <strong style={styles.strongText}>95% RTP on games</strong>, instant withdrawals, and complete transparency in every transaction. We publish live RTP tables, verifiable RNG hashes, and weekly profit-share reports so you always see how every CMX token is allocated.
+        </>
+      )
+    },
+    {
+      icon: '👥',
+      title: 'From the Founders',
+      body: (
+        <>
+          "We're not a massive corporation or a crypto scheme. We're three guys who believe people deserve <strong style={styles.strongText}>fair compensation</strong> for their time and attention. Join us in building the future of online earning—one game, one task, one win at a time." 🚀
+        </>
+      )
+    }
   ];
 
   return (
@@ -623,67 +662,19 @@ function Login() {
               
               <div style={styles.missionContent}>
                 <p style={styles.missionText}>
-                  We're <strong style={styles.strongText}>three friends</strong> on a mission to revolutionize how people earn money online. 
-                  CMX isn't a cryptocurrency—it's our <strong style={styles.strongText}>platform currency</strong> designed to make 
-                  your gaming experience exciting and meaningful.
+                  We're <strong style={styles.strongText}>three friends</strong> building a simple cycle: complete sponsored tasks, videos, and surveys to earn CMX tokens, which are valued like real currency at <strong style={styles.strongText}>10,000 CMX = $1 USD</strong>. Jump into the gaming hub to play and multiply your balance, then cash out or route your earnings to a cause you believe in.
                 </p>
                 
-                <div style={styles.conceptBox}>
-                  <div style={styles.conceptIcon}>💡</div>
-                  <div style={styles.conceptContent}>
-                    <div style={styles.conceptTitle}>Why CMX Points?</div>
-                    <div style={styles.conceptText}>
-                      Nobody wants to play with depressing 1-cent balances. With CMX, <strong style={styles.strongText}>10,000 tokens = $1</strong>, 
-                      so your account always shows impressive numbers while you earn and play. It's psychology that makes gaming more fun!
-                    </div>
-                  </div>
-                </div>
-                
                 <div style={styles.valueProps}>
-                  <div style={styles.valueProp}>
-                    <div style={styles.valuePropIcon}>🎯</div>
-                    <div>
-                      <div style={styles.valuePropTitle}>Our Promise</div>
-                      <div style={styles.valuePropText}>
-                        Earn CMX through tasks and ads, then multiply it playing <strong style={styles.strongText}>provably fair games</strong>. 
-                        Everything is transparent, verifiable, and honest.
+                  {valueHighlights.map(({ icon, iconSize, title, body }, idx) => (
+                    <div key={idx} style={styles.valueProp}>
+                      <div style={{ ...styles.valuePropIcon, fontSize: iconSize || styles.valuePropIcon.fontSize }}>{icon}</div>
+                      <div>
+                        <div style={styles.valuePropTitle}>{title}</div>
+                        <div style={styles.valuePropText}>{body}</div>
                       </div>
                     </div>
-                  </div>
-                  
-                  <div style={styles.valueProp}>
-                    <div style={styles.valuePropIcon}>🤝</div>
-                    <div>
-                      <div style={styles.valuePropTitle}>Growing Together</div>
-                      <div style={styles.valuePropText}>
-                        We're building this <strong style={styles.strongText}>with you, not for you</strong>. Your feedback shapes our platform. 
-                        We're here to learn, improve, and create something amazing together.
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div style={styles.valueProp}>
-                    <div style={styles.valuePropIcon}>✅</div>
-                    <div>
-                      <div style={styles.valuePropTitle}>Fair & Transparent</div>
-                      <div style={styles.valuePropText}>
-                        No hidden fees, no tricks, no BS. <strong style={styles.strongText}>95% RTP on games</strong>, instant withdrawals, 
-                        and complete transparency in every transaction.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div style={styles.founderNote}>
-                  <div style={styles.founderIcon}>👥</div>
-                  <div style={styles.founderContent}>
-                    <div style={styles.founderTitle}>From the Founders</div>
-                    <div style={styles.founderText}>
-                      "We're not a massive corporation or a crypto scheme. We're three guys who believe people deserve 
-                      <strong style={styles.strongText}> fair compensation</strong> for their time and attention. 
-                      Join us in building the future of online earning—one game, one task, one win at a time." 🚀
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -756,13 +747,6 @@ function Login() {
                 {activeTab === 'earn' && (
                   <>
                     {/* Mission Section */}
-                    <div className="liquid-glass" style={styles.contentCard}>
-                      <h3 className="text-glow" style={styles.missionTitle}>Our Mission</h3>
-                      <p style={styles.missionText}>
-                        At CMX, we're revolutionizing how people earn and give back. Our mission is to create a platform where every commercial you watch, every offer you complete, and every game you play generates real value—both for you and for the world. We believe in transparency, fairness, and community impact. Unlike traditional platforms that keep all the revenue, we split earnings with you based on your loyalty, ensuring that your time and engagement are genuinely valued. Simultaneously, we've built a system that empowers you to make a meaningful difference by donating your earnings to organizations tackling the world's most pressing challenges. CMX isn't just about earning money—it's about creating a sustainable economy where entertainment, profit, and purpose converge.
-                      </p>
-                    </div>
-
                     <div className="liquid-glass" style={styles.contentCard}>
                       <h3 style={styles.sectionTitle}>Earn From Every Action</h3>
                       <p style={styles.description}>
@@ -893,11 +877,8 @@ function Login() {
 
             </div>
 
-            {/* Right Side - Login Form + Demo Game */}
+            {/* Right Side - Login Form */}
             <div style={styles.rightSide}>
-              {/* Professional Slot Machine */}
-              <ProfessionalSlotMachine />
-
               <div className="liquid-glass" style={styles.formCard}>
                 <h2 className="text-glow" style={styles.formTitle}>Start Earning Today</h2>
                 <p style={styles.formSubtitle}>Join thousands earning real money</p>
@@ -1133,7 +1114,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     padding: '3rem 2rem',
-    background: 'linear-gradient(135deg, #0a0a0a 0%, #1a0a1f 30%, #0f0a20 60%, #0a0a0a 100%)',
+    background: 'linear-gradient(150deg, #05060b 0%, #0a1320 55%, #020308 100%)',
     position: 'relative',
     overflow: 'hidden'
   },
@@ -1149,7 +1130,7 @@ const styles = {
     `,
     backgroundSize: '60px 60px',
     pointerEvents: 'none',
-    opacity: 0.4
+    opacity: 0.25
   },
   rainContainer: {
     position: 'absolute',
@@ -1566,11 +1547,11 @@ const styles = {
     letterSpacing: '-0.3px'
   },
   missionText: {
-    fontSize: '1rem',
-    color: 'rgba(255, 255, 255, 0.85)',
+    fontSize: '1.15rem',
+    color: 'rgba(226, 232, 240, 0.85)',
     lineHeight: '1.8',
-    margin: 0,
-    fontWeight: '400'
+    marginBottom: '2rem',
+    textAlign: 'center'
   },
   diffBox: {
     marginTop: '1rem'
@@ -1770,31 +1751,34 @@ const styles = {
   missionHeader: {
     padding: '3rem',
     textAlign: 'center',
-    background: 'rgba(255, 255, 255, 0.04)',
-    border: '2px solid rgba(255, 215, 0, 0.2)',
-    boxShadow: '0 8px 40px rgba(255, 215, 0, 0.15)'
+    background: 'rgba(10, 13, 22, 0.85)',
+    border: '1px solid rgba(148, 163, 184, 0.22)',
+    boxShadow: '0 24px 60px rgba(2, 6, 23, 0.55)',
+    borderRadius: '28px',
+    backdropFilter: 'blur(28px)'
   },
   missionBadge: {
     display: 'inline-flex',
     alignItems: 'center',
     gap: '0.75rem',
-    background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.15))',
-    border: '2px solid rgba(255, 215, 0, 0.3)',
+    background: 'rgba(17, 24, 39, 0.7)',
+    border: '1px solid rgba(148, 163, 184, 0.3)',
     borderRadius: '30px',
     padding: '0.75rem 2rem',
     marginBottom: '1.5rem',
-    fontSize: '1rem',
-    fontWeight: '800',
-    letterSpacing: '1px',
-    textTransform: 'uppercase'
+    fontSize: '0.95rem',
+    fontWeight: '700',
+    letterSpacing: '0.6px',
+    textTransform: 'uppercase',
+    color: 'rgba(226, 232, 240, 0.85)'
   },
   badgeGlow: {
-    fontSize: '1.3rem',
-    filter: 'drop-shadow(0 0 10px rgba(255, 215, 0, 0.6))'
+    fontSize: '1.2rem',
+    filter: 'drop-shadow(0 0 6px rgba(148, 163, 184, 0.35))'
   },
   badgeTitle: {
-    color: '#FFD700',
-    textShadow: '0 0 15px rgba(255, 215, 0, 0.5)'
+    color: 'rgba(226, 232, 240, 0.9)',
+    textShadow: '0 0 10px rgba(148, 163, 184, 0.3)'
   },
   missionTitle: {
     fontSize: '3rem',
@@ -1804,16 +1788,16 @@ const styles = {
     lineHeight: '1.2'
   },
   highlightGold: {
-    color: '#FFD700',
-    textShadow: '0 0 30px rgba(255, 215, 0, 0.6)'
+    color: 'rgba(226, 232, 240, 0.95)',
+    textShadow: '0 0 14px rgba(148, 163, 184, 0.35)'
   },
   highlightPurple: {
-    color: '#c084fc',
-    textShadow: '0 0 30px rgba(192, 132, 252, 0.6)'
+    color: 'rgba(165, 180, 252, 0.9)',
+    textShadow: '0 0 14px rgba(129, 140, 248, 0.3)'
   },
   highlightGreen: {
-    color: '#4ade80',
-    textShadow: '0 0 30px rgba(74, 222, 128, 0.6)'
+    color: 'rgba(134, 239, 172, 0.85)',
+    textShadow: '0 0 12px rgba(34, 197, 94, 0.25)'
   },
   missionContent: {
     maxWidth: '900px',
@@ -1828,77 +1812,12 @@ const styles = {
     textAlign: 'center'
   },
   strongText: {
-    color: '#FFD700',
+    color: 'rgba(226, 232, 240, 0.95)',
     fontWeight: '800'
   },
-  conceptBox: {
-    background: 'rgba(102, 126, 234, 0.08)',
-    border: '2px solid rgba(102, 126, 234, 0.3)',
-    borderRadius: '20px',
-    padding: '1.75rem',
-    marginBottom: '2rem',
-    display: 'flex',
-    gap: '1.25rem',
-    alignItems: 'flex-start'
-  },
-  conceptIcon: {
-    fontSize: '2.5rem',
-    flexShrink: 0,
-    filter: 'drop-shadow(0 0 15px rgba(102, 126, 234, 0.5))'
-  },
-  conceptContent: {
-    flex: 1
-  },
-  conceptTitle: {
-    fontSize: '1.2rem',
-    fontWeight: '800',
-    color: '#a5b4fc',
-    marginBottom: '0.5rem',
-    letterSpacing: '0.3px'
-  },
-  conceptText: {
-    fontSize: '1rem',
-    color: 'rgba(255, 255, 255, 0.85)',
-    lineHeight: '1.7'
-  },
-  valueProps: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '1.5rem',
-    marginBottom: '2rem'
-  },
-  valueProp: {
-    background: 'rgba(255, 255, 255, 0.03)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    borderRadius: '16px',
-    padding: '1.5rem',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-    transition: 'all 0.3s ease'
-  },
-  valuePropIcon: {
-    fontSize: '2.5rem',
-    textAlign: 'center',
-    filter: 'drop-shadow(0 0 10px rgba(255, 215, 0, 0.3))'
-  },
-  valuePropTitle: {
-    fontSize: '1.1rem',
-    fontWeight: '800',
-    color: '#ffffff',
-    marginBottom: '0.5rem',
-    textAlign: 'center',
-    letterSpacing: '0.3px'
-  },
-  valuePropText: {
-    fontSize: '0.95rem',
-    color: 'rgba(255, 255, 255, 0.8)',
-    lineHeight: '1.7',
-    textAlign: 'center'
-  },
   founderNote: {
-    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1))',
-    border: '2px solid rgba(139, 92, 246, 0.3)',
+    background: 'rgba(8, 13, 23, 0.85)',
+    border: '1px solid rgba(71, 85, 105, 0.35)',
     borderRadius: '20px',
     padding: '2rem',
     display: 'flex',
@@ -1908,7 +1827,7 @@ const styles = {
   founderIcon: {
     fontSize: '3rem',
     flexShrink: 0,
-    filter: 'drop-shadow(0 0 15px rgba(139, 92, 246, 0.5))'
+    filter: 'drop-shadow(0 0 8px rgba(94, 106, 129, 0.35))'
   },
   founderContent: {
     flex: 1
@@ -1916,13 +1835,13 @@ const styles = {
   founderTitle: {
     fontSize: '1.3rem',
     fontWeight: '800',
-    color: '#c084fc',
+    color: 'rgba(226, 232, 240, 0.9)',
     marginBottom: '0.75rem',
     letterSpacing: '0.5px'
   },
   founderText: {
     fontSize: '1.05rem',
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: 'rgba(203, 213, 225, 0.87)',
     lineHeight: '1.8',
     fontStyle: 'italic'
   },
@@ -2029,6 +1948,47 @@ const styles = {
   },
   badgeText: {
     letterSpacing: '0.3px'
+  },
+  valueProps: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gap: '1.5rem',
+    marginBottom: '2rem',
+    alignItems: 'stretch'
+  },
+  valueProp: {
+    background: 'rgba(11, 16, 26, 0.72)',
+    border: '1px solid rgba(71, 85, 105, 0.35)',
+    borderRadius: '16px',
+    padding: '1.75rem',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+    transition: 'all 0.3s ease',
+    minHeight: '240px',
+    justifyContent: 'space-between',
+    height: '100%',
+    alignItems: 'flex-start'
+  },
+  valuePropIcon: {
+    fontSize: '2.2rem',
+    textAlign: 'left',
+    marginBottom: '0.75rem',
+    filter: 'drop-shadow(0 0 6px rgba(148, 163, 184, 0.25))'
+  },
+  valuePropTitle: {
+    fontSize: '1.05rem',
+    fontWeight: '700',
+    color: 'rgba(226, 232, 240, 0.92)',
+    marginBottom: '0.6rem',
+    textAlign: 'left',
+    letterSpacing: '0.25px'
+  },
+  valuePropText: {
+    fontSize: '0.95rem',
+    color: 'rgba(203, 213, 225, 0.72)',
+    lineHeight: '1.7',
+    textAlign: 'left'
   }
 };
 

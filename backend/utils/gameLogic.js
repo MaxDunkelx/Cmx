@@ -1,39 +1,155 @@
 import { generateFairRandom } from './provablyFair.js';
 
 // Game constants
-const HOUSE_EDGE = 0.05; // 5% house edge
-const SLOTS_SYMBOLS = ['🍒', '🍋', '🍊', '⭐', '💎', '7️⃣'];
-const SLOTS_PAYOUTS = {
-  '💎💎💎': 100,
-  '⭐⭐⭐': 50,
-  '7️⃣7️⃣7️⃣': 25,
-  '🍒🍒🍒': 10,
-  '🍋🍋🍋': 8,
-  '🍊🍊🍊': 5
+const HOUSE_EDGE = 0.03; // 3% house edge (more player friendly)
+const SLOTS_SYMBOLS = ['🏺', '👁️', '🐍', '🦅', '⚱️', '👑'];
+
+// Symbol payouts for 3+ matches
+const SYMBOL_PAYOUTS = {
+  '👑': { 3: 50, 4: 200 },   // Legendary
+  '⚱️': { 3: 15, 4: 50 },    // Epic
+  '🦅': { 3: 8, 4: 25 },     // Rare
+  '🐍': { 3: 5, 4: 15 },     // Uncommon
+  '👁️': { 3: 3, 4: 8 },     // Common (Wild)
+  '🏺': { 3: 2, 4: 5 }       // Common
 };
 
+// Weighted symbol selection for better win frequency
+const SYMBOL_WEIGHTS = {
+  '🏺': 30,  // Most common
+  '👁️': 25,  // Wild - common
+  '🐍': 20,
+  '🦅': 15,
+  '⚱️': 8,
+  '👑': 2    // Rarest
+};
+
+function selectWeightedSymbol(seed) {
+  const symbols = Object.keys(SYMBOL_WEIGHTS);
+  const weights = Object.values(SYMBOL_WEIGHTS);
+  const totalWeight = weights.reduce((a, b) => a + b, 0);
+  const random = generateFairRandom(seed, totalWeight - 1);
+  
+  let cumulative = 0;
+  for (let i = 0; i < symbols.length; i++) {
+    cumulative += weights[i];
+    if (random < cumulative) {
+      return symbols[i];
+    }
+  }
+  return symbols[0];
+}
+
+// Check for winning patterns in grid
+function checkPaylines(grid) {
+  const paylines = [
+    // Horizontal lines
+    { pattern: [[0,0], [0,1], [0,2], [0,3]], name: 'Top' },
+    { pattern: [[1,0], [1,1], [1,2], [1,3]], name: 'Middle' },
+    { pattern: [[2,0], [2,1], [2,2], [2,3]], name: 'Bottom' },
+    // Diagonal and zigzag
+    { pattern: [[0,0], [1,1], [2,2], [1,3]], name: 'V' },
+    { pattern: [[2,0], [1,1], [0,2], [1,3]], name: 'Λ' },
+    { pattern: [[1,0], [0,1], [1,2], [2,3]], name: 'W' },
+    { pattern: [[1,0], [2,1], [1,2], [0,3]], name: 'M' },
+    { pattern: [[0,0], [1,1], [1,2], [0,3]], name: 'Valley' },
+    { pattern: [[2,0], [1,1], [1,2], [2,3]], name: 'Hill' },
+  ];
+  
+  let maxWin = 0;
+  let winningSymbol = null;
+  let matchCount = 0;
+  let winningLine = null;
+  
+  for (const payline of paylines) {
+    const symbols = payline.pattern.map(([row, col]) => grid[row]?.[col]);
+    
+    // Skip if any symbol is undefined
+    if (symbols.some(s => !s)) continue;
+    
+    // Check all 4 symbols match
+    if (symbols[0] === symbols[1] && symbols[1] === symbols[2] && symbols[2] === symbols[3]) {
+      const symbol = symbols[0];
+      const payout = SYMBOL_PAYOUTS[symbol];
+      
+      if (payout && payout[4]) {
+        const multiplier = payout[4];
+        if (multiplier > maxWin) {
+          maxWin = multiplier;
+          winningSymbol = symbol;
+          matchCount = 4;
+          winningLine = payline.name;
+        }
+      }
+    }
+    // Check first 3 symbols match
+    else if (symbols[0] === symbols[1] && symbols[1] === symbols[2]) {
+      const symbol = symbols[0];
+      const payout = SYMBOL_PAYOUTS[symbol];
+      
+      if (payout && payout[3]) {
+        const multiplier = payout[3];
+        if (multiplier > maxWin) {
+          maxWin = multiplier;
+          winningSymbol = symbol;
+          matchCount = 3;
+          winningLine = payline.name;
+        }
+      }
+    }
+    // Check last 3 symbols match (indices 1, 2, 3)
+    else if (symbols[1] === symbols[2] && symbols[2] === symbols[3]) {
+      const symbol = symbols[1];
+      const payout = SYMBOL_PAYOUTS[symbol];
+      
+      if (payout && payout[3]) {
+        const multiplier = payout[3];
+        if (multiplier > maxWin) {
+          maxWin = multiplier;
+          winningSymbol = symbol;
+          matchCount = 3;
+          winningLine = payline.name;
+        }
+      }
+    }
+  }
+  
+  console.log('Payline Check - Max Win:', maxWin, 'Symbol:', winningSymbol, 'Line:', winningLine);
+  
+  return { multiplier: maxWin, symbol: winningSymbol, matchCount, winningLine };
+}
+
 /**
- * Generate spin result for slots game
+ * Generate spin result for slots game (3x4 grid)
  * @param {String} seed - Provably fair seed
+ * @param {Number} betAmount - Bet amount
  * @returns {Object} - { reels, winAmount, result }
  */
 export const generateSlotsResult = (seed, betAmount) => {
-  const reels = [
-    SLOTS_SYMBOLS[generateFairRandom(seed + '1', SLOTS_SYMBOLS.length - 1)],
-    SLOTS_SYMBOLS[generateFairRandom(seed + '2', SLOTS_SYMBOLS.length - 1)],
-    SLOTS_SYMBOLS[generateFairRandom(seed + '3', SLOTS_SYMBOLS.length - 1)]
+  // Generate 3x4 grid (12 symbols total)
+  const reels = [];
+  for (let i = 0; i < 12; i++) {
+    reels.push(selectWeightedSymbol(seed + i));
+  }
+  
+  // Convert to grid for evaluation
+  const grid = [
+    [reels[0], reels[1], reels[2], reels[3]],   // Row 0
+    [reels[4], reels[5], reels[6], reels[7]],   // Row 1
+    [reels[8], reels[9], reels[10], reels[11]]  // Row 2
   ];
   
-  const winCombination = reels.join('');
-  const multiplier = SLOTS_PAYOUTS[winCombination] || 0;
+  const { multiplier, symbol, matchCount } = checkPaylines(grid);
   const winAmount = multiplier > 0 ? Math.floor(betAmount * multiplier * (1 - HOUSE_EDGE)) : 0;
   
   return {
     reels,
-    winCombination,
+    grid,
     winAmount,
     result: winAmount > 0 ? 'win' : 'loss',
-    multiplier
+    multiplier,
+    winningSymbol: symbol,
+    matchCount
   };
 };
 

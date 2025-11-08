@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../../components/ThemeProvider';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
+import walletBackground from '../../assets/images/wallet.jpg';
 
 export default function Wallet() {
   const theme = useTheme();
@@ -32,13 +33,30 @@ export default function Wallet() {
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>Loading...</div>;
 
+  const containerStyle = {
+    minHeight: '100vh',
+    color: '#fff',
+    padding: '2rem',
+    position: 'relative',
+    overflow: 'hidden'
+  };
+
+  const backgroundLayerStyle = {
+    position: 'absolute',
+    inset: 0,
+    backgroundImage: `linear-gradient(180deg, rgba(7, 11, 28, 0.55), rgba(7, 11, 28, 0.92)), url(${walletBackground})`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center top',
+    backgroundColor: '#050a1e',
+    filter: 'saturate(1.05)',
+    zIndex: 0
+  };
+
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: theme.gradients.background,
-      color: '#fff',
-      padding: '2rem'
-    }}>
+    <div style={containerStyle}>
+      <div style={backgroundLayerStyle} />
+      <div style={{ position: 'relative', zIndex: 1 }}>
       <h1 style={{
         fontSize: '3rem',
         fontWeight: '800',
@@ -187,6 +205,7 @@ export default function Wallet() {
           Request Withdrawal →
         </button>
       </motion.div>
+    </div>
     </div>
   );
 }

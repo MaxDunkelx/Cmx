@@ -134,11 +134,8 @@ function DashboardGlass() {
             <h3 style={styles.cardTitle}>Balance</h3>
           </div>
           <div style={styles.balanceDisplay}>
-            <div style={styles.balanceAmount}>{balance.toLocaleString()}</div>
-            <div style={styles.balanceCurrency}>CMX</div>
-          </div>
-          <div style={styles.usdEquivalent}>
-            ≈ ${(balance / 10000 / 100).toFixed(2)} USD
+            <h2>{balance.toLocaleString()} CMX</h2>
+            <p>≈ ${ (balance / 10000).toFixed(2) } USD</p>
           </div>
           <Link to="/wallet" className="liquid-glass-button" style={styles.withdrawButton}>
             Request Withdrawal →

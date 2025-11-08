@@ -180,9 +180,9 @@ export default function Home() {
       }} />
 
       <div style={{
-        maxWidth: '1400px',
+        maxWidth: '1180px',
         margin: '0 auto',
-        padding: '4rem 2rem',
+        padding: '3.5rem 1.75rem',
         position: 'relative',
         zIndex: 1
       }}>
@@ -194,45 +194,85 @@ export default function Home() {
         >
           <CMXLogo size="130px" animated={true} />
           <h1 style={{
-            fontSize: '4rem',
+            fontSize: '3.25rem',
             fontWeight: '900',
-            margin: '1rem 0',
-            background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%)',
+            margin: '1rem 0 0.75rem',
+            letterSpacing: '0.04em',
+            background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.65) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
             CMX Platform
           </h1>
           <p style={{
-            fontSize: '1.5rem',
-            color: 'rgba(255,255,255,0.9)',
-            maxWidth: '700px',
-            margin: '0 auto'
+            fontSize: '1.3rem',
+            color: 'rgba(255,255,255,0.88)',
+            maxWidth: '640px',
+            margin: '0 auto',
+            lineHeight: '1.6'
           }}>
-            The Revolutionary Way to Earn & Play. Win crypto playing provably fair casino games.
+            A refined earning hub that blends high-end gaming, automated rewards, and transparent treasury management in one streamlined experience.
           </p>
-          <p style={{
-            fontSize: '1.1rem',
-            color: 'rgba(255,255,255,0.7)',
-            maxWidth: '800px',
-            margin: '1.5rem auto 0',
-            lineHeight: '1.6',
-            padding: '1.5rem',
-            background: 'rgba(34, 197, 94, 0.1)',
-            border: '1px solid rgba(34, 197, 94, 0.3)',
-            borderRadius: '16px'
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '1.5rem',
+            flexWrap: 'wrap',
+            marginTop: '2rem'
           }}>
-            <strong style={{ color: '#86efac' }}>✨ No Payments Required ✨</strong><br />
-            We will never ask for your money, credit card, or personal payment information. Our mission is to share profits with you through our tier-based reward system. The more the platform grows, the more we can distribute to our community. Earn based on your tier through gaming, skill challenges, and luck-based games. Your success is our success - let's build this together.
-          </p>
+            {[
+              {
+                title: 'Built for Pro Players',
+                copy: 'Curated slot suites, real-time analytics, and provably fair outcomes designed for serious retention.'
+              },
+              {
+                title: 'All-In Platform Model',
+                copy: 'CMX credits, performance tiers, and profit-sharing rewards—without cash deposits or paywalls.'
+              },
+              {
+                title: 'Operational Confidence',
+                copy: 'Security-first infrastructure, audited math models, and clearly staged growth milestones.'
+              }
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                style={{
+                  minWidth: '240px',
+                  maxWidth: '320px',
+                  padding: '1.25rem 1.5rem',
+                  background: 'rgba(15, 23, 42, 0.55)',
+                  border: '1px solid rgba(148, 163, 184, 0.28)',
+                  borderRadius: '18px',
+                  boxShadow: '0 18px 40px rgba(15, 23, 42, 0.35)',
+                  textAlign: 'left'
+                }}
+              >
+                <h3 style={{
+                  fontSize: '1.05rem',
+                  fontWeight: '700',
+                  color: 'rgba(226, 232, 240, 0.95)',
+                  marginBottom: '0.5rem'
+                }}>
+                  {item.title}
+                </h3>
+                <p style={{
+                  fontSize: '0.95rem',
+                  color: 'rgba(226, 232, 240, 0.75)',
+                  lineHeight: '1.5'
+                }}>
+                  {item.copy}
+                </p>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Main Content Grid */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '3rem',
-          marginBottom: '3rem'
+          gap: '2.75rem',
+          marginBottom: '2.75rem'
         }}>
           {/* Left: Features */}
           <motion.div
@@ -240,11 +280,11 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
             style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              backdropFilter: 'blur(40px)',
-              border: '2px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '30px',
-              padding: '3rem'
+              background: 'rgba(255, 255, 255, 0.08)',
+              backdropFilter: 'blur(32px)',
+              border: '1px solid rgba(148, 163, 184, 0.28)',
+              borderRadius: '24px',
+              padding: '2.5rem'
             }}
           >
             <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '2rem' }}>
@@ -296,11 +336,11 @@ export default function Home() {
             transition={{ delay: 0.3 }}
             className="glass-card login-container"
             style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              backdropFilter: 'blur(40px)',
-              border: '2px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '30px',
-              padding: '3rem',
+              background: 'rgba(255, 255, 255, 0.08)',
+              backdropFilter: 'blur(32px)',
+              border: '1px solid rgba(148, 163, 184, 0.28)',
+              borderRadius: '24px',
+              padding: '2.5rem',
               position: 'relative',
               transition: 'all 0.3s ease'
             }}
@@ -316,7 +356,7 @@ export default function Home() {
 
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', fontSize: '1rem', fontWeight: '600', marginBottom: '0.5rem' }}>
+                <label style={{ display: 'block', fontSize: '0.95rem', fontWeight: '600', marginBottom: '0.4rem', letterSpacing: '0.02em' }}>
                   Email Address
                 </label>
                 <input
@@ -327,10 +367,10 @@ export default function Home() {
                   placeholder="your@email.com"
                   style={{
                     width: '100%',
-                    padding: '1rem 1.5rem',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '2px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '16px',
+                    padding: '0.9rem 1.25rem',
+                    background: 'rgba(15, 23, 42, 0.45)',
+                    border: '1px solid rgba(148, 163, 184, 0.32)',
+                    borderRadius: '14px',
                     color: '#fff',
                     fontSize: '1rem',
                     outline: 'none'
@@ -339,7 +379,7 @@ export default function Home() {
               </div>
 
               <div style={{ marginBottom: '2rem' }}>
-                <label style={{ display: 'block', fontSize: '1rem', fontWeight: '600', marginBottom: '0.5rem' }}>
+                <label style={{ display: 'block', fontSize: '0.95rem', fontWeight: '600', marginBottom: '0.4rem', letterSpacing: '0.02em' }}>
                   Password
                 </label>
                 <input
@@ -350,10 +390,10 @@ export default function Home() {
                   placeholder="••••••••"
                   style={{
                     width: '100%',
-                    padding: '1rem 1.5rem',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '2px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '16px',
+                    padding: '0.9rem 1.25rem',
+                    background: 'rgba(15, 23, 42, 0.45)',
+                    border: '1px solid rgba(148, 163, 184, 0.32)',
+                    borderRadius: '14px',
                     color: '#fff',
                     fontSize: '1rem',
                     outline: 'none'
@@ -380,13 +420,14 @@ export default function Home() {
                 className="glass-button"
                 style={{
                   width: '100%',
-                  padding: '1.25rem',
-                  background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
+                  padding: '1.1rem',
+                  background: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
                   border: 'none',
-                  borderRadius: '20px',
+                  borderRadius: '18px',
                   color: '#fff',
-                  fontSize: '1.2rem',
-                  fontWeight: '800',
+                  fontSize: '1.15rem',
+                  fontWeight: '700',
+                  letterSpacing: '0.03em',
                   cursor: loading ? 'not-allowed' : 'pointer',
                   opacity: loading ? 0.6 : 1,
                   marginBottom: '1rem'
@@ -408,10 +449,10 @@ export default function Home() {
                   disabled={loading}
                   className="glass-button"
                   style={{
-                    padding: '1rem',
-                    background: 'rgba(34, 197, 94, 0.2)',
-                    border: '2px solid rgba(34, 197, 94, 0.4)',
-                    borderRadius: '16px',
+                    padding: '0.9rem',
+                    background: 'rgba(34, 197, 94, 0.16)',
+                    border: '1px solid rgba(34, 197, 94, 0.35)',
+                    borderRadius: '14px',
                     color: '#86efac',
                     fontWeight: '700',
                     cursor: loading ? 'not-allowed' : 'pointer'
@@ -426,10 +467,10 @@ export default function Home() {
                   disabled={loading}
                   className="glass-button"
                   style={{
-                    padding: '1rem',
-                    background: 'rgba(239, 68, 68, 0.2)',
-                    border: '2px solid rgba(239, 68, 68, 0.4)',
-                    borderRadius: '16px',
+                    padding: '0.9rem',
+                    background: 'rgba(239, 68, 68, 0.16)',
+                    border: '1px solid rgba(239, 68, 68, 0.35)',
+                    borderRadius: '14px',
                     color: '#fca5a5',
                     fontWeight: '700',
                     cursor: loading ? 'not-allowed' : 'pointer'
@@ -465,9 +506,9 @@ export default function Home() {
           transition={{ delay: 0.6 }}
           style={{
             background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '24px',
+            backdropFilter: 'blur(18px)',
+            border: '1px solid rgba(148, 163, 184, 0.25)',
+            borderRadius: '22px',
             padding: '2rem',
             textAlign: 'center'
           }}

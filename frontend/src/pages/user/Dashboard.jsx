@@ -4,6 +4,11 @@ import { useAuth } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
 import CMXLogo from '../../components/CMXLogo';
 import api from '../../utils/api';
+import gamesCardImage from '../../assets/images/games.png';
+import cmxLogoImage from '../../assets/images/CMX-logo.png';
+import profileCardImage from '../../assets/images/profile.jpg';
+import walletCardImage from '../../assets/images/wallet.jpg';
+import balanceCardImage from '../../assets/images/balance.jpg';
 
 function Dashboard() {
   const { user, logout } = useAuth();
@@ -153,6 +158,32 @@ function Dashboard() {
     return () => document.head.removeChild(style);
   }, []);
 
+  const balanceCardStyle = {
+    ...styles.balanceCard,
+    backgroundImage: `linear-gradient(180deg, rgba(7, 11, 28, 0.55), rgba(7, 11, 28, 0.92)), url(${balanceCardImage})`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundColor: '#050a1e',
+    borderColor: 'rgba(255, 255, 255, 0.18)',
+    boxShadow: '0 28px 48px rgba(6, 10, 28, 0.45)'
+  };
+
+  const imageActionCardStyle = (action) =>
+    action.iconImage
+      ? {
+          ...styles.actionCard,
+          ...styles.imageActionCard,
+          borderColor: `${action.color}80`,
+          boxShadow: `0 16px 36px ${action.color}33`,
+          backgroundImage: `linear-gradient(180deg, rgba(7, 11, 28, 0.4), rgba(7, 11, 28, 0.92)), url(${action.iconImage})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundColor: '#050a1e'
+        }
+      : styles.actionCard;
+
   if (loading) {
     return (
       <div style={{
@@ -200,9 +231,9 @@ function Dashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="liquid-glass-dash"
-        style={styles.balanceCard}
+        style={balanceCardStyle}
       >
+        <div style={styles.balanceCardOverlay} />
         <div style={styles.balanceContent}>
           <h3 style={styles.balanceLabel}>Total Balance</h3>
           <motion.div
@@ -215,9 +246,7 @@ function Dashboard() {
           <div style={styles.logoContainer}>
             <CMXLogo size="60px" animated={false} />
           </div>
-          <div style={styles.usdValue}>
-            ≈ ${(balance / 1000000).toFixed(2)} USD
-          </div>
+          <div style={styles.usdValue}>≈ ${ (balance / 10000).toFixed(2) } USD</div>
         </div>
       </motion.div>
 
@@ -229,10 +258,38 @@ function Dashboard() {
         style={styles.actionsGrid}
       >
         {[
-          { icon: '🎰', label: 'Play Games', path: '/games', color: '#667eea' },
-          { icon: '💰', label: 'Earn CMX', path: '/tasks', color: '#FFD700' },
-          { icon: '💳', label: 'Wallet', path: '/wallet', color: '#764ba2' },
-          { icon: '👤', label: 'Profile', path: '/profile', color: '#5ac8fa' }
+          {
+            iconImage: gamesCardImage,
+            label: 'Play Games',
+            path: '/games',
+            color: '#667eea',
+            subtitle: 'Dive into every live game without leaving your dashboard.',
+            ctaLabel: 'Play Now →'
+          },
+          {
+            iconImage: cmxLogoImage,
+            label: 'Earn CMX',
+            path: '/tasks',
+            color: '#FFD700',
+            subtitle: 'Complete quests, offers, and missions to grow your CMX balance fast.',
+            ctaLabel: 'Start Earning →'
+          },
+          {
+            iconImage: walletCardImage,
+            label: 'Wallet',
+            path: '/wallet',
+            color: '#764ba2',
+            subtitle: 'Check balances, review payouts, and manage withdrawals instantly.',
+            ctaLabel: 'Open Wallet →'
+          },
+          {
+            iconImage: profileCardImage,
+            label: 'Profile',
+            path: '/profile',
+            color: '#5ac8fa',
+            subtitle: 'Track your tier, stats, and personalize the way you play.',
+            ctaLabel: 'View Profile →'
+          }
         ].map((action, idx) => (
           <motion.div
             key={action.label}
@@ -243,11 +300,25 @@ function Dashboard() {
             whileTap={{ scale: 0.95 }}
           >
             <Link to={action.path} style={{ textDecoration: 'none' }}>
-              <div className="liquid-glass-dash" style={styles.actionCard}>
-                <div style={{...styles.actionIcon, color: action.color}}>{action.icon}</div>
-                <div style={{...styles.actionLabel, color: action.color}}>
-                  {action.label}
-                </div>
+              <div className="liquid-glass-dash" style={imageActionCardStyle(action)}>
+                {action.iconImage ? (
+                  <div style={styles.imageActionContent}>
+                    <div>
+                      <span style={styles.imageActionLabel}>{action.label}</span>
+                      {action.subtitle && <p style={styles.imageActionSubtitle}>{action.subtitle}</p>}
+                    </div>
+                    {action.ctaLabel && (
+                      <span style={{ ...styles.imageActionButton, borderColor: action.color }}>
+                        {action.ctaLabel}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <div style={{ ...styles.actionIcon, color: action.color }}>{action.icon}</div>
+                    <div style={{ ...styles.actionLabel, color: action.color }}>{action.label}</div>
+                  </>
+                )}
               </div>
             </Link>
           </motion.div>
@@ -407,7 +478,20 @@ const styles = {
   },
   balanceCard: {
     marginBottom: '2rem',
-    textAlign: 'center'
+    textAlign: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+    padding: '3rem',
+    borderRadius: '26px',
+    border: '1px solid rgba(255, 255, 255, 0.18)',
+    transition: 'transform 0.4s ease, box-shadow 0.4s ease'
+  },
+  balanceCardOverlay: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(135deg, rgba(7, 11, 28, 0.35), rgba(4, 7, 20, 0.78))',
+    backdropFilter: 'blur(4px)',
+    zIndex: 0
   },
   balanceContent: {
     position: 'relative',
@@ -459,6 +543,51 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  imageActionCard: {
+    padding: '2.25rem',
+    textAlign: 'left',
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
+    minHeight: '220px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    borderWidth: '2px'
+  },
+  imageActionContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    gap: '1.5rem',
+    height: '100%'
+  },
+  imageActionLabel: {
+    display: 'inline-block',
+    fontSize: '1.35rem',
+    fontWeight: '800',
+    letterSpacing: '0.05em',
+    textTransform: 'uppercase',
+    color: '#f8fafc',
+    marginBottom: '0.5rem'
+  },
+  imageActionSubtitle: {
+    margin: 0,
+    fontSize: '0.95rem',
+    color: 'rgba(226, 232, 240, 0.78)',
+    maxWidth: '16rem',
+    lineHeight: 1.45,
+    minHeight: '2.9em'
+  },
+  imageActionButton: {
+    alignSelf: 'flex-start',
+    padding: '0.65rem 1.5rem',
+    borderRadius: '12px',
+    border: '1px solid rgba(148, 163, 184, 0.45)',
+    color: '#0b1220',
+    background: 'rgba(226, 232, 240, 0.92)',
+    fontWeight: '700',
+    letterSpacing: '0.04em'
   },
   actionIcon: {
     fontSize: '3rem',

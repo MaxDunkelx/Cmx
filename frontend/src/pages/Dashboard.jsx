@@ -127,7 +127,7 @@ function Dashboard() {
           </div>
           <div style={styles.balanceContent}>
             <p style={styles.balance}>{balance.toLocaleString()} CMX</p>
-            <p style={styles.usdValue}>≈ ${(balance / 10000 / 100).toFixed(2)} USD</p>
+            <p style={styles.balanceUsd}>≈ ${ (balance / 10000).toFixed(2) } USD</p>
             <div style={styles.infoBox}>
               <span style={styles.infoIcon}>ℹ️</span>
               <span style={styles.infoText}>Minimum withdrawal: 5,000,000 CMX ($5)</span>
@@ -303,7 +303,7 @@ const styles = {
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent'
   },
-  usdValue: {
+  balanceUsd: {
     fontSize: '1.3rem',
     color: '#888',
     marginBottom: '1.5rem'

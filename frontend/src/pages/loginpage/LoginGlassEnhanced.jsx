@@ -669,7 +669,7 @@ function Login() {
                           <strong style={{color: '#FFD700', fontSize: '1.1rem'}}>1,000 CMX = $0.01 (1 cent)</strong>
                         </div>
                         <div style={styles.infoItem}>
-                          <strong style={{color: '#FFD700', fontSize: '1.1rem'}}>1,000,000 CMX = $1.00 USD</strong>
+                          <strong style={{color: '#FFD700', fontSize: '1.1rem'}}>1,000,000 CMX = $100.00 USD</strong>
                         </div>
                         <div style={styles.infoItem}>
                           Simple conversion: 1 million CMX equals 1 dollar

@@ -73,7 +73,7 @@ function Wallet() {
         <div style={styles.balanceIcon}>💵</div>
         <h2 style={styles.balanceTitle}>Current Balance</h2>
         <div style={styles.balanceAmount}>{balance.toLocaleString()} CMX</div>
-        <div style={styles.usdEquivalent}>≈ ${(balance / 10000 / 100).toFixed(2)} USD</div>
+        <div style={styles.usdEquivalent}>≈ ${ (balance / 10000).toFixed(2) } USD</div>
         
         <button 
           onClick={() => setShowWithdraw(true)} 
