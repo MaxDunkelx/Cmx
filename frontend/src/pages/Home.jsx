@@ -5,6 +5,7 @@ import CMXLogo from '../components/CMXLogo';
 import LiquidParticles from '../components/LiquidParticles';
 import ReviewsSlider from '../components/ReviewsSlider';
 import { motion, AnimatePresence } from 'framer-motion';
+import featureVideo from '../assets/background-vidio.mp4';
 
 export default function Home() {
   const { user, login, setUser } = useAuth();
@@ -268,25 +269,54 @@ export default function Home() {
         </motion.div>
 
         {/* Main Content Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '2.75rem',
-          marginBottom: '2.75rem'
-        }}>
-          {/* Left: Features */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+        <div
+          style={{
+            position: 'relative',
+            borderRadius: '28px',
+            overflow: 'hidden',
+            marginBottom: '2.75rem',
+            border: '1px solid rgba(148, 163, 184, 0.25)',
+            boxShadow: '0 32px 60px rgba(5, 10, 28, 0.55)'
+          }}
+        >
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            src={featureVideo}
             style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              backdropFilter: 'blur(32px)',
-              border: '1px solid rgba(148, 163, 184, 0.28)',
-              borderRadius: '24px',
-              padding: '2.5rem'
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: 0.38
+            }}
+          />
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '2.75rem',
+              padding: '2.75rem'
             }}
           >
+            {/* Left: Features */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              style={{
+                background: 'rgba(8, 15, 32, 0.65)',
+                backdropFilter: 'blur(32px)',
+                border: '1px solid rgba(148, 163, 184, 0.32)',
+                borderRadius: '24px',
+                padding: '2.5rem'
+              }}
+            >
             <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '2rem' }}>
               Why Choose CMX?
             </h2>
@@ -327,24 +357,24 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+            </motion.div>
 
-          {/* Right: Login Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="glass-card login-container"
-            style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              backdropFilter: 'blur(32px)',
-              border: '1px solid rgba(148, 163, 184, 0.28)',
-              borderRadius: '24px',
-              padding: '2.5rem',
-              position: 'relative',
-              transition: 'all 0.3s ease'
-            }}
-          >
+            {/* Right: Login Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="glass-card login-container"
+              style={{
+                background: 'rgba(8, 15, 32, 0.72)',
+                backdropFilter: 'blur(32px)',
+                border: '1px solid rgba(148, 163, 184, 0.32)',
+                borderRadius: '24px',
+                padding: '2.5rem',
+                position: 'relative',
+                transition: 'all 0.3s ease'
+              }}
+            >
             {/* Mini Logo in Top Right */}
             <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem' }}>
               <CMXLogo size="40px" animated={false} />
@@ -496,7 +526,8 @@ export default function Home() {
             <div style={{ marginTop: '3rem' }}>
               <ReviewsSlider />
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
 
         {/* Bottom Features */}
