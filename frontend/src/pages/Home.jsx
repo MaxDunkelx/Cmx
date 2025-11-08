@@ -575,41 +575,27 @@ export default function Home() {
         </div>
 
         {/* Earn · Play · Win Story */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          style={{ marginBottom: '2.75rem' }}
-        >
-          <div
-            style={{
-              position: 'relative',
-              overflow: 'hidden',
-              borderRadius: '28px',
-              padding: '3rem',
-              textAlign: 'center',
-              background: 'rgba(10, 13, 22, 0.85)',
-              border: '1px solid rgba(148, 163, 184, 0.22)',
-              boxShadow: '0 24px 60px rgba(2, 6, 23, 0.55)',
-              backdropFilter: 'blur(28px)'
-            }}
-          >
+        <motion.div initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} style={{ marginBottom: '2.75rem' }}>
+          <div style={{ position: 'relative', borderRadius: '28px', overflow: 'hidden', border: '1px solid rgba(148, 163, 184, 0.22)', boxShadow: '0 24px 60px rgba(2, 6, 23, 0.55)' }}>
             <video
               autoPlay
               loop
               muted
               playsInline
               src={featureVideo}
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                opacity: 0.35
-              }}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.38 }}
             />
-            <div style={{ position: 'relative', zIndex: 1 }}>
+            <div
+              className="liquid-glass"
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                padding: '3rem',
+                textAlign: 'center',
+                background: 'linear-gradient(180deg, rgba(10, 13, 22, 0.52), rgba(5, 10, 24, 0.82))',
+                backdropFilter: 'blur(22px)'
+              }}
+            >
               <div
                 style={{
                   display: 'inline-flex',
@@ -622,7 +608,7 @@ export default function Home() {
                   marginBottom: '1.5rem',
                   fontSize: '0.95rem',
                   fontWeight: 700,
-                  letterSpacing: '0.06em',
+                  letterSpacing: '0.6px',
                   textTransform: 'uppercase',
                   color: 'rgba(226, 232, 240, 0.85)'
                 }}
@@ -647,86 +633,39 @@ export default function Home() {
               </h2>
 
               <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'left' }}>
-                <p
-                  style={{
-                    fontSize: '1.15rem',
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    lineHeight: 1.8,
-                    marginBottom: '2rem',
-                    textAlign: 'center'
-                  }}
-                >
+                <p style={{ fontSize: '1.15rem', color: 'rgba(255, 255, 255, 0.9)', lineHeight: 1.8, marginBottom: '2rem', textAlign: 'center' }}>
                   We&apos;re{' '}
-                  <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>
-                    three friends
-                  </strong>{' '}
-                  building a simple cycle: complete sponsored tasks, videos, and surveys to earn CMX tokens, which are valued like real currency at{' '}
-                  <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>
-                    10,000 CMX = $1 USD
-                  </strong>
-                  . Jump into the gaming hub to play and multiply your balance, then cash out or route your earnings to a cause you believe in.
+                  <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>three friends</strong> building a simple cycle: complete sponsored tasks,
+                  videos, and surveys to earn CMX tokens, which are valued like real currency at{' '}
+                  <strong style={{ color: 'rgba(226, 232, 240, 0.95)', fontWeight: 800 }}>10,000 CMX = $1 USD</strong>. Jump into the gaming hub to play and multiply
+                  your balance, then cash out or route your earnings to a cause you believe in.
                 </p>
 
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                    gap: '1.5rem',
-                    marginBottom: '0.5rem',
-                    alignItems: 'stretch'
-                  }}
-                >
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '1.5rem', marginBottom: '2rem', alignItems: 'stretch' }}>
                   {missionHighlights.map(({ icon, iconSize, title, body }, idx) => (
                     <div
                       key={idx}
                       style={{
-                        background: 'rgba(11, 16, 26, 0.72)',
+                        background: 'rgba(11, 16, 26, 0.58)',
                         border: '1px solid rgba(71, 85, 105, 0.35)',
                         borderRadius: '16px',
                         padding: '1.75rem',
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '1rem',
-                        justifyContent: 'space-between',
+                        transition: '0.3s',
                         minHeight: '240px',
+                        justifyContent: 'space-between',
                         height: '100%',
-                        alignItems: 'flex-start',
-                        transition: 'transform 0.3s ease, border-color 0.3s ease',
-                        boxShadow: '0 18px 44px rgba(2, 6, 23, 0.45)'
+                        alignItems: 'flex-start'
                       }}
                     >
-                      <div
-                        style={{
-                          fontSize: iconSize,
-                          textAlign: 'left',
-                          filter: 'drop-shadow(0 0 6px rgba(148, 163, 184, 0.25))'
-                        }}
-                      >
-                        {icon}
-                      </div>
+                      <div style={{ fontSize: iconSize, textAlign: 'left', filter: 'drop-shadow(0 0 6px rgba(148, 163, 184, 0.25))' }}>{icon}</div>
                       <div>
-                        <div
-                          style={{
-                            fontSize: '1.05rem',
-                            fontWeight: 700,
-                            color: 'rgba(226, 232, 240, 0.92)',
-                            marginBottom: '0.6rem',
-                            textAlign: 'left',
-                            letterSpacing: '0.25px'
-                          }}
-                        >
+                        <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'rgba(226, 232, 240, 0.92)', marginBottom: '0.6rem', textAlign: 'left', letterSpacing: '0.25px' }}>
                           {title}
                         </div>
-                        <div
-                          style={{
-                            fontSize: '0.95rem',
-                            color: 'rgba(203, 213, 225, 0.72)',
-                            lineHeight: 1.7,
-                            textAlign: 'left'
-                          }}
-                        >
-                          {body}
-                        </div>
+                        <div style={{ fontSize: '0.95rem', color: 'rgba(203, 213, 225, 0.72)', lineHeight: 1.7, textAlign: 'left' }}>{body}</div>
                       </div>
                     </div>
                   ))}
