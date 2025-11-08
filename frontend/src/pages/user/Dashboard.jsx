@@ -8,7 +8,7 @@ import gamesCardImage from '../../assets/images/games.png';
 import cmxLogoImage from '../../assets/images/CMX-logo.png';
 import profileCardImage from '../../assets/images/profile.jpg';
 import walletCardImage from '../../assets/images/wallet.jpg';
-import balanceCardImage from '../../assets/images/balance.jpg';
+import balanceCardVideo from '../../assets/balance-vid.mp4';
 
 function Dashboard() {
   const { user, logout } = useAuth();
@@ -158,17 +158,6 @@ function Dashboard() {
     return () => document.head.removeChild(style);
   }, []);
 
-  const balanceCardStyle = {
-    ...styles.balanceCard,
-    backgroundImage: `linear-gradient(180deg, rgba(7, 11, 28, 0.55), rgba(7, 11, 28, 0.92)), url(${balanceCardImage})`,
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundColor: '#050a1e',
-    borderColor: 'rgba(255, 255, 255, 0.18)',
-    boxShadow: '0 28px 48px rgba(6, 10, 28, 0.45)'
-  };
-
   const imageActionCardStyle = (action) =>
     action.iconImage
       ? {
@@ -231,8 +220,17 @@ function Dashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        style={balanceCardStyle}
+        className="balance-video-card"
+        style={styles.balanceCard}
       >
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="balance-video"
+          src={balanceCardVideo}
+        />
         <div style={styles.balanceCardOverlay} />
         <div style={styles.balanceContent}>
           <h3 style={styles.balanceLabel}>Total Balance</h3>
@@ -485,6 +483,14 @@ const styles = {
     borderRadius: '26px',
     border: '1px solid rgba(255, 255, 255, 0.18)',
     transition: 'transform 0.4s ease, box-shadow 0.4s ease'
+  },
+  balanceVideo: {
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    zIndex: 0
   },
   balanceCardOverlay: {
     position: 'absolute',
