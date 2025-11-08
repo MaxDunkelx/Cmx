@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import CMXLogo from '../components/CMXLogo';
 import AnimatedHero3D from '../components/AnimatedHero3D';
 import EnhancedReviewsCarousel from '../components/EnhancedReviewsCarousel';
+import backgroundVideo from '../assets/background-vidio.mp4';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -647,34 +648,46 @@ function Login() {
             transition={{ duration: 0.7, delay: 0.2 }}
             style={{ marginBottom: '2.5rem' }}
           >
-            <div className="liquid-glass" style={styles.missionHeader}>
-              <div style={styles.missionBadge}>
-                <span style={styles.badgeGlow}>✨</span>
-                <span style={styles.badgeTitle}>CMX Platform</span>
-                <span style={styles.badgeGlow}>✨</span>
-              </div>
-              
-              <h2 style={styles.missionTitle}>
-                <span style={styles.highlightGold}>Earn.</span>{' '}
-                <span style={styles.highlightPurple}>Play.</span>{' '}
-                <span style={styles.highlightGreen}>Win.</span>
-              </h2>
-              
-              <div style={styles.missionContent}>
-                <p style={styles.missionText}>
-                  We're <strong style={styles.strongText}>three friends</strong> building a simple cycle: complete sponsored tasks, videos, and surveys to earn CMX tokens, which are valued like real currency at <strong style={styles.strongText}>10,000 CMX = $1 USD</strong>. Jump into the gaming hub to play and multiply your balance, then cash out or route your earnings to a cause you believe in.
-                </p>
+            <div style={styles.missionHeader}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={styles.missionHeaderVideo}
+              >
+                <source src={backgroundVideo} type="video/mp4" />
+              </video>
+              <div style={styles.missionHeaderOverlay} />
+              <div style={styles.missionHeaderContent}>
+                <div style={styles.missionBadge}>
+                  <span style={styles.badgeGlow}>✨</span>
+                  <span style={styles.badgeTitle}>CMX Platform</span>
+                  <span style={styles.badgeGlow}>✨</span>
+                </div>
                 
-                <div style={styles.valueProps}>
-                  {valueHighlights.map(({ icon, iconSize, title, body }, idx) => (
-                    <div key={idx} style={styles.valueProp}>
-                      <div style={{ ...styles.valuePropIcon, fontSize: iconSize || styles.valuePropIcon.fontSize }}>{icon}</div>
-                      <div>
-                        <div style={styles.valuePropTitle}>{title}</div>
-                        <div style={styles.valuePropText}>{body}</div>
+                <h2 style={styles.missionTitle}>
+                  <span style={styles.highlightGold}>Earn.</span>{' '}
+                  <span style={styles.highlightPurple}>Play.</span>{' '}
+                  <span style={styles.highlightGreen}>Win.</span>
+                </h2>
+                
+                <div style={styles.missionContent}>
+                  <p style={styles.missionText}>
+                    We're <strong style={styles.strongText}>three friends</strong> building a simple cycle: complete sponsored tasks, videos, and surveys to earn CMX tokens, which are valued like real currency at <strong style={styles.strongText}>10,000 CMX = $1 USD</strong>. Jump into the gaming hub to play and multiply your balance, then cash out or route your earnings to a cause you believe in.
+                  </p>
+                  
+                  <div style={styles.valueProps}>
+                    {valueHighlights.map(({ icon, iconSize, title, body }, idx) => (
+                      <div key={idx} style={styles.valueProp}>
+                        <div style={{ ...styles.valuePropIcon, fontSize: iconSize || styles.valuePropIcon.fontSize }}>{icon}</div>
+                        <div>
+                          <div style={styles.valuePropTitle}>{title}</div>
+                          <div style={styles.valuePropText}>{body}</div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1751,11 +1764,37 @@ const styles = {
   missionHeader: {
     padding: '3rem',
     textAlign: 'center',
-    background: 'rgba(10, 13, 22, 0.85)',
     border: '1px solid rgba(148, 163, 184, 0.22)',
     boxShadow: '0 24px 60px rgba(2, 6, 23, 0.55)',
     borderRadius: '28px',
-    backdropFilter: 'blur(28px)'
+    position: 'relative',
+    overflow: 'hidden',
+    background: 'transparent'
+  },
+  missionHeaderVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    zIndex: 0,
+    filter: 'brightness(0.5)'
+  },
+  missionHeaderOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(180deg, rgba(5, 10, 20, 0.7) 0%, rgba(2, 6, 18, 0.85) 100%)',
+    zIndex: 1,
+    borderRadius: 'inherit',
+    backdropFilter: 'blur(4px)'
+  },
+  missionHeaderContent: {
+    position: 'relative',
+    zIndex: 2
   },
   missionBadge: {
     display: 'inline-flex',
