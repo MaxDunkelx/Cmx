@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import CMXLogo from '../components/CMXLogo';
@@ -15,6 +15,7 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const homeVideoRefs = useRef([]);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -79,6 +80,22 @@ export default function Home() {
     `;
     document.head.appendChild(style);
     return () => document.head.removeChild(style);
+  }, []);
+
+  useEffect(() => {
+    const videos = homeVideoRefs.current.filter(Boolean);
+    videos.forEach((video) => {
+      try {
+        video.muted = true;
+        video.volume = 0;
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      } catch (err) {
+        console.warn('Home video autoplay error:', err);
+      }
+    });
   }, []);
 
   const handleSubmit = async (e) => {
@@ -328,14 +345,18 @@ export default function Home() {
             loop
             muted
             playsInline
+            preload="auto"
             src={featureVideo}
+            ref={(node) => {
+              if (node) homeVideoRefs.current[0] = node;
+            }}
             style={{
               position: 'absolute',
               inset: 0,
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              opacity: 0.38
+              opacity: 0.85
             }}
           />
           <div
@@ -582,7 +603,11 @@ export default function Home() {
               loop
               muted
               playsInline
+              preload="auto"
               src={featureVideo}
+            ref={(node) => {
+              if (node) homeVideoRefs.current[1] = node;
+            }}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.38 }}
             />
             <div
@@ -592,8 +617,8 @@ export default function Home() {
                 zIndex: 1,
                 padding: '3rem',
                 textAlign: 'center',
-                background: 'linear-gradient(180deg, rgba(10, 13, 22, 0.52), rgba(5, 10, 24, 0.82))',
-                backdropFilter: 'blur(22px)'
+                background: 'linear-gradient(180deg, rgba(8, 12, 26, 0.1), rgba(5, 9, 20, 0.24))',
+                backdropFilter: 'blur(8px)'
               }}
             >
               <div
@@ -646,8 +671,8 @@ export default function Home() {
                     <div
                       key={idx}
                       style={{
-                        background: 'rgba(11, 16, 26, 0.58)',
-                        border: '1px solid rgba(71, 85, 105, 0.35)',
+                        background: 'rgba(11, 16, 26, 0.22)',
+                        border: '1px solid rgba(71, 85, 105, 0.24)',
                         borderRadius: '16px',
                         padding: '1.75rem',
                         display: 'flex',

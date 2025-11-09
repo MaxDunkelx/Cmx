@@ -8,7 +8,12 @@ import gamesCardImage from '../../assets/images/games.png';
 import cmxLogoImage from '../../assets/images/CMX-logo.png';
 import profileCardImage from '../../assets/images/profile.jpg';
 import walletCardImage from '../../assets/images/wallet.jpg';
-import balanceCardVideo from '../../assets/balance-vid.mp4';
+import balanceCardImage from '../../assets/images/balance.jpg';
+import historyImage from '../../assets/images/history.jpg';
+import tierLevelImage from '../../assets/images/tier-level.jpg';
+import gamesPlayedImage from '../../assets/images/games-played.jpg';
+import totalWonImage from '../../assets/images/total-won.jpg';
+import tasksImage from '../../assets/images/tasks.jpg';
 
 function Dashboard() {
   const { user, logout } = useAuth();
@@ -220,17 +225,8 @@ function Dashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="balance-video-card"
         style={styles.balanceCard}
       >
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="balance-video"
-          src={balanceCardVideo}
-        />
         <div style={styles.balanceCardOverlay} />
         <div style={styles.balanceContent}>
           <h3 style={styles.balanceLabel}>Total Balance</h3>
@@ -269,7 +265,7 @@ function Dashboard() {
             label: 'Earn CMX',
             path: '/tasks',
             color: '#FFD700',
-            subtitle: 'Complete quests, offers, and missions to grow your CMX balance fast.',
+            subtitle: 'Complete quests, offers, and missions to grow your CMX balance.',
             ctaLabel: 'Start Earning →'
           },
           {
@@ -310,7 +306,7 @@ function Dashboard() {
                         {action.ctaLabel}
                       </span>
                     )}
-                  </div>
+                </div>
                 ) : (
                   <>
                     <div style={{ ...styles.actionIcon, color: action.color }}>{action.icon}</div>
@@ -333,10 +329,10 @@ function Dashboard() {
           style={styles.statsSection}
         >
           {[
-            { label: 'Tier Level', value: `${user?.tier || 1}/5`, icon: '👑', color: '#FFD700' },
-            { label: 'Games Played', value: stats.gamesPlayed, icon: '🎮', color: '#667eea' },
-            { label: 'Total Won', value: stats.gamesWon, icon: '🏆', color: '#764ba2' },
-            { label: 'Tasks Completed', value: stats.tasksCompleted, icon: '✅', color: '#5ac8fa' }
+            { label: 'Tier Level', value: `${user?.tier || 1}/5`, icon: '👑', color: '#FFD700', background: tierLevelImage },
+            { label: 'Games Played', value: stats.gamesPlayed, icon: '🎮', color: '#667eea', background: gamesPlayedImage },
+            { label: 'Total Won', value: stats.gamesWon, icon: '🏆', color: '#764ba2', background: totalWonImage },
+            { label: 'Tasks Completed', value: stats.tasksCompleted, icon: '✅', color: '#5ac8fa', background: tasksImage }
           ].map((stat, idx) => (
             <motion.div
               key={stat.label}
@@ -347,10 +343,14 @@ function Dashboard() {
               className="liquid-glass-dash"
               style={styles.statCard}
             >
-              <div style={styles.statIcon}>{stat.icon}</div>
-              <div>
-                <div style={styles.statLabel}>{stat.label}</div>
-                <div style={{...styles.statValue, color: stat.color}}>{stat.value}</div>
+              <div style={{ ...styles.statCardBackground, backgroundImage: `url(${stat.background})` }} />
+              <div style={styles.statCardOverlay} />
+              <div style={styles.statCardContent}>
+                <div style={styles.statIcon}>{stat.icon}</div>
+                <div>
+                  <div style={styles.statLabel}>{stat.label}</div>
+                  <div style={{...styles.statValue, color: stat.color}}>{stat.value}</div>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -364,49 +364,53 @@ function Dashboard() {
           className="liquid-glass-dash"
           style={styles.activityCard}
         >
-          <h3 className="text-glow" style={styles.activityTitle}>Activity History</h3>
-          <div className="activity-scroll" style={styles.activityScroll}>
-            {transactions.length === 0 ? (
-              <div style={styles.emptyState}>
-                <div style={styles.emptyIcon}>📋</div>
-                <p style={styles.emptyText}>No activity yet</p>
-                <p style={styles.emptySubtext}>Start playing games or completing tasks to see your history here</p>
-              </div>
-            ) : (
-              transactions.map((transaction, idx) => (
-                <motion.div
-                  key={transaction._id || idx}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.1 + idx * 0.05 }}
-                  style={styles.activityItem}
-                >
-                  <div style={styles.activityIconContainer}>
-                    <div style={styles.activityIcon}>
-                      {getActivityIcon(transaction.type || transaction.description || '')}
+          <div style={styles.activityCardBackground} />
+          <div style={styles.activityCardOverlay} />
+          <div style={styles.activityCardContent}>
+            <h3 className="text-glow" style={styles.activityTitle}>Activity History</h3>
+            <div className="activity-scroll" style={styles.activityScroll}>
+              {transactions.length === 0 ? (
+                <div style={styles.emptyState}>
+                  <div style={styles.emptyIcon}>📋</div>
+                  <p style={styles.emptyText}>No activity yet</p>
+                  <p style={styles.emptySubtext}>Start playing games or completing tasks to see your history here</p>
+                </div>
+              ) : (
+                transactions.map((transaction, idx) => (
+                  <motion.div
+                    key={transaction._id || idx}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.1 + idx * 0.05 }}
+                    style={styles.activityItem}
+                  >
+                    <div style={styles.activityIconContainer}>
+                      <div style={styles.activityIcon}>
+                        {getActivityIcon(transaction.type || transaction.description || '')}
+                      </div>
                     </div>
-                  </div>
-                  <div style={styles.activityContent}>
-                    <div style={styles.activityDescription}>
-                      {transaction.description || transaction.type || 'Activity'}
-                    </div>
-                    <div style={styles.activityMeta}>
-                      <span style={styles.activityDate}>
-                        {formatDate(transaction.timestamp || transaction.createdAt)}
-                      </span>
-                      {transaction.amount !== undefined && (
-                        <span style={{
-                          ...styles.activityAmount,
-                          color: transaction.amount >= 0 ? '#4ade80' : '#ff6b6b'
-                        }}>
-                          {transaction.amount >= 0 ? '+' : ''}{transaction.amount.toLocaleString()} CMX
+                    <div style={styles.activityContent}>
+                      <div style={styles.activityDescription}>
+                        {transaction.description || transaction.type || 'Activity'}
+                      </div>
+                      <div style={styles.activityMeta}>
+                        <span style={styles.activityDate}>
+                          {formatDate(transaction.timestamp || transaction.createdAt)}
                         </span>
-                      )}
+                        {transaction.amount !== undefined && (
+                          <span style={{
+                            ...styles.activityAmount,
+                            color: transaction.amount >= 0 ? '#4ade80' : '#ff6b6b'
+                          }}>
+                            {transaction.amount >= 0 ? '+' : ''}{transaction.amount.toLocaleString()} CMX
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))
-            )}
+                  </motion.div>
+                ))
+              )}
+            </div>
           </div>
         </motion.div>
       </div>
@@ -482,15 +486,12 @@ const styles = {
     padding: '3rem',
     borderRadius: '26px',
     border: '1px solid rgba(255, 255, 255, 0.18)',
-    transition: 'transform 0.4s ease, box-shadow 0.4s ease'
-  },
-  balanceVideo: {
-    position: 'absolute',
-    inset: 0,
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    zIndex: 0
+    transition: 'transform 0.4s ease, box-shadow 0.4s ease',
+    backgroundImage: `linear-gradient(180deg, rgba(7, 11, 28, 0.55), rgba(7, 11, 28, 0.9)), url(${balanceCardImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    boxShadow: '0 28px 48px rgba(6, 10, 28, 0.45)'
   },
   balanceCardOverlay: {
     position: 'absolute',
@@ -575,25 +576,29 @@ const styles = {
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
     color: '#f8fafc',
-    marginBottom: '0.5rem'
+    textShadow: '0 0 12px rgba(59, 130, 246, 0.7)'
   },
   imageActionSubtitle: {
     margin: 0,
     fontSize: '0.95rem',
-    color: 'rgba(226, 232, 240, 0.78)',
-    maxWidth: '16rem',
-    lineHeight: 1.45,
-    minHeight: '2.9em'
+    color: 'rgba(226, 232, 240, 0.82)',
+    maxWidth: '18rem',
+    lineHeight: 1.55,
+    minHeight: '3.1em',
+    textShadow: '0 0 10px rgba(56, 189, 248, 0.45)'
   },
   imageActionButton: {
     alignSelf: 'flex-start',
-    padding: '0.65rem 1.5rem',
-    borderRadius: '12px',
-    border: '1px solid rgba(148, 163, 184, 0.45)',
-    color: '#0b1220',
-    background: 'rgba(226, 232, 240, 0.92)',
+    padding: '0.75rem 1.75rem',
+    borderRadius: '14px',
+    border: '1px solid rgba(59, 130, 246, 0.5)',
+    color: '#cbd5ff',
+    background: 'rgba(12, 20, 35, 0.92)',
     fontWeight: '700',
-    letterSpacing: '0.04em'
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
+    textShadow: '0 0 14px rgba(59, 130, 246, 0.65)',
+    boxShadow: '0 0 28px rgba(59, 130, 246, 0.35)'
   },
   actionIcon: {
     fontSize: '3rem',
@@ -618,15 +623,42 @@ const styles = {
     gap: '1.5rem'
   },
   statCard: {
+    padding: 0,
+    position: 'relative',
+    overflow: 'hidden',
+    minHeight: '160px',
+    display: 'flex'
+  },
+  statCardBackground: {
+    position: 'absolute',
+    inset: 0,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    filter: 'brightness(0.55)',
+    transform: 'scale(1.05)',
+    zIndex: 0
+  },
+  statCardOverlay: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(135deg, rgba(6, 10, 28, 0.6), rgba(4, 7, 20, 0.85))',
+    zIndex: 1
+  },
+  statCardContent: {
+    position: 'relative',
+    zIndex: 2,
     padding: '1.75rem',
     display: 'flex',
     gap: '1.25rem',
     alignItems: 'center',
-    minHeight: '100px'
+    width: '100%'
   },
   statIcon: {
-    fontSize: '2.5rem',
-    flexShrink: 0
+    fontSize: '2.6rem',
+    flexShrink: 0,
+    color: '#FFD700',
+    textShadow: '0 0 15px rgba(255, 215, 0, 0.35)'
   },
   statLabel: {
     fontSize: '0.95rem',
@@ -642,7 +674,35 @@ const styles = {
   activityCard: {
     minHeight: '500px',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    position: 'relative',
+    overflow: 'hidden',
+    padding: 0
+  },
+  activityCardBackground: {
+    position: 'absolute',
+    inset: 0,
+    backgroundImage: `url(${historyImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    filter: 'brightness(0.45)',
+    transform: 'scale(1.05)',
+    zIndex: 0
+  },
+  activityCardOverlay: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(180deg, rgba(5, 10, 22, 0.6) 0%, rgba(2, 6, 18, 0.85) 100%)',
+    zIndex: 1
+  },
+  activityCardContent: {
+    position: 'relative',
+    zIndex: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '2.5rem',
+    height: '100%'
   },
   activityTitle: {
     fontSize: '1.5rem',

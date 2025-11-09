@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import CMXLogo from '../components/CMXLogo';
 import AnimatedHero3D from '../components/AnimatedHero3D';
-import EnhancedReviewsCarousel from '../components/EnhancedReviewsCarousel';
+import signupVideo from '../assets/login-vid.mp4';
+import yourWorkVideo from '../assets/your-work.mp4';
+import cmxNewAgeVideo from '../assets/cmx-new-age.mp4';
 import backgroundVideo from '../assets/background-vidio.mp4';
 
 function Login() {
@@ -12,6 +14,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const videoRefs = useRef([]);
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('earn');
@@ -318,6 +321,22 @@ function Login() {
     `;
     document.head.appendChild(style);
     return () => document.head.removeChild(style);
+  }, []);
+
+  useEffect(() => {
+    const videos = videoRefs.current.filter(Boolean);
+    videos.forEach((video) => {
+      try {
+        video.muted = true;
+        video.volume = 0;
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      } catch (err) {
+        console.warn('Video autoplay error:', err);
+      }
+    });
   }, []);
 
   const handleSubmit = async (e) => {
@@ -638,9 +657,6 @@ function Login() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          {/* 3D Animated Hero with Particle Streams */}
-          <AnimatedHero3D />
-
           {/* CMX Mission Statement - What We Are */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -654,6 +670,10 @@ function Login() {
                 loop
                 muted
                 playsInline
+                preload="auto"
+                ref={(node) => {
+                  if (node) videoRefs.current[0] = node;
+                }}
                 style={styles.missionHeaderVideo}
               >
                 <source src={backgroundVideo} type="video/mp4" />
@@ -693,36 +713,45 @@ function Login() {
             </div>
           </motion.div>
 
-          {/* Enhanced Reviews Carousel - Compact Top Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            style={{ marginBottom: '2rem', transform: 'scale(0.85)', transformOrigin: 'top center' }}
-          >
-            <EnhancedReviewsCarousel />
-          </motion.div>
+          {/* 3D Animated Hero with Particle Streams */}
+          <AnimatedHero3D />
 
           <div style={styles.zigzagLayout}>
             {/* Left Side - Content Sections */}
             <div style={styles.leftSide}>
               {/* Key Benefits */}
-              <div className="liquid-glass" style={styles.benefitsCard}>
-                <h3 style={styles.benefitsTitle}>Why Choose CMX?</h3>
-                <div style={styles.benefitsGrid}>
-                  {benefits.map((benefit, idx) => (
-                    <div key={idx} className="benefit-item liquid-glass" style={styles.benefitItem}>
-                      <div style={styles.benefitIcon}>
-                        <benefit.Icon />
+              <div style={styles.benefitsCardWrapper}>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  ref={(node) => {
+                    if (node) videoRefs.current[1] = node;
+                  }}
+                  style={styles.benefitsVideo}
+                >
+                  <source src={signupVideo} type="video/mp4" />
+                </video>
+                <div style={styles.benefitsOverlay}></div>
+                <div style={styles.benefitsCard}>
+                  <h3 style={styles.benefitsTitle}>Why Choose CMX?</h3>
+                  <div style={styles.benefitsGrid}>
+                    {benefits.map((benefit, idx) => (
+                      <div key={idx} style={styles.benefitItem}>
+                        <div style={styles.benefitIcon}>
+                          <benefit.Icon />
+                        </div>
+                        <div>
+                          <div style={styles.benefitTitle}>{benefit.title}</div>
+                          <div style={styles.benefitDesc}>{benefit.desc}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div style={styles.benefitTitle}>{benefit.title}</div>
-                        <div style={styles.benefitDesc}>{benefit.desc}</div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
 
               {/* Tabs */}
               <div style={styles.tabs}>
@@ -892,145 +921,196 @@ function Login() {
 
             {/* Right Side - Login Form */}
             <div style={styles.rightSide}>
-              <div className="liquid-glass" style={styles.formCard}>
-                <h2 className="text-glow" style={styles.formTitle}>Start Earning Today</h2>
-                <p style={styles.formSubtitle}>Join thousands earning real money</p>
+              <div style={styles.formCardWrapper}>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  ref={(node) => {
+                    if (node) videoRefs.current[2] = node;
+                  }}
+                  style={styles.formCardVideo}
+                >
+                  <source src={yourWorkVideo} type="video/mp4" />
+                </video>
+                <div style={styles.formCard}>
+                  <h2 className="text-glow" style={styles.formTitle}>Start Earning Today</h2>
+                  <p style={styles.formSubtitle}>Join thousands earning real money</p>
 
-                <AnimatePresence>
-                  {success && (
-                    <motion.div
-                      style={styles.success}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                    >
-                      <span style={styles.successIcon}>✓</span>
-                      {success}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <AnimatePresence>
-                  {error && (
-                    <motion.div
-                      style={styles.error}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 10 }}
-                    >
-                      <span style={styles.errorIcon}>⚠</span>
-                      {error}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-            
-            <form onSubmit={handleSubmit} style={styles.form}>
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>
-                      <IconMail style={{...styles.inputIcon, display: 'inline-block', verticalAlign: 'middle', marginRight: '0.5rem'}} />
-                      Email Address
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email"
-                  required
-                  style={styles.input}
-                      disabled={loading}
-                />
-              </div>
-
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>
-                      <IconKey style={{...styles.inputIcon, display: 'inline-block', verticalAlign: 'middle', marginRight: '0.5rem'}} />
-                      Password
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter your password"
-                  required
-                  style={styles.input}
-                      disabled={loading}
-                />
-              </div>
-
-                  <motion.button
-                type="submit" 
-                disabled={loading}
-                    style={{
-                      ...styles.submitButton,
-                      ...(loading && styles.submitButtonLoading)
-                    }}
-                    whileHover={!loading ? { scale: 1.02, y: -1 } : {}}
-                    whileTap={!loading ? { scale: 0.98 } : {}}
-                  >
-                    {loading ? (
-                      <>
-                        <span className="spinner"></span>
-                        <span>Signing in...</span>
-                      </>
-                    ) : (
-                      <span>Sign In to Your Account</span>
+                  <AnimatePresence>
+                    {success && (
+                      <motion.div
+                        style={styles.success}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                      >
+                        <span style={styles.successIcon}>✓</span>
+                        {success}
+                      </motion.div>
                     )}
-                  </motion.button>
-            </form>
+                  </AnimatePresence>
 
-                <div style={styles.divider}>
-                  <div style={styles.dividerLine}></div>
-                  <span style={styles.dividerText}>Quick Access</span>
-                  <div style={styles.dividerLine}></div>
+                  <AnimatePresence>
+                    {error && (
+                      <motion.div
+                        style={styles.error}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 10 }}
+                      >
+                        <span style={styles.errorIcon}>⚠</span>
+                        {error}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+              
+              <form onSubmit={handleSubmit} style={styles.form}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>
+                        <IconMail style={{...styles.inputIcon, display: 'inline-block', verticalAlign: 'middle', marginRight: '0.5rem'}} />
+                        Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your email"
+                    required
+                    style={styles.input}
+                        disabled={loading}
+                  />
                 </div>
 
-            <div style={styles.testButtons}>
-                  <motion.button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      if (!loading) handleTestLogin('user');
-                    }}
-                    className="liquid-glass"
-                    style={styles.testButton}
-                    disabled={loading}
-                    whileHover={!loading ? { scale: 1.05 } : {}}
-                    whileTap={!loading ? { scale: 0.95 } : {}}
-                  >
-                    <div style={styles.testTitle}>Player</div>
-                    <div style={styles.testSubtitle}>Try it</div>
-                  </motion.button>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>
+                        <IconKey style={{...styles.inputIcon, display: 'inline-block', verticalAlign: 'middle', marginRight: '0.5rem'}} />
+                        Password
+                  </label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                    required
+                    style={styles.input}
+                        disabled={loading}
+                  />
+                </div>
 
-                  <motion.button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      if (!loading) handleTestLogin('admin');
-                    }}
-                    className="liquid-glass"
-                    style={styles.testButton}
-                    disabled={loading}
-                    whileHover={!loading ? { scale: 1.05 } : {}}
-                    whileTap={!loading ? { scale: 0.95 } : {}}
-                  >
-                    <div style={styles.testTitle}>Admin</div>
-                    <div style={styles.testSubtitle}>Panel</div>
-                  </motion.button>
-            </div>
+                    <motion.button
+                  type="submit" 
+                  disabled={loading}
+                      style={{
+                        ...styles.submitButton,
+                        ...(loading && styles.submitButtonLoading)
+                      }}
+                      whileHover={!loading ? { scale: 1.02, y: -1 } : {}}
+                      whileTap={!loading ? { scale: 0.98 } : {}}
+                    >
+                      {loading ? (
+                        <>
+                          <span className="spinner"></span>
+                          <span>Signing in...</span>
+                        </>
+                      ) : (
+                        <span>Sign In to Your Account</span>
+                      )}
+                    </motion.button>
+              </form>
 
-            <p style={styles.signupLink}>
-                  New here? <Link to="/register" style={styles.link}>Create account →</Link>
-            </p>
-          </div>
+                  <div style={styles.divider}>
+                    <div style={styles.dividerLine}></div>
+                    <span style={styles.dividerText}>Quick Access</span>
+                    <div style={styles.dividerLine}></div>
+                  </div>
+
+              <div style={styles.testButtons}>
+                    <motion.button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (!loading) handleTestLogin('user');
+                      }}
+                      className="liquid-glass"
+                      style={styles.testButton}
+                      disabled={loading}
+                      whileHover={!loading ? { scale: 1.05 } : {}}
+                      whileTap={!loading ? { scale: 0.95 } : {}}
+                    >
+                      <div style={styles.testTitle}>Player</div>
+                      <div style={styles.testSubtitle}>Try it</div>
+                    </motion.button>
+
+                    <motion.button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (!loading) handleTestLogin('admin');
+                      }}
+                      className="liquid-glass"
+                      style={styles.testButton}
+                      disabled={loading}
+                      whileHover={!loading ? { scale: 1.05 } : {}}
+                      whileTap={!loading ? { scale: 0.95 } : {}}
+                    >
+                      <div style={styles.testTitle}>Admin</div>
+                      <div style={styles.testSubtitle}>Panel</div>
+                    </motion.button>
+              </div>
+
+              <p style={styles.signupLink}>
+                    New here? <Link to="/register" style={styles.link}>Create account →</Link>
+              </p>
+                </div>
+              </div>
 
               {/* Key Differentiator - Zigzag placement */}
-              <div className="liquid-glass" style={styles.diffBox}>
-                <div>
+              <div style={styles.diffBoxWrapper}>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  ref={(node) => {
+                    if (node) videoRefs.current[3] = node;
+                  }}
+                  style={styles.diffVideo}
+                >
+                  <source src={cmxNewAgeVideo} type="video/mp4" />
+                </video>
+                <div style={styles.diffOverlay}></div>
+                <div style={styles.diffBox}>
                   <strong className="text-glow" style={styles.diffTitle}>What Makes CMX Different?</strong>
-                  <p style={styles.diffText}>
-                    We <strong style={{color: '#FFD700', fontWeight: '700'}}>appreciate your business</strong>. Every ad you watch, every offer you complete—we split the revenue with you based on your loyalty. No other platform does this. Plus, you can donate to causes while earning.
+                  <div style={styles.diffGrid}>
+                    <div style={styles.diffItem}>
+                      <div style={styles.diffLabel}>Revenue Sharing</div>
+                      <div style={styles.diffValue}>70% back to players</div>
+                      <div style={styles.diffCaption}>Programmatic split, settled daily on-chain</div>
+                    </div>
+                    <div style={styles.diffItem}>
+                      <div style={styles.diffLabel}>Transparency Stack</div>
+                      <div style={styles.diffValue}>Real-time ledgers</div>
+                      <div style={styles.diffCaption}>Live RTP tables & published RNG hashes every hour</div>
+                    </div>
+                    <div style={styles.diffItem}>
+                      <div style={styles.diffLabel}>Payout Velocity</div>
+                      <div style={styles.diffValue}>5m 02s avg</div>
+                      <div style={styles.diffCaption}>24/7 compliance, instant USDC bridge</div>
+                    </div>
+                    <div style={styles.diffItem}>
+                      <div style={styles.diffLabel}>Impact Routing</div>
+                      <div style={styles.diffValue}>$842K+ donated</div>
+                      <div style={styles.diffCaption}>Direct-to-charity toggles per withdrawal</div>
+                    </div>
+                  </div>
+                  <p style={styles.diffNarrative}>
+                    We <strong style={{color: '#FFD700', fontWeight: '700'}}>treat attention as equity</strong>. Every impression, task, or game you complete feeds a shared treasury that’s audited and distributed back to the community. You see the math, verify the odds, and decide whether to cash out or fund causes. That’s how a gaming platform earns trust.
                   </p>
-        </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1338,8 +1418,35 @@ const styles = {
     margin: 0,
     fontWeight: '400'
   },
+  benefitsCardWrapper: {
+    position: 'relative',
+    borderRadius: '28px',
+    overflow: 'hidden',
+    marginBottom: '0',
+    border: '1px solid rgba(148, 163, 184, 0.22)',
+    boxShadow: '0 30px 60px rgba(2, 6, 23, 0.55)'
+  },
+  benefitsVideo: {
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    opacity: 0.65
+  },
+  benefitsOverlay: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(180deg, rgba(7, 10, 20, 0.3) 0%, rgba(2, 6, 18, 0.8) 100%)'
+  },
   benefitsCard: {
-    marginBottom: '0'
+    position: 'relative',
+    zIndex: 1,
+    padding: '2.5rem',
+    borderRadius: '28px',
+    background: 'rgba(6, 10, 22, 0.45)',
+    border: '1px solid rgba(148, 163, 184, 0.2)',
+    backdropFilter: 'none'
   },
   benefitsTitle: {
     fontSize: '1.5rem',
@@ -1359,7 +1466,11 @@ const styles = {
     gap: '1rem',
     alignItems: 'flex-start',
     padding: '1.25rem',
-    transition: 'all 0.3s ease'
+    transition: 'all 0.3s ease',
+    background: 'rgba(15, 23, 42, 0.55)',
+    border: '1px solid rgba(30, 41, 59, 0.6)',
+    borderRadius: '16px',
+    boxShadow: '0 18px 30px rgba(2, 6, 23, 0.35)'
   },
   benefitIcon: {
     color: '#FFD700',
@@ -1566,30 +1677,107 @@ const styles = {
     marginBottom: '2rem',
     textAlign: 'center'
   },
+  diffBoxWrapper: {
+    position: 'relative',
+    marginTop: '1.5rem',
+    borderRadius: '30px',
+    overflow: 'hidden',
+    border: '1px solid rgba(148, 163, 184, 0.18)',
+    boxShadow: '0 32px 60px rgba(2, 6, 18, 0.6)',
+    minHeight: '420px'
+  },
+  diffVideo: {
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover'
+  },
+  diffOverlay: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(180deg, rgba(2, 6, 18, 0.35) 0%, rgba(2, 6, 18, 0.8) 90%)',
+    zIndex: 1
+  },
   diffBox: {
-    marginTop: '1rem'
+    position: 'relative',
+    zIndex: 2,
+    padding: '2.75rem 3rem',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1.75rem'
   },
   diffTitle: {
-    fontSize: '1.3rem',
-    color: '#FFD700',
+    fontSize: '1.65rem',
+    color: '#f8fafc',
     display: 'block',
-    marginBottom: '0.75rem',
-    fontWeight: '700',
-    letterSpacing: '-0.3px'
+    fontWeight: '800',
+    letterSpacing: '0.2px'
   },
-  diffText: {
+  diffGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gap: '1.5rem'
+  },
+  diffItem: {
+    background: 'rgba(15, 23, 42, 0.7)',
+    border: '1px solid rgba(51, 65, 85, 0.7)',
+    borderRadius: '20px',
+    padding: '1.5rem',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.65rem',
+    boxShadow: '0 18px 36px rgba(2, 6, 18, 0.45)'
+  },
+  diffLabel: {
+    fontSize: '0.85rem',
+    letterSpacing: '0.3px',
+    textTransform: 'uppercase',
+    color: 'rgba(148, 163, 184, 0.85)'
+  },
+  diffValue: {
+    fontSize: '1.3rem',
+    fontWeight: '800',
+    color: '#f8fafc',
+    letterSpacing: '-0.2px'
+  },
+  diffCaption: {
+    fontSize: '0.85rem',
+    color: 'rgba(226, 232, 240, 0.75)',
+    lineHeight: '1.6'
+  },
+  diffNarrative: {
     fontSize: '1rem',
-    color: 'rgba(255, 255, 255, 0.85)',
-    lineHeight: '1.7',
+    color: 'rgba(226, 232, 240, 0.85)',
+    lineHeight: '1.75',
     margin: 0,
-    fontWeight: '400'
+    fontWeight: '400',
+    maxWidth: '900px'
   },
+  formCardWrapper: {
+    position: 'relative',
+    width: '100%',
+    borderRadius: '28px',
+    overflow: 'hidden',
+    boxShadow: '0 30px 60px rgba(2, 6, 23, 0.55)',
+    border: '1px solid rgba(148, 163, 184, 0.22)',
+    minHeight: '100%'
+  },
+  formCardVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    opacity: 0.4
+  },
+  formCardOverlay: undefined,
   formCard: {
     width: '100%',
     padding: '3rem',
-    position: 'sticky',
-    top: '2rem',
-    zIndex: 10,
+    position: 'relative',
+    zIndex: 2,
     pointerEvents: 'auto'
   },
   formTitle: {
