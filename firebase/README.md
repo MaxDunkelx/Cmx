@@ -13,13 +13,7 @@ This directory contains shared guidance and helper files for migrating the CMX p
 
    ```bash
    # frontend/.env.local
-   VITE_FIREBASE_API_KEY="AIzaSyCGn1moAglk-kRrFwoIz_X3s7j3JFrwD7w"
-   VITE_FIREBASE_AUTH_DOMAIN="cmxx-83b5f.firebaseapp.com"
-   VITE_FIREBASE_PROJECT_ID="cmxx-83b5f"
-   VITE_FIREBASE_STORAGE_BUCKET="cmxx-83b5f.firebasestorage.app"
-   VITE_FIREBASE_MESSAGING_SENDER_ID="699587315355"
-   VITE_FIREBASE_APP_ID="1:699587315355:web:d9a34f197ff9aa9d8ae83e"
-   VITE_FIREBASE_MEASUREMENT_ID="G-SQ1SYH04BD"
+   VITE_FIREBASE_API_KEY="YOUR_API_KEY"
    ```
 
 3. Generate a service account key (JSON) for server-side access and place it somewhere secure. The backend will read it from the path defined by the `FIREBASE_SERVICE_ACCOUNT_PATH` environment variable. When running locally you can export it in your shell or place it in `backend/.env`:
