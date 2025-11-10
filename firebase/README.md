@@ -14,6 +14,13 @@ This directory contains shared guidance and helper files for migrating the CMX p
    ```bash
    # frontend/.env.local
    VITE_FIREBASE_API_KEY="YOUR_API_KEY"
+   VITE_FIREBASE_AUTH_DOMAIN="YOUR_AUTH_DOMAIN"
+   VITE_FIREBASE_PROJECT_ID="YOUR_PROJECT_ID"
+   VITE_FIREBASE_STORAGE_BUCKET="YOUR_STORAGE_BUCKET"
+   VITE_FIREBASE_MESSAGING_SENDER_ID="YOUR_SENDER_ID"
+   VITE_FIREBASE_APP_ID="YOUR_APP_ID"
+   VITE_FIREBASE_MEASUREMENT_ID="YOUR_MEASUREMENT_ID"
+   VITE_API_BASE_URL="http://localhost:3001"
    ```
 
 3. Generate a service account key (JSON) for server-side access and place it somewhere secure. The backend will read it from the path defined by the `FIREBASE_SERVICE_ACCOUNT_PATH` environment variable. When running locally you can export it in your shell or place it in `backend/.env`:
