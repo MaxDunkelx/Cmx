@@ -4,12 +4,165 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const DB = require('../database/JSONDatabase');
+const { initFirebaseAdmin } = require('./firebaseAdmin');
+const {
+  ensureUserProfile,
+  touchLastLogin,
+  updateUserProfile,
+  getUserByUid,
+  getUserByEmail,
+  getUserTransactions,
+  addTransaction,
+  getUserWithdrawals,
+  addWithdrawal,
+  updateWithdrawal,
+  addGameSession,
+  getUserGameSessions
+} = require('./firestoreService');
+
+let firebaseAdmin = null;
+try {
+  firebaseAdmin = initFirebaseAdmin();
+  console.log('Firebase Admin initialized.');
+} catch (error) {
+  console.warn('Firebase Admin not initialized:', error.message);
+}
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const JWT_SECRET = 'cmx-platform-secret-key-2024';
+
+function formatUserResponse(user) {
+  if (!user) {
+    return null;
+  }
+
+  return {
+    _id: user._id || user.firebaseUid || user.legacyId || null,
+    firebaseUid: user.firebaseUid || user._id || null,
+    email: user.email || null,
+    username: user.username || null,
+    tier: user.tier ?? 1,
+    isAdmin: Boolean(user.isAdmin),
+    isBanned: Boolean(user.isBanned),
+    balance: user.balance ?? 0,
+    totalEarned: user.totalEarned ?? 0,
+    totalWithdrawn: user.totalWithdrawn ?? 0,
+    gamesPlayed: user.gamesPlayed ?? 0,
+    gamesWon: user.gamesWon ?? 0,
+    tasksCompleted: user.tasksCompleted ?? 0,
+    notes: user.notes ?? null,
+    createdAt: user.createdAt || null,
+    updatedAt: user.updatedAt || null,
+    lastLogin: user.lastLogin || null
+  };
+}
+
+
+async function loadUserProfile(req) {
+  if (req.user?.profile) {
+    return req.user.profile;
+  }
+
+  if (req.user?.firebaseUid) {
+    const byUid = await getUserByUid(req.user.firebaseUid);
+    if (byUid) {
+      req.user.profile = byUid;
+      return byUid;
+    }
+  }
+
+  if (req.user?.firebase?.uid) {
+    const byUid = await getUserByUid(req.user.firebase.uid);
+    if (byUid) {
+      req.user.profile = byUid;
+      return byUid;
+    }
+  }
+
+  if (req.user?.email) {
+    const byEmail = await getUserByEmail(req.user.email);
+    if (byEmail) {
+      req.user.profile = byEmail;
+      return byEmail;
+    }
+  }
+
+  return null;
+}
+
+async function updateUserProfileOnRequest(req, updates) {
+  if (!req.user?.profile && !req.user?.firebaseUid) {
+    return null;
+  }
+
+  const uid = req.user?.firebaseUid || req.user?.profile?._id || req.user?.firebase?.uid;
+  if (!uid) {
+    return null;
+  }
+
+  const updated = await updateUserProfile(uid, updates);
+  if (updated) {
+    req.user.profile = updated;
+  }
+  return updated;
+}
+
+async function syncLegacyUserToFirestore(jsonUser) {
+  if (!jsonUser || !jsonUser.firebaseUid) {
+    return null;
+  }
+
+  const updates = {
+    legacyId: jsonUser._id,
+    email: jsonUser.email,
+    username: jsonUser.username,
+    tier: jsonUser.tier,
+    isAdmin: jsonUser.isAdmin,
+    isBanned: jsonUser.isBanned ?? false,
+    balance: jsonUser.balance,
+    totalEarned: jsonUser.totalEarned,
+    totalWithdrawn: jsonUser.totalWithdrawn,
+    gamesPlayed: jsonUser.gamesPlayed,
+    gamesWon: jsonUser.gamesWon,
+    tasksCompleted: jsonUser.tasksCompleted,
+    notes: jsonUser.notes ?? null,
+    lastLogin: jsonUser.lastLogin || new Date().toISOString()
+  };
+
+  const profile = await updateUserProfile(jsonUser.firebaseUid, updates);
+  return profile;
+}
+
+const originalUserCreate = DB.users.create.bind(DB.users);
+DB.users.create = function (userData) {
+  const newUser = originalUserCreate(userData);
+  syncLegacyUserToFirestore(newUser).catch(() => {});
+  return newUser;
+};
+
+const originalUserUpdate = DB.users.update.bind(DB.users);
+DB.users.update = function (id, updates) {
+  const updated = originalUserUpdate(id, updates);
+  syncLegacyUserToFirestore(updated).catch(() => {});
+  return updated;
+};
+
+async function loadOrCreateUserProfileFromToken(decodedToken, fallbackUser) {
+  const firebaseUser = {
+    uid: decodedToken.uid,
+    email: decodedToken.email,
+    displayName: decodedToken.name,
+    isAdmin: decodedToken.isAdmin || decodedToken.admin === true
+  };
+
+  const profile = await ensureUserProfile(firebaseUser, fallbackUser || undefined);
+  return profile;
+}
+
+
 
 // Helper function to generate JWT
 function generateToken(user) {
@@ -21,7 +174,7 @@ function generateToken(user) {
 }
 
 // Middleware to authenticate requests
-function authenticateToken(req, res, next) {
+async function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
@@ -29,54 +182,70 @@ function authenticateToken(req, res, next) {
     return res.status(401).json({ success: false, message: 'No token provided' });
   }
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ success: false, message: 'Invalid token' });
-    }
-    req.user = user;
-    next();
-  });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    return next();
+  } catch (error) {
+    // continue to Firebase verification
+  }
+
+  if (!firebaseAdmin) {
+    return res.status(403).json({ success: false, message: 'Auth service unavailable' });
+  }
+
+  try {
+    const decodedToken = await firebaseAdmin.auth().verifyIdToken(token);
+    const dbUser = decodedToken.email ? DB.users.findByEmail(decodedToken.email) : null;
+
+    req.user = {
+      userId: dbUser ? dbUser._id : decodedToken.uid,
+      email: decodedToken.email,
+      isAdmin: dbUser ? dbUser.isAdmin : Boolean(decodedToken.isAdmin || decodedToken.admin),
+      firebase: decodedToken
+    };
+
+    return next();
+  } catch (error) {
+    return res.status(403).json({ success: false, message: 'Invalid token' });
+  }
 }
 
 // Authentication Routes
-app.post('/auth/login', async (req, res) => {
+app.post('/auth/login', authenticateToken, async (req, res) => {
   try {
-    const { email, password } = req.body;
-    
-    if (!email || !password) {
-      return res.status(400).json({ success: false, message: 'Email and password required' });
+    const authToken = req.headers['authorization']?.split(' ')[1];
+    const emailFromRequest = req.body?.email;
+    const email = req.user?.email || emailFromRequest;
+    const userId = req.user?.userId;
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Email is required' });
     }
 
-    // Find user
-    const user = DB.users.findByEmail(email);
-    
+    let user = null;
+    if (userId) {
+      user = DB.users.findById(userId);
+    }
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      user = DB.users.findByEmail(email);
     }
 
-    // Check password using bcrypt
-    const isPasswordValid = password === "password123" || password === "admin123";
-    
-    if (!isPasswordValid) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    // Generate token
-    const token = generateToken(user);
+    if (!user.firebaseUid && req.user?.firebase?.uid) {
+      DB.users.update(user._id, { firebaseUid: req.user.firebase.uid });
+      user = DB.users.findById(user._id);
+    }
 
     res.json({
       success: true,
       message: 'Login successful',
       data: {
-        token,
-        user: {
-          _id: user._id,
-          email: user.email,
-          username: user.username,
-          tier: user.tier,
-          isAdmin: user.isAdmin,
-          balance: user.balance
-        }
+        token: authToken,
+        user: formatUserResponse(user)
       }
     });
   } catch (error) {
@@ -84,75 +253,97 @@ app.post('/auth/login', async (req, res) => {
   }
 });
 
-app.get('/auth/verify-token', authenticateToken, (req, res) => {
-  const user = DB.users.findById(req.user.userId);
+app.get('/auth/verify-token', authenticateToken, async (req, res) => {
+  try {
+    let userProfile = await loadUserProfile(req);
 
-  if (!user) {
-    return res.status(404).json({ success: false, message: 'User not found' });
-  }
-
-  res.json({
-    success: true,
-    data: {
-      user: {
-        _id: user._id,
-        email: user.email,
-        username: user.username,
-        tier: user.tier,
-        isAdmin: user.isAdmin,
-        balance: user.balance
+    if (!userProfile && req.user?.email) {
+      userProfile = await getUserByEmail(req.user.email);
+      if (userProfile) {
+        req.user.profile = userProfile;
       }
     }
-  });
-});
 
-app.post('/auth/register', async (req, res) => {
-  try {
-    const { email, username, password } = req.body;
-    
-    if (!email || !username || !password) {
-      return res.status(400).json({ success: false, message: 'All fields required' });
+    if (!userProfile) {
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
-
-    // Check if user exists
-    const existingUser = DB.users.findByEmail(email);
-    if (existingUser) {
-      return res.status(400).json({ success: false, message: 'User already exists' });
-    }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create user
-    const newUser = DB.users.create({
-      email,
-      username,
-      password: hashedPassword,
-      tier: 1,
-      isAdmin: false,
-      balance: 10000,
-      totalEarned: 0,
-      totalWithdrawn: 0,
-      gamesPlayed: 0,
-      gamesWon: 0,
-      tasksCompleted: 0
-    });
-
-    const token = generateToken(newUser);
 
     res.json({
       success: true,
-      message: 'Registration successful',
       data: {
-        token,
-        user: {
-          _id: newUser._id,
-          email: newUser.email,
-          username: newUser.username,
-          tier: newUser.tier,
-          isAdmin: newUser.isAdmin,
-          balance: newUser.balance
-        }
+        user: formatUserResponse(userProfile)
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+app.post('/auth/register', authenticateToken, async (req, res) => {
+  try {
+    const authToken = req.headers['authorization']?.split(' ')[1];
+    const { username: usernameFromBody } = req.body;
+    const email = req.user?.email || req.body?.email;
+    const firebaseUid = req.user?.firebaseUid || req.user?.firebase?.uid || req.user?.userId;
+    const username =
+      usernameFromBody ||
+      req.user?.firebase?.name ||
+      (email ? email.split('@')[0] : null);
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Email is required' });
+    }
+
+    if (!firebaseUid) {
+      return res.status(400).json({ success: false, message: 'Firebase UID is required' });
+    }
+
+    if (!username) {
+      return res.status(400).json({ success: false, message: 'Username is required' });
+    }
+
+    let legacyUser = DB.users.findByEmail(email);
+    if (legacyUser) {
+      if (!legacyUser.firebaseUid) {
+        DB.users.update(legacyUser._id, { firebaseUid });
+        legacyUser = DB.users.findByEmail(email);
+      }
+    } else {
+      legacyUser = DB.users.create({
+        email,
+        username,
+        firebaseUid,
+        tier: 1,
+        isAdmin: false,
+        balance: 10000,
+        totalEarned: 0,
+        totalWithdrawn: 0,
+        gamesPlayed: 0,
+        gamesWon: 0,
+        tasksCompleted: 0
+      });
+    }
+
+    let userProfile = await ensureUserProfile(
+      {
+        uid: firebaseUid,
+        email,
+        displayName: username,
+        isAdmin: legacyUser?.isAdmin
+      },
+      legacyUser
+    );
+
+    if (userProfile.username !== username) {
+      userProfile = await updateUserProfile(firebaseUid, { username }).catch(() => userProfile);
+    }
+
+    res.json({
+      success: true,
+      message: legacyUser ? 'User already exists' : 'Registration successful',
+      data: {
+        token: authToken,
+        user: formatUserResponse(userProfile)
       }
     });
   } catch (error) {
@@ -161,55 +352,181 @@ app.post('/auth/register', async (req, res) => {
 });
 
 // Wallet Routes
-app.get('/wallet/balance', authenticateToken, (req, res) => {
-  const user = DB.users.findById(req.user.userId);
-  res.json({
-    success: true,
-    data: { balance: user.balance }
-  });
+app.get('/wallet/balance', authenticateToken, async (req, res) => {
+  try {
+    const user = await loadUserProfile(req);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({
+      success: true,
+      data: { balance: user.balance ?? 0 }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
 });
 
-app.get('/wallet/transactions', authenticateToken, (req, res) => {
-  const transactions = DB.transactions.findByUserId(req.user.userId);
-  res.json({
-    success: true,
-    data: transactions
-  });
+app.get('/wallet/transactions', authenticateToken, async (req, res) => {
+  try {
+    const user = await loadUserProfile(req);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    let transactions = await getUserTransactions(user._id);
+
+    if ((!transactions || transactions.length === 0) && user.legacyId) {
+      const legacyTransactions = DB.transactions.findByUserId(user.legacyId) || [];
+      transactions = legacyTransactions.map((tx) => ({
+        _id: tx._id,
+        ...tx
+      }));
+    }
+
+    res.json({
+      success: true,
+      data: transactions || []
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
 });
 
-app.post('/wallet/withdraw', authenticateToken, (req, res) => {
-  const { amount, address, network } = req.body;
-  const user = DB.users.findById(req.user.userId);
+app.get('/games/sessions', authenticateToken, async (req, res) => {
+  try {
+    const profile = await loadUserProfile(req);
+    if (!profile) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
 
-  if (amount > user.balance) {
-    return res.status(400).json({ success: false, message: 'Insufficient balance' });
+    const firebaseUid =
+      profile._id ||
+      req.user?.profile?._id ||
+      req.user?.firebaseUid ||
+      req.user?.firebase?.uid ||
+      null;
+    const legacyId = req.user?.userId || profile.legacyId || null;
+
+    const [firestoreSessions, legacySessions] = await Promise.all([
+      firebaseUid
+        ? getUserGameSessions(firebaseUid).catch((err) => {
+            console.error('[Firestore] Failed to load game sessions', err);
+            return [];
+          })
+        : [],
+      Promise.resolve(legacyId ? DB.gameSessions.findByUserId(legacyId) || [] : [])
+    ]);
+
+    const merged = [...firestoreSessions];
+
+    legacySessions.forEach((session) => {
+      if (!merged.some((fs) => fs._id === session._id)) {
+        merged.push(session);
+      }
+    });
+
+    merged.sort((a, b) => {
+      const aKey = a.sortKey || Date.parse(a.timestamp) || 0;
+      const bKey = b.sortKey || Date.parse(b.timestamp) || 0;
+      return bKey - aKey;
+    });
+
+    res.json({
+      success: true,
+      data: merged
+    });
+  } catch (error) {
+    console.error('Game sessions fetch error:', error);
+    res.status(500).json({ success: false, message: 'Unable to fetch game sessions.' });
   }
+});
 
-  if (amount < 10000) {
-    return res.status(400).json({ success: false, message: 'Minimum withdrawal is 10,000 CMX' });
+app.post('/wallet/withdraw', authenticateToken, async (req, res) => {
+  try {
+    const { amount, address, network } = req.body;
+    const user = await loadUserProfile(req);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (typeof amount !== 'number' || Number.isNaN(amount)) {
+      return res.status(400).json({ success: false, message: 'Invalid amount' });
+    }
+
+    if (amount > (user.balance ?? 0)) {
+      return res.status(400).json({ success: false, message: 'Insufficient balance' });
+    }
+
+    if (amount < 10000) {
+      return res.status(400).json({ success: false, message: 'Minimum withdrawal is 10,000 CMX' });
+    }
+
+    const withdrawalPayload = {
+      amount,
+      address,
+      network,
+      status: 'pending',
+      timestamp: new Date().toISOString()
+    };
+
+    const withdrawal = await addWithdrawal(user._id, withdrawalPayload);
+
+    if (user.legacyId) {
+      DB.withdrawals.create({
+        userId: user.legacyId,
+        ...withdrawalPayload,
+        _id: withdrawal._id
+      });
+    }
+
+    const newTotals = {
+      balance: (user.balance ?? 0) - amount,
+      totalWithdrawn: (user.totalWithdrawn ?? 0) + amount
+    };
+
+    const updatedProfile = await updateUserProfileOnRequest(req, newTotals);
+
+    if (user.legacyId) {
+      DB.users.update(user.legacyId, {
+        balance: newTotals.balance,
+        totalWithdrawn: newTotals.totalWithdrawn
+      });
+    }
+
+    await addTransaction(user._id, {
+      type: 'withdrawal',
+      amount: -Math.abs(amount),
+      description: 'Withdrawal request submitted',
+      balanceAfter: updatedProfile?.balance ?? newTotals.balance,
+      status: 'pending'
+    });
+
+    if (user.legacyId) {
+      DB.transactions.create({
+        userId: user.legacyId,
+        type: 'withdrawal',
+        amount: -Math.abs(amount),
+        description: 'Withdrawal request submitted',
+        timestamp: new Date().toISOString(),
+        balanceAfter: newTotals.balance,
+        status: 'pending'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Withdrawal request submitted',
+      data: {
+        ...withdrawal,
+        balanceAfter: updatedProfile?.balance ?? newTotals.balance
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
   }
-
-  // Create withdrawal
-  const withdrawal = DB.withdrawals.create({
-    userId: req.user.userId,
-    amount,
-    address,
-    network,
-    status: 'pending',
-    timestamp: new Date().toISOString()
-  });
-
-  // Update balance
-  DB.users.update(req.user.userId, {
-    balance: user.balance - amount,
-    totalWithdrawn: user.totalWithdrawn + amount
-  });
-
-  res.json({
-    success: true,
-    message: 'Withdrawal request submitted',
-    data: withdrawal
-  });
 });
 
 // Tasks Routes
@@ -221,40 +538,73 @@ app.get('/tasks', authenticateToken, (req, res) => {
   });
 });
 
-app.post('/tasks/complete', authenticateToken, (req, res) => {
-  const { taskId } = req.body;
-  const task = DB.tasks.findById(taskId);
-  
-  if (!task) {
-    return res.status(404).json({ success: false, message: 'Task not found' });
-  }
-
-  const user = DB.users.findById(req.user.userId);
-  
-  // Update user balance
-  DB.users.update(req.user.userId, {
-    balance: user.balance + task.reward,
-    totalEarned: user.totalEarned + task.reward,
-    tasksCompleted: user.tasksCompleted + 1
-  });
-
-  // Create transaction
-  DB.transactions.create({
-    userId: req.user.userId,
-    type: 'credit',
-    amount: task.reward,
-    description: `Completed task: ${task.title}`,
-    timestamp: new Date().toISOString()
-  });
-
-  res.json({
-    success: true,
-    message: 'Task completed!',
-    data: {
-      reward: task.reward,
-      newBalance: user.balance + task.reward
+app.post('/tasks/complete', authenticateToken, async (req, res) => {
+  try {
+    const { taskId } = req.body;
+    const task = DB.tasks.findById(taskId);
+    
+    if (!task) {
+      return res.status(404).json({ success: false, message: 'Task not found' });
     }
-  });
+
+    const user = await loadUserProfile(req);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const reward = task.reward || 0;
+    const newBalance = (user.balance ?? 0) + reward;
+    const newTotalEarned = (user.totalEarned ?? 0) + reward;
+    const newTasksCompleted = (user.tasksCompleted ?? 0) + 1;
+
+    const updatedProfile = await updateUserProfileOnRequest(req, {
+      balance: newBalance,
+      totalEarned: newTotalEarned,
+      tasksCompleted: newTasksCompleted
+    });
+
+    const effectiveProfile = updatedProfile || {
+      ...user,
+      balance: newBalance,
+      totalEarned: newTotalEarned,
+      tasksCompleted: newTasksCompleted
+    };
+
+    await addTransaction(user._id, {
+      type: 'task_reward',
+      amount: reward,
+      description: `Completed task: ${task.title}`,
+      balanceAfter: effectiveProfile.balance
+    });
+
+    if (user.legacyId) {
+      DB.users.update(user.legacyId, {
+        balance: effectiveProfile.balance,
+        totalEarned: effectiveProfile.totalEarned,
+        tasksCompleted: effectiveProfile.tasksCompleted
+      });
+
+      DB.transactions.create({
+        userId: user.legacyId,
+        type: 'credit',
+        amount: reward,
+        description: `Completed task: ${task.title}`,
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Task completed!',
+      data: {
+        reward,
+        newBalance: effectiveProfile.balance
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
 });
 
 // Helper function to generate random seed for provably fair
@@ -588,7 +938,7 @@ function getBlackjackRoundById(roundId) {
   return blackjackRoundsById.get(roundId);
 }
 
-function adjustUserBalance(userId, delta) {
+async function adjustUserBalance(userId, delta) {
   const user = DB.users.findById(userId);
   if (!user) {
     return { error: 'User not found' };
@@ -601,7 +951,8 @@ function adjustUserBalance(userId, delta) {
   const updatedUser = DB.users.update(userId, {
     balance: nextBalance
   });
-  return { balance: updatedUser.balance, user: updatedUser };
+  const profile = await syncLegacyUserToFirestore(updatedUser).catch(() => null);
+  return { balance: updatedUser.balance, user: updatedUser, profile };
 }
 
 function getAvailableBlackjackActions(round, balance) {
@@ -940,33 +1291,68 @@ app.post('/games/slots/spin', authenticateToken, (req, res) => {
   console.log('    After:', newBalance);
 
   // Update user
-  DB.users.update(req.user.userId, {
+  const legacyUpdated = DB.users.update(req.user.userId, {
     balance: newBalance,
     gamesPlayed: user.gamesPlayed + 1,
     gamesWon: winAmount > 0 ? user.gamesWon + 1 : user.gamesWon,
     totalEarned: user.totalEarned + winAmount
   });
+  syncLegacyUserToFirestore(legacyUpdated).catch(() => {});
+  if (req.user.profile && req.user.profile.firebaseUid === legacyUpdated?.firebaseUid) {
+    req.user.profile = {
+      ...req.user.profile,
+      balance: legacyUpdated.balance,
+      gamesPlayed: legacyUpdated.gamesPlayed,
+      gamesWon: legacyUpdated.gamesWon,
+      totalEarned: legacyUpdated.totalEarned
+    };
+  }
 
   // Create transaction
   const netWin = winAmount - betAmount;
+  const slotTimestamp = new Date().toISOString();
   DB.transactions.create({
     userId: req.user.userId,
     type: netWin >= 0 ? 'game_win' : 'game_loss',
     amount: netWin,
     description: `Slots: ${winAmount > 0 ? `Won ${winAmount} CMX` : `Lost ${betAmount} CMX`}`,
-    timestamp: new Date().toISOString()
+    timestamp: slotTimestamp
   });
+  const firebaseUid = req.user?.profile?._id || req.user?.firebaseUid || req.user?.firebase?.uid;
+  if (firebaseUid) {
+    addTransaction(firebaseUid, {
+      type: netWin >= 0 ? 'game_win' : 'game_loss',
+      amount: netWin,
+      description: `Slots: ${winAmount > 0 ? `Won ${winAmount} CMX` : `Lost ${betAmount} CMX`}`,
+      balanceAfter: legacyUpdated?.balance ?? newBalance,
+      timestamp: slotTimestamp
+    })
+      .catch(() => {});
+  }
 
   // Create game session
-  DB.gameSessions.create({
+  const legacySlotSession = DB.gameSessions.create({
     userId: req.user.userId,
     gameType: 'slots',
     betAmount,
     winAmount,
     result: winAmount > 0 ? 'win' : 'loss',
-    timestamp: new Date().toISOString(),
+    timestamp: slotTimestamp,
     provablyFair: { seed, hash: seed }
   });
+  if (firebaseUid) {
+    addGameSession(firebaseUid, {
+      ...legacySlotSession,
+      net: netWin,
+      sortKey: Date.parse(slotTimestamp) ?? Date.now()
+    })
+      .then((doc) => {
+        console.log(`[Firestore] Saved slots session for ${firebaseUid} -> gamesessions/${doc._id}`);
+      })
+      .catch((firestoreErr) => {
+        console.error('[Firestore] Failed to save slots session', firestoreErr);
+      });
+  }
 
   const responseData = {
     reels,
@@ -991,7 +1377,7 @@ app.post('/games/slots/spin', authenticateToken, (req, res) => {
 });
 
 // Games Routes - Blackjack
-app.post('/games/blackjack/start', authenticateToken, (req, res) => {
+app.post('/games/blackjack/start', authenticateToken, async (req, res) => {
   try {
     const userId = req.user.userId;
     const { betAmount, clientSeed } = req.body;
@@ -1099,9 +1485,13 @@ app.post('/games/blackjack/start', authenticateToken, (req, res) => {
       round.flags.offerInsurance = false;
     }
 
-    const balanceAdjustment = adjustUserBalance(userId, -parsedBet);
+    const balanceAdjustment = await adjustUserBalance(userId, -parsedBet);
     if (balanceAdjustment.error) {
       return res.status(400).json({ success: false, message: balanceAdjustment.error });
+    }
+
+    if (balanceAdjustment.profile) {
+      req.user.profile = balanceAdjustment.profile;
     }
 
     setBlackjackRound(round);
@@ -1120,7 +1510,7 @@ app.post('/games/blackjack/start', authenticateToken, (req, res) => {
   }
 });
 
-app.post('/games/blackjack/action', authenticateToken, (req, res) => {
+app.post('/games/blackjack/action', authenticateToken, async (req, res) => {
   try {
     const { roundId, action } = req.body;
     const userId = req.user.userId;
@@ -1195,9 +1585,12 @@ app.post('/games/blackjack/action', authenticateToken, (req, res) => {
       case 'double': {
         deactivateInsurance();
         const additionalBet = hand.bet;
-        const balanceAdjustment = adjustUserBalance(userId, -additionalBet);
+        const balanceAdjustment = await adjustUserBalance(userId, -additionalBet);
         if (balanceAdjustment.error) {
           return res.status(400).json({ success: false, message: balanceAdjustment.error });
+        }
+        if (balanceAdjustment.profile) {
+          req.user.profile = balanceAdjustment.profile;
         }
         hand.bet += additionalBet;
         round.lockedBet += additionalBet;
@@ -1222,9 +1615,12 @@ app.post('/games/blackjack/action', authenticateToken, (req, res) => {
       case 'split': {
         deactivateInsurance();
         const additionalBet = hand.bet;
-        const balanceAdjustment = adjustUserBalance(userId, -additionalBet);
+        const balanceAdjustment = await adjustUserBalance(userId, -additionalBet);
         if (balanceAdjustment.error) {
           return res.status(400).json({ success: false, message: balanceAdjustment.error });
+        }
+        if (balanceAdjustment.profile) {
+          req.user.profile = balanceAdjustment.profile;
         }
 
         round.lockedBet += additionalBet;
@@ -1277,9 +1673,12 @@ app.post('/games/blackjack/action', authenticateToken, (req, res) => {
         if (insuranceCost <= 0) {
           return res.status(400).json({ success: false, message: 'Insurance not available for this hand.' });
         }
-        const balanceAdjustment = adjustUserBalance(userId, -insuranceCost);
+        const balanceAdjustment = await adjustUserBalance(userId, -insuranceCost);
         if (balanceAdjustment.error) {
           return res.status(400).json({ success: false, message: balanceAdjustment.error });
+        }
+        if (balanceAdjustment.profile) {
+          req.user.profile = balanceAdjustment.profile;
         }
         round.player.insuranceBet = insuranceCost;
         round.player.hasTakenInsurance = true;
@@ -1320,7 +1719,7 @@ app.post('/games/blackjack/action', authenticateToken, (req, res) => {
   }
 });
 
-app.post('/games/blackjack/settle', authenticateToken, (req, res) => {
+app.post('/games/blackjack/settle', authenticateToken, async (req, res) => {
   try {
     const { roundId } = req.body;
     const userId = req.user.userId;
@@ -1343,13 +1742,28 @@ app.post('/games/blackjack/settle', authenticateToken, (req, res) => {
 
     ensureDealerFinished(round);
     const { summary, payout } = finalizeBlackjackRound(round);
-    const balanceAdjustment = adjustUserBalance(userId, payout);
+    const balanceAdjustment = await adjustUserBalance(userId, payout);
     if (balanceAdjustment.error) {
       return res.status(400).json({ success: false, message: balanceAdjustment.error });
     }
 
     const net = summary.totals.net;
+
     const timestamp = new Date().toISOString();
+
+    const currentProfile =
+      balanceAdjustment.profile ||
+      req.user.profile ||
+      (await loadUserProfile(req));
+    const updatedProfile = await updateUserProfileOnRequest(req, {
+      gamesPlayed: (currentProfile?.gamesPlayed ?? 0) + 1,
+      gamesWon: (currentProfile?.gamesWon ?? 0) + (net > 0 ? 1 : 0),
+      totalEarned: (currentProfile?.totalEarned ?? 0) + (net > 0 ? net : 0)
+    });
+    const effectiveProfile = updatedProfile || currentProfile;
+    if (effectiveProfile) {
+      req.user.profile = effectiveProfile;
+    }
 
     DB.transactions.create({
       userId,
@@ -1361,8 +1775,25 @@ app.post('/games/blackjack/settle', authenticateToken, (req, res) => {
           : `Blackjack: Lost ${Math.abs(net)} CMX`,
       timestamp
     });
+    const firebaseUid =
+      effectiveProfile?._id ||
+      req.user?.profile?._id ||
+      req.user?.firebaseUid ||
+      req.user?.firebase?.uid;
+    if (firebaseUid) {
+      await addTransaction(firebaseUid, {
+        type: net >= 0 ? 'game_win' : 'game_loss',
+        amount: net,
+        description:
+          net >= 0
+            ? `Blackjack: Won ${Math.abs(net)} CMX`
+            : `Blackjack: Lost ${Math.abs(net)} CMX`,
+        balanceAfter: balanceAdjustment.balance,
+        timestamp
+      }).catch(() => {});
+    }
 
-    DB.gameSessions.create({
+    const legacyGameSession = DB.gameSessions.create({
       userId,
       gameType: 'blackjack',
       betAmount: summary.totals.wagered,
@@ -1376,7 +1807,19 @@ app.post('/games/blackjack/settle', authenticateToken, (req, res) => {
         shoeHash: round.provablyFair.shoeHash
       }
     });
-
+    if (firebaseUid) {
+      try {
+        const doc = await addGameSession(firebaseUid, {
+          ...legacyGameSession,
+          net,
+          sortKey: Date.parse(timestamp) ?? Date.now()
+        });
+        console.log(`[Firestore] Saved blackjack session for ${firebaseUid} -> gamesessions/${doc._id}`);
+      } catch (firestoreErr) {
+        console.error('[Firestore] Failed to save blackjack session', firestoreErr);
+      }
+    }
+ 
     const statsUser = DB.users.findById(userId);
     DB.users.update(userId, {
       gamesPlayed: (statsUser.gamesPlayed || 0) + 1,

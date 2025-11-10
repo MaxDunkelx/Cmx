@@ -2044,5 +2044,477 @@
     "description": "Slots: Lost 500 CMX",
     "timestamp": "2025-11-09T06:57:49.862Z",
     "_id": "1762671469864_t3jk7oaka"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 6900,
+    "description": "Blackjack: Won 6900 CMX",
+    "timestamp": "2025-11-09T15:13:39.999Z",
+    "_id": "1762701220003_hsbwvw4yx"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 0,
+    "description": "Blackjack: Won 0 CMX",
+    "timestamp": "2025-11-09T15:13:57.076Z",
+    "_id": "1762701237081_fzbjodu7z"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 0,
+    "description": "Blackjack: Won 0 CMX",
+    "timestamp": "2025-11-09T15:15:57.008Z",
+    "_id": "1762701357009_yjvuuthdr"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:16:42.924Z",
+    "_id": "1762701402925_l36gvxymx"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 23750,
+    "description": "Slots: Won 24250 CMX",
+    "timestamp": "2025-11-09T15:16:49.682Z",
+    "_id": "1762701409683_3yxogk7cs"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:17:23.248Z",
+    "_id": "1762701443250_q0sbe2a6q"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:17:28.678Z",
+    "_id": "1762701448678_a54aq1euf"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:17:36.136Z",
+    "_id": "1762701456139_jqfmq164r"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:17:44.583Z",
+    "_id": "1762701464583_6yekh7vvz"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:17:53.098Z",
+    "_id": "1762701473099_z2z6pmrr8"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:17:59.183Z",
+    "_id": "1762701479183_m56l3i8wo"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:18:13.111Z",
+    "_id": "1762701493113_ryfkijhuy"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:18:21.963Z",
+    "_id": "1762701501964_yzim9x8m8"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:18:30.029Z",
+    "_id": "1762701510032_fpulqluz8"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:18:40.078Z",
+    "_id": "1762701520079_f4mn8rfjf"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Slots: Lost 500 CMX",
+    "timestamp": "2025-11-09T15:18:52.246Z",
+    "_id": "1762701532248_4ng2kpy9m"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Roulette: Lost 1000 CMX - Number: 24",
+    "timestamp": "2025-11-09T15:19:38.615Z",
+    "_id": "1762701578616_6jsb6iqqp"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 6900,
+    "description": "Blackjack: Won 6900 CMX",
+    "timestamp": "2025-11-09T18:32:52.651Z",
+    "_id": "1762713172653_ej4ztukyy"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -4800,
+    "description": "Blackjack: Lost 4800 CMX",
+    "timestamp": "2025-11-09T18:45:49.182Z",
+    "_id": "1762713949184_3et61ys6k"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -4800,
+    "description": "Blackjack: Lost 4800 CMX",
+    "timestamp": "2025-11-09T18:46:25.728Z",
+    "_id": "1762713985730_yk9a9v82o"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -2400,
+    "description": "Blackjack: Lost 2400 CMX",
+    "timestamp": "2025-11-09T18:46:34.323Z",
+    "_id": "1762713994325_vzhbg4bok"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "type": "game_win",
+    "amount": 0,
+    "description": "Blackjack: Won 0 CMX",
+    "timestamp": "2025-11-09T18:57:36.813Z",
+    "_id": "1762714656816_gn6pi2d7y"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Blackjack: Lost 500 CMX",
+    "timestamp": "2025-11-09T18:57:59.520Z",
+    "_id": "1762714679522_j2b930sns"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Blackjack: Lost 500 CMX",
+    "timestamp": "2025-11-09T18:58:08.716Z",
+    "_id": "1762714688717_ow1kqypwp"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Blackjack: Lost 500 CMX",
+    "timestamp": "2025-11-09T18:58:19.349Z",
+    "_id": "1762714699350_2njghu809"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "type": "game_win",
+    "amount": 1000,
+    "description": "Blackjack: Won 1000 CMX",
+    "timestamp": "2025-11-09T18:58:36.407Z",
+    "_id": "1762714716409_00p4mjr1h"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 3000,
+    "description": "Blackjack: Won 3000 CMX",
+    "timestamp": "2025-11-09T20:01:08.243Z",
+    "_id": "1762718468245_a4lzi5gs4"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 2000,
+    "description": "Blackjack: Won 2000 CMX",
+    "timestamp": "2025-11-09T20:01:28.377Z",
+    "_id": "1762718488379_dfma5b6pa"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -2000,
+    "description": "Blackjack: Lost 2000 CMX",
+    "timestamp": "2025-11-09T20:02:40.680Z",
+    "_id": "1762718560682_zg54o9wqq"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 2000,
+    "description": "Blackjack: Won 2000 CMX",
+    "timestamp": "2025-11-09T20:03:03.175Z",
+    "_id": "1762718583176_6qz7xah04"
+  },
+  {
+    "userId": "1762715004625_aqox7e35w",
+    "type": "game_loss",
+    "amount": -500,
+    "description": "Blackjack: Lost 500 CMX",
+    "timestamp": "2025-11-09T20:05:42.986Z",
+    "_id": "1762718742989_bqz8ujrhy"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "type": "game_win",
+    "amount": 0,
+    "description": "Blackjack: Won 0 CMX",
+    "timestamp": "2025-11-09T20:11:17.048Z",
+    "_id": "1762719077050_nz8wrx396"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "type": "game_win",
+    "amount": 0,
+    "description": "Blackjack: Won 0 CMX",
+    "timestamp": "2025-11-09T20:11:20.933Z",
+    "_id": "1762719080934_itp7op8vf"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "type": "game_win",
+    "amount": 1000,
+    "description": "Blackjack: Won 1000 CMX",
+    "timestamp": "2025-11-09T20:11:28.948Z",
+    "_id": "1762719088951_2zslq3tqi"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "type": "game_loss",
+    "amount": -2000,
+    "description": "Blackjack: Lost 2000 CMX",
+    "timestamp": "2025-11-09T20:12:36.129Z",
+    "_id": "1762719156131_6jbyhwdh4"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Blackjack: Lost 1000 CMX",
+    "timestamp": "2025-11-09T21:40:50.689Z",
+    "_id": "1762724450690_754g554m0"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T21:42:24.563Z",
+    "_id": "1762724544564_jsp30513z"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "type": "game_win",
+    "amount": 200,
+    "description": "Blackjack: Won 200 CMX",
+    "timestamp": "2025-11-09T21:42:38.766Z",
+    "_id": "1762724558769_awvsvqyec"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T21:42:43.897Z",
+    "_id": "1762724563897_xuqhsinji"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "type": "game_win",
+    "amount": 0,
+    "description": "Blackjack: Won 0 CMX",
+    "timestamp": "2025-11-09T21:42:48.444Z",
+    "_id": "1762724568446_en90iyar1"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "type": "game_win",
+    "amount": 200,
+    "description": "Blackjack: Won 200 CMX",
+    "timestamp": "2025-11-09T21:42:54.369Z",
+    "_id": "1762724574370_895bg8bsb"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T21:43:03.741Z",
+    "_id": "1762724583742_gj38xnxoh"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "type": "game_win",
+    "amount": 2000,
+    "description": "Blackjack: Won 2000 CMX",
+    "timestamp": "2025-11-09T21:45:38.780Z",
+    "_id": "1762724738783_jlcibeec7"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T21:52:46.995Z",
+    "_id": "1762725166996_bv868v6lj"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 200,
+    "description": "Blackjack: Won 200 CMX",
+    "timestamp": "2025-11-09T21:53:09.616Z",
+    "_id": "1762725189618_8opldkvue"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_loss",
+    "amount": -1000,
+    "description": "Blackjack: Lost 1000 CMX",
+    "timestamp": "2025-11-09T21:57:39.451Z",
+    "_id": "1762725459453_xy67prjye"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_win",
+    "amount": 200,
+    "description": "Blackjack: Won 200 CMX",
+    "timestamp": "2025-11-09T22:33:34.113Z",
+    "_id": "1762727614115_e1d7fgjn1"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T22:38:02.151Z",
+    "_id": "1762727882154_t5s34li25"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T22:38:11.692Z",
+    "_id": "1762727891694_9sdm7veff"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T22:38:20.627Z",
+    "_id": "1762727900629_k0da9318j"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_win",
+    "amount": 300,
+    "description": "Blackjack: Won 300 CMX",
+    "timestamp": "2025-11-09T22:38:23.002Z",
+    "_id": "1762727903003_agl5h1u3a"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_win",
+    "amount": 300,
+    "description": "Blackjack: Won 300 CMX",
+    "timestamp": "2025-11-09T22:38:25.064Z",
+    "_id": "1762727905068_o6awe9ifw"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T22:38:29.199Z",
+    "_id": "1762727909200_444s6zkee"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T22:38:38.717Z",
+    "_id": "1762727918719_rqz64u1zv"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T22:45:00.378Z",
+    "_id": "1762728300382_anc832pon"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T22:53:29.187Z",
+    "_id": "1762728809190_vr55m5gxg"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_loss",
+    "amount": -200,
+    "description": "Blackjack: Lost 200 CMX",
+    "timestamp": "2025-11-09T22:53:34.492Z",
+    "_id": "1762728814493_wv5cwj5jh"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "type": "game_win",
+    "amount": 0,
+    "description": "Blackjack: Won 0 CMX",
+    "timestamp": "2025-11-09T22:53:46.878Z",
+    "_id": "1762728826881_qanmw6lsc"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "type": "game_win",
+    "amount": 200,
+    "description": "Blackjack: Won 200 CMX",
+    "timestamp": "2025-11-09T22:57:21.196Z",
+    "_id": "1762729041199_9ke2vefbh"
   }
 ]

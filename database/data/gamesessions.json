@@ -3333,5 +3333,849 @@
       "hash": "mhrd2yozuopmm61wn6o8eztuu7p96b"
     },
     "_id": "1762671469866_ncjytec5y"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 6900,
+    "winAmount": 13800,
+    "result": "win",
+    "timestamp": "2025-11-09T15:13:39.999Z",
+    "provablyFair": {
+      "serverSeed": "b987a2a1a70ccd390f4eedefd6390395a844aa8eaf83144bc19c8dd588ce70a8",
+      "serverSeedHash": "e35ceb0bf90ecc0027d28e18635166e5b1593bd26524be864d3dd9c31b4e2072",
+      "clientSeed": "2518c8189f58853bb926a4184e7aa8e9",
+      "shoeHash": "660742969d93816eefd11f510af62a4e1d1abbea1726c32f39708d594de5af7f"
+    },
+    "_id": "1762701220012_18pbpkerf"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 6900,
+    "winAmount": 6900,
+    "result": "push",
+    "timestamp": "2025-11-09T15:13:57.076Z",
+    "provablyFair": {
+      "serverSeed": "beae47dd07fef83f0e8d83934a97a163fafece2c8a71c2fc6c7ecf103b844edb",
+      "serverSeedHash": "420bd26739267c7b9efe91eb1ccb000cd14b3d457b87c1f24cc7bd43e2c2cd08",
+      "clientSeed": "2518c8189f58853bb926a4184e7aa8e9",
+      "shoeHash": "dd2436bd7454224fe325cbd77f3a936942c01b1c25391fb909be34ee333de199"
+    },
+    "_id": "1762701237086_pfgze5jpo"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 13800,
+    "winAmount": 13800,
+    "result": "push",
+    "timestamp": "2025-11-09T15:15:57.008Z",
+    "provablyFair": {
+      "serverSeed": "301f86c16f7f4a00bc94738530c32b5c0e1d4ff3a6f43df0bfe82e1c1c3f459a",
+      "serverSeedHash": "293d5a936eddddca21f95898cdf59662a7124f9ddc58470075da7a9bfde2cc94",
+      "clientSeed": "2518c8189f58853bb926a4184e7aa8e9",
+      "shoeHash": "ff711c9ffbad70ef780abf14d00c0cd8d58b3be0d73ed616dd5fd3cd7996c200"
+    },
+    "_id": "1762701357013_vw0fra1i4"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:16:42.927Z",
+    "provablyFair": {
+      "seed": "mhruwj6vgptn6fidoftesjw8tltkx8",
+      "hash": "mhruwj6vgptn6fidoftesjw8tltkx8"
+    },
+    "_id": "1762701402930_3xv3rmud1"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 24250,
+    "result": "win",
+    "timestamp": "2025-11-09T15:16:49.684Z",
+    "provablyFair": {
+      "seed": "mhruwoeojt1nvtkdnr81la0na9fbab",
+      "hash": "mhruwoeojt1nvtkdnr81la0na9fbab"
+    },
+    "_id": "1762701409684_2jnduzfqq"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:17:23.251Z",
+    "provablyFair": {
+      "seed": "mhruxeb3swhrgz8bvqkyey2fq0estc",
+      "hash": "mhruxeb3swhrgz8bvqkyey2fq0estc"
+    },
+    "_id": "1762701443253_35vx12yud"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:17:28.679Z",
+    "provablyFair": {
+      "seed": "mhruxihxcz486sov0udd3fbppw24cf",
+      "hash": "mhruxihxcz486sov0udd3fbppw24cf"
+    },
+    "_id": "1762701448680_hwl8k3kdh"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:17:36.139Z",
+    "provablyFair": {
+      "seed": "mhruxo938dgyvng5qdvg78hpe1eg",
+      "hash": "mhruxo938dgyvng5qdvg78hpe1eg"
+    },
+    "_id": "1762701456146_i48d19m1p"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:17:44.584Z",
+    "provablyFair": {
+      "seed": "mhruxuro6gebbthcf12p2iuvakxjb",
+      "hash": "mhruxuro6gebbthcf12p2iuvakxjb"
+    },
+    "_id": "1762701464584_clkh3nvn9"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:17:53.100Z",
+    "provablyFair": {
+      "seed": "mhruy1c90wahhjq1exzqnl7qwz3004j",
+      "hash": "mhruy1c90wahhjq1exzqnl7qwz3004j"
+    },
+    "_id": "1762701473102_xq7158cym"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:17:59.186Z",
+    "provablyFair": {
+      "seed": "mhruy617yu31b19tigsewohkivitz5",
+      "hash": "mhruy617yu31b19tigsewohkivitz5"
+    },
+    "_id": "1762701479188_qilceda7r"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:18:13.113Z",
+    "provablyFair": {
+      "seed": "mhruygs5c46u3tp4p8wa1vokduos3e",
+      "hash": "mhruygs5c46u3tp4p8wa1vokduos3e"
+    },
+    "_id": "1762701493115_z4rut5ykb"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:18:21.965Z",
+    "provablyFair": {
+      "seed": "mhruynm2f8v9k85obguty2swot8l3",
+      "hash": "mhruynm2f8v9k85obguty2swot8l3"
+    },
+    "_id": "1762701501966_mzdpkktk0"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:18:30.034Z",
+    "provablyFair": {
+      "seed": "mhruytu4b1kv648wqd8a3rsvakeozs",
+      "hash": "mhruytu4b1kv648wqd8a3rsvakeozs"
+    },
+    "_id": "1762701510036_z2zkqbd9j"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:18:40.081Z",
+    "provablyFair": {
+      "seed": "mhruz1l8jri38s2lxeeiovg3554jf",
+      "hash": "mhruz1l8jri38s2lxeeiovg3554jf"
+    },
+    "_id": "1762701520083_rvvpeayi7"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "slots",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T15:18:52.249Z",
+    "provablyFair": {
+      "seed": "mhruzaz9ktvi5pxldhk5v3uoej9yv5",
+      "hash": "mhruzaz9ktvi5pxldhk5v3uoej9yv5"
+    },
+    "_id": "1762701532251_50lfzgrkc"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 6900,
+    "winAmount": 13800,
+    "result": "win",
+    "timestamp": "2025-11-09T18:32:52.651Z",
+    "provablyFair": {
+      "serverSeed": "492250c46115a951dc64e696726f7b4f0e9a4a2c1803792e06b7fe66858b3ce2",
+      "serverSeedHash": "215f7ed06b419bc38e15b664e2af50ce30286a4325f06ccf560898a9efc2f3a4",
+      "clientSeed": "e0480b8b40b62b18eb61ffd71bad8a6a",
+      "shoeHash": "eee1b4e1f4249647c847c4c833c12f1c919c58c6565c67ae32f515a369f3d611"
+    },
+    "_id": "1762713172665_tidmeb31n"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 4800,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T18:45:49.182Z",
+    "provablyFair": {
+      "serverSeed": "8f5b6a123708b8628257f1a565d128aca6497d2b1e02b40168330237ebd1610f",
+      "serverSeedHash": "66797dc80aff8f041b2af21fa37c51319a5ffd059b2e51070c72b32f65fb12b9",
+      "clientSeed": "a8450ba680735e0a2cc93a5302d77bf4",
+      "shoeHash": "469ad589a662f379d4a71fd1346732378aba04a4b07a3ff0d181bcb58fbcc54c"
+    },
+    "_id": "1762713949194_7azoini04"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 4800,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T18:46:25.728Z",
+    "provablyFair": {
+      "serverSeed": "7b8c3547f01a109e63d6808359e14dc60ff4846f41d4bb33de116a99f748aa49",
+      "serverSeedHash": "f4ea62f8278690b11f833e39fed107cbc077773cdc09de7478fea9b623c4d6cc",
+      "clientSeed": "a8450ba680735e0a2cc93a5302d77bf4",
+      "shoeHash": "fdb7c63535da13a902c45c8beef2bee857505e5537149c4c7df8917b3f19e0ee"
+    },
+    "_id": "1762713985736_ugit9mlia"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 4800,
+    "winAmount": 2400,
+    "result": "loss",
+    "timestamp": "2025-11-09T18:46:34.323Z",
+    "provablyFair": {
+      "serverSeed": "733f86e744add6fce34fd9f61fdd5ae4f0892784ce2f5e6de3a706a21c2fe4f7",
+      "serverSeedHash": "9a8c68860e9d4d52cccf7e049d35a550f78b738913aff00d6ff2266473315c37",
+      "clientSeed": "a8450ba680735e0a2cc93a5302d77bf4",
+      "shoeHash": "47d6d4106dfba2bc2db4e8c72ae914aff7d200cdaa36072010d4bc1fb40c0aa5"
+    },
+    "_id": "1762713994330_kmqb1o2k4"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "gameType": "blackjack",
+    "betAmount": 500,
+    "winAmount": 500,
+    "result": "push",
+    "timestamp": "2025-11-09T18:57:36.813Z",
+    "provablyFair": {
+      "serverSeed": "60ce429862c5d68320ff0fe162032bf9fcd941ba004689a531ce6196e39a9175",
+      "serverSeedHash": "0781a01b0a97304956075920e26f47e7a262d538dc68b480b00ae1dd2f39dcf4",
+      "clientSeed": "cf11fc3769ca3807b1fddf9d69d6f4c2",
+      "shoeHash": "f48a1760313edcdbbd91df927f9d9ec5a768e331f682bc089e71f7ec851cfe68"
+    },
+    "_id": "1762714656829_lmxunujbj"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "gameType": "blackjack",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T18:57:59.520Z",
+    "provablyFair": {
+      "serverSeed": "9db75a4d2ae2f603c6c249c3f138669271595d66f8c36fc5f08f941f619eec1c",
+      "serverSeedHash": "9e5ade1add65d38aecf06a30337f8c08850a3cfe8f783157187d9449aabcf98f",
+      "clientSeed": "cf11fc3769ca3807b1fddf9d69d6f4c2",
+      "shoeHash": "0ce80c8cc5d983d65feaca2853f5e904fab675fb4b9bf2e52dc2bef6fe07dbe4"
+    },
+    "_id": "1762714679525_jb8jej7mw"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "gameType": "blackjack",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T18:58:08.716Z",
+    "provablyFair": {
+      "serverSeed": "f85b7b50847aa4bd17c286d44bebf65d274a5303ef3b8bd2596320ef16065586",
+      "serverSeedHash": "d679c1f3568b727139bf589046c1824f21db344afc2112ffd602093605f302c0",
+      "clientSeed": "cf11fc3769ca3807b1fddf9d69d6f4c2",
+      "shoeHash": "03226dc3a8fd19e0787f45d44778955e5fda7eb50d9097a1fd4a998189b43222"
+    },
+    "_id": "1762714688722_tv6kc6f0n"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "gameType": "blackjack",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T18:58:19.349Z",
+    "provablyFair": {
+      "serverSeed": "df8afffc5c5919f6a0927b04bf013c2200917a7f02d2d34392e610663bb66084",
+      "serverSeedHash": "1b63e9feba376adc0170157d87f66eccc185aba83830dda20c51f93ce20214ab",
+      "clientSeed": "cf11fc3769ca3807b1fddf9d69d6f4c2",
+      "shoeHash": "86fbab30cfa203111c20f7215b1557aa26af28f64a51af9725860fc8d3287f8d"
+    },
+    "_id": "1762714699354_ozcri37nz"
+  },
+  {
+    "userId": "1762714562592_b4rfxsy70",
+    "gameType": "blackjack",
+    "betAmount": 1000,
+    "winAmount": 2000,
+    "result": "win",
+    "timestamp": "2025-11-09T18:58:36.407Z",
+    "provablyFair": {
+      "serverSeed": "0a40b498d07b8794b80ceba20081cc2aad4cedb65b746f75d738dfb6d7dc06fd",
+      "serverSeedHash": "9b24390d849798946be3a56ddb6d59b5dc4a0b9d1342e5c87b7a2d22b228bd54",
+      "clientSeed": "cf11fc3769ca3807b1fddf9d69d6f4c2",
+      "shoeHash": "fc938f5638e621fa717552b18fc7fc3dd443b96c867e6ce1fb351b2e4aaf1500"
+    },
+    "_id": "1762714716412_rs4fwjuy9"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 2000,
+    "winAmount": 5000,
+    "result": "win",
+    "timestamp": "2025-11-09T20:01:08.243Z",
+    "provablyFair": {
+      "serverSeed": "9bc1c1de9477ba6d81ad058d07b0ce7c38de5a7ed92e6c4298896c91d64e990b",
+      "serverSeedHash": "5ac1b063b5d47bfa441cf28e7f974b25f1a845b442d50286246ebc420fff72ce",
+      "clientSeed": "9288b4bf71e634920219e9410a6b8f1f",
+      "shoeHash": "d49a1b7c96fe6ed6672d087d28c3f2bd6b0575ce2e04e5cd4631a5a94bd241eb"
+    },
+    "_id": "1762718468254_ly2kzwra1"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 2000,
+    "winAmount": 4000,
+    "result": "win",
+    "timestamp": "2025-11-09T20:01:28.377Z",
+    "provablyFair": {
+      "serverSeed": "9fc271e38772ed6d4c5476588c6cacd9aee6486c1db097bf3d994bcfaca41551",
+      "serverSeedHash": "a25ea821febd4a5e4dbe7e74b22490e01e843fe89fb1b300dcd427284ddfcaed",
+      "clientSeed": "9288b4bf71e634920219e9410a6b8f1f",
+      "shoeHash": "29469b58dc8a09842f4845fddd628fe0678b24071ff0f26521fbf75d45164370"
+    },
+    "_id": "1762718488383_3ea4kh9wb"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 2000,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T20:02:40.680Z",
+    "provablyFair": {
+      "serverSeed": "a7baa0d7deae523fc31a79edbd7a145d3094b889fb616aef9b6d503bed36715e",
+      "serverSeedHash": "36619e3ee526407c8d59c74d4989daa2096610ac76a7aa58deef109f41bd13a8",
+      "clientSeed": "6ec91a1f41b40c37b0190acd6cdfdf34",
+      "shoeHash": "43f1b6be6c3804272ea844262fce378e121656b6709eac9fbb6cc496ec85cc0d"
+    },
+    "_id": "1762718560685_44qefp5km"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 2000,
+    "winAmount": 4000,
+    "result": "win",
+    "timestamp": "2025-11-09T20:03:03.175Z",
+    "provablyFair": {
+      "serverSeed": "cc7b774d8a9d3fdd9bc8d28e389deab2a33ebde2a5b6a178305a0a0f0eb2d6b7",
+      "serverSeedHash": "b88fb4c6e1bc0c06b49d9c5628e93a56d49b5bbd0d82cb6d1ac439d0c6c5dabe",
+      "clientSeed": "6ec91a1f41b40c37b0190acd6cdfdf34",
+      "shoeHash": "5b035dfe3d76366724707068c75b15138d5f71d79c8957d44d1fdfcd48763b1a"
+    },
+    "_id": "1762718583179_ite0fn1wm"
+  },
+  {
+    "userId": "1762715004625_aqox7e35w",
+    "gameType": "blackjack",
+    "betAmount": 500,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T20:05:42.986Z",
+    "provablyFair": {
+      "serverSeed": "cf013f6ec256b5e48985f1f090558b57ad6cad2b473fe268f63c746f2ae807d2",
+      "serverSeedHash": "279e3bdb541c909acb73074efcd88d2b5fdf68a190ba3bfbf037c54c1226daef",
+      "clientSeed": "c8e116178bd41cfb6931c2ad280a4b5a",
+      "shoeHash": "87b8572f911a3a37a7593f3dc91d7a1c0d5a45a27ad29af5a7d01709868bd16c"
+    },
+    "_id": "1762718742996_8rexrv482"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "gameType": "blackjack",
+    "betAmount": 1000,
+    "winAmount": 1000,
+    "result": "push",
+    "timestamp": "2025-11-09T20:11:17.048Z",
+    "provablyFair": {
+      "serverSeed": "7527b3290fee643eb44cc40cd90f9ea946dc691de6f59501c98d2590e04f2bbe",
+      "serverSeedHash": "0492de93da2cfbf92ceadabe190d493973a807f260d0e6a7afaade8a59a952b3",
+      "clientSeed": "9afa19061c5383db7fc6277e32eb97e6",
+      "shoeHash": "c6361faacb229252ad007770f734fcdc4946853ce09b7340d744fcb4482711de"
+    },
+    "_id": "1762719077056_nx3zkf4xu"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "gameType": "blackjack",
+    "betAmount": 1000,
+    "winAmount": 1000,
+    "result": "push",
+    "timestamp": "2025-11-09T20:11:20.933Z",
+    "provablyFair": {
+      "serverSeed": "a959d044ab2400d138557fda1c6503f18e9325005e3568740b182d4e48187a75",
+      "serverSeedHash": "edf263d96342d2023d251cd4b4cbc75cdae6a4e45aed3af6011c50b4fc0bcddc",
+      "clientSeed": "9afa19061c5383db7fc6277e32eb97e6",
+      "shoeHash": "382ea98b0d7e95c150ebc162f652686a30e192f392ae8ddc885438498839c3fc"
+    },
+    "_id": "1762719080941_bs1biqyfd"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "gameType": "blackjack",
+    "betAmount": 1000,
+    "winAmount": 2000,
+    "result": "win",
+    "timestamp": "2025-11-09T20:11:28.948Z",
+    "provablyFair": {
+      "serverSeed": "29aa5f2288ecf08f116e2c624a637da9de24b772f8c4d68c247a31ebda498501",
+      "serverSeedHash": "5491dbd642cad3d73973d70285f63fff084bb3521c9257f2b79c8003b8c55805",
+      "clientSeed": "9afa19061c5383db7fc6277e32eb97e6",
+      "shoeHash": "4622fb3d8345d20158d674c23e58bbb4b7f379443609dffe2fc1de1b3bca6bd9"
+    },
+    "_id": "1762719088954_0iwd6btt0"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "gameType": "blackjack",
+    "betAmount": 2000,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T20:12:36.129Z",
+    "provablyFair": {
+      "serverSeed": "1e1e56fc1bbfea96a389e935a75715d0611265549bf1fbf381e2ecc333b14f2a",
+      "serverSeedHash": "f2c373ffbe400d5e11bd530046268fb9b77683db6e1b91b1a2e726f8c9fea783",
+      "clientSeed": "9afa19061c5383db7fc6277e32eb97e6",
+      "shoeHash": "cd95b36d9bf53840bfa306b61089b997fec4039975b0b50c39fbbd454d2f6e0b"
+    },
+    "_id": "1762719156140_iuyfuftb5"
+  },
+  {
+    "userId": "1762718994187_gb58mgfdd",
+    "gameType": "blackjack",
+    "betAmount": 1000,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T21:40:50.689Z",
+    "provablyFair": {
+      "serverSeed": "1c85ce98dce2043e75cb796987c45273fe8901e0fde2be96449ca0c53bd840f3",
+      "serverSeedHash": "3a77b60e621239288c50c8987b74b724c6b71c5f6ea4e86e466429bc35feb9fb",
+      "clientSeed": "b5f7c8b4338fcaf9db9c2e13e796595c",
+      "shoeHash": "6bd98d5508af57c2c11ca06d268ad1fc644a161c5809ea4df4b3240ccbdbf09e"
+    },
+    "_id": "1762724450697_ut7tvugfy"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T21:42:24.563Z",
+    "provablyFair": {
+      "serverSeed": "b543b70110bf3aa0d3e6aa877f859fcd799a70a540beac9d5cfeb57c871ca129",
+      "serverSeedHash": "3c77558e82ac70be1e0b544c3284f63d8243c85c91a6630e121482aec8016f13",
+      "clientSeed": "927785f32cfd5769d91fd5f05ba80772",
+      "shoeHash": "bc927a69030b7071737152769a4b7339cccf694087a8990a00457e647452e874"
+    },
+    "_id": "1762724544571_cf6zg9s6z"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 400,
+    "result": "win",
+    "timestamp": "2025-11-09T21:42:38.766Z",
+    "provablyFair": {
+      "serverSeed": "3811d7870a3702f91643c68c43569392002d18cadbfb5e6c44c3f8cb40d0e7e3",
+      "serverSeedHash": "6dd5f6488a2ce4e73073809f59f8bcf2ddfcdbaecd2899e934e49d53fc6a1d6a",
+      "clientSeed": "927785f32cfd5769d91fd5f05ba80772",
+      "shoeHash": "f587e2726864cb79831bbfda564df98074b0043791588970ebf4efb3daf71ba4"
+    },
+    "_id": "1762724558774_lfsgoljce"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T21:42:43.897Z",
+    "provablyFair": {
+      "serverSeed": "13c1fa1ad21a894d77edd2b3a8554f9044bc134ab92f269780065eda3a5c101b",
+      "serverSeedHash": "d58373c9ba5e65833476b081b113fa37549e517a9b14b09ac1c560d7e42a7aa8",
+      "clientSeed": "927785f32cfd5769d91fd5f05ba80772",
+      "shoeHash": "a22aca60d4d30212db5593f0beb0876c57154806e1dd8fc898b37e3e33280ffd"
+    },
+    "_id": "1762724563900_7yau4avwj"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 200,
+    "result": "push",
+    "timestamp": "2025-11-09T21:42:48.444Z",
+    "provablyFair": {
+      "serverSeed": "be7021405fdf57b22e4b62da9ec9a0e0dd06d7b9e72384384286412228c5c9bf",
+      "serverSeedHash": "a6703f733dc6b042f01810559d41cb8f1d85b023ee19d3796d918d56014a9274",
+      "clientSeed": "927785f32cfd5769d91fd5f05ba80772",
+      "shoeHash": "0222eeea1a65a1102085c97de1af75d26a709083eebf8d814e604ee78ec0a5d6"
+    },
+    "_id": "1762724568448_1tbcedq0q"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 400,
+    "result": "win",
+    "timestamp": "2025-11-09T21:42:54.369Z",
+    "provablyFair": {
+      "serverSeed": "5cc05aceeab06ea45d1f6e3a79bbc3e97d4204c18c69b4c6180f30e05aa8c8dc",
+      "serverSeedHash": "6155095c606777f69870bef126df3698ea85ae83ebc336a15d15f2808535de0c",
+      "clientSeed": "927785f32cfd5769d91fd5f05ba80772",
+      "shoeHash": "ff9e29df05d1a4c89ece5ed8fbc6b0451d53c56c21b113a12cf121b905672a3f"
+    },
+    "_id": "1762724574375_2iyzymxjh"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T21:43:03.741Z",
+    "provablyFair": {
+      "serverSeed": "16ee3dbcd230e18800c3c2c3d29c04790d906158bf249617b7e8fd8ddc2a8acf",
+      "serverSeedHash": "04e4bd5bd6f67c8798d4217dbe58badad265f9e55a0fa7c1e502ecca790c1acf",
+      "clientSeed": "927785f32cfd5769d91fd5f05ba80772",
+      "shoeHash": "83ee1c25f381a623786f20bc4342090166556c28e22d81b66e17f5679720fcc0"
+    },
+    "_id": "1762724583744_4tw32n3yh"
+  },
+  {
+    "userId": "1762724535505_qru7pm8b3",
+    "gameType": "blackjack",
+    "betAmount": 2000,
+    "winAmount": 4000,
+    "result": "win",
+    "timestamp": "2025-11-09T21:45:38.780Z",
+    "provablyFair": {
+      "serverSeed": "361b5ba78cdcd348c505df2948a538b08fa1b1d1b63793a57fcd2f223d8aa46b",
+      "serverSeedHash": "b28e4c6a712b8be04e4c6d8c97c3abd2e9651b75daeb2b5d64465ec21767d02d",
+      "clientSeed": "dd88e5f9411c8aa2929f9768717f8f0f",
+      "shoeHash": "afe65e22486aec41da8297c3405610c1dc63a06f46e4e38d81df8c17bd1e7ee4"
+    },
+    "_id": "1762724738788_utmx2m5i4"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T21:52:46.995Z",
+    "provablyFair": {
+      "serverSeed": "db242b0ebf8b268716b68d6777cdf4d4815e8d4fbb3c4e9005659c8ddf4df988",
+      "serverSeedHash": "1860e7d784296b8ea402decac4cb8872fa8277b0c7d09507bd82b924db5924ff",
+      "clientSeed": "7708b9a48bdf9e1ec330df3ccb18370a",
+      "shoeHash": "1307f3e348f23bb749831ed0f6759a22fa4cc7a9f79e97ab2d67583739800401"
+    },
+    "_id": "1762725167003_ft3idt47o"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 400,
+    "result": "win",
+    "timestamp": "2025-11-09T21:53:09.616Z",
+    "provablyFair": {
+      "serverSeed": "a2ec3996ab4f3cb14f4fd91829fd05c0a02cc09519f7f71812e9dec8bfda0a35",
+      "serverSeedHash": "cdf87ad866fd4ef1a07ed743e053d3ae95e92b92e8a8173be80ae6074167a6de",
+      "clientSeed": "7708b9a48bdf9e1ec330df3ccb18370a",
+      "shoeHash": "c9b5cd61a0bf11658719e504eabead4645f44910914e943911e9e24d0d662f01"
+    },
+    "_id": "1762725189624_4fgvg559y"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 1000,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T21:57:39.451Z",
+    "provablyFair": {
+      "serverSeed": "e5d4429e8ee4b6f67d3fd769c2a22bfe218fcedcd68466e9f32be8f94274c460",
+      "serverSeedHash": "de9d002a8799ecf8fb5408ae3a427cfc58214afb70c8fc352fcc2cea9f0fea08",
+      "clientSeed": "1b4bf9b39a3fa485b32c7da0344f6ced",
+      "shoeHash": "f8c001e73cbafdbee5170cdb9aa5165b20829776232ad5732ce5426199c0927a"
+    },
+    "_id": "1762725459459_b4izoljfc"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 400,
+    "result": "win",
+    "timestamp": "2025-11-09T22:33:34.113Z",
+    "provablyFair": {
+      "serverSeed": "a6d1e60053ae81eac8e8ca06fede0a9ccb8613a9adb7f795bf39a963d5f35844",
+      "serverSeedHash": "aeb194815384c2f615a87cdc5c546c39e2213d8101939648324541b3a7eced45",
+      "clientSeed": "9811e542c3e7d686823d841fede75614",
+      "shoeHash": "7e4059e29a94f3a3c3c4599fc01254175037c9b47c2fe3d415404bf378ad84f1"
+    },
+    "_id": "1762727614125_lczpdjqfg"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T22:38:02.151Z",
+    "provablyFair": {
+      "serverSeed": "464410cd79c38ed9da46652f85000b4c362b7d58cd0e95b57724b42f15ef54cb",
+      "serverSeedHash": "ede4c1b28c000607a319086ef77f8742977e5042c9923aa3145041d0da69cf8d",
+      "clientSeed": "0839e2822da14c24f07b25e713cc68fb",
+      "shoeHash": "69ab535b07b37733cd5f45ffb2dbc73d61fe00efa6a30d4efaa33b752ef199a9"
+    },
+    "_id": "1762727882160_xer081plx"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T22:38:11.692Z",
+    "provablyFair": {
+      "serverSeed": "ff03a11ca71799ba1b51e638a7abdaa5669e61692e969fa0ff51e16281f92364",
+      "serverSeedHash": "ae8fd3652e225fddb018f11c6aac8b706ccda91ba671b0bf13b07b0708a0cad8",
+      "clientSeed": "0839e2822da14c24f07b25e713cc68fb",
+      "shoeHash": "b7438a2c970075bfb017e64cb6e59977e9637a6f745267559ec42363027b892d"
+    },
+    "_id": "1762727891697_zkmrhh6dt"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T22:38:20.627Z",
+    "provablyFair": {
+      "serverSeed": "ed391ed845285a5d2bedbeeddfc07d86676d30daa8787ef103ea65455ec482fa",
+      "serverSeedHash": "32632bead907ea076a826fd3e3433e0d3ec437e1426c8b5241df5b5bf23c52cd",
+      "clientSeed": "0839e2822da14c24f07b25e713cc68fb",
+      "shoeHash": "8739387764b8673abc6b473f0e1cb421be9d4ccb55111cd6efd001b48b76f4f5"
+    },
+    "_id": "1762727900634_22o1bynic"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 500,
+    "result": "win",
+    "timestamp": "2025-11-09T22:38:23.002Z",
+    "provablyFair": {
+      "serverSeed": "72bdabb0d69f639723ea0b8ac3b4ef748d3cb41be3717b2189c8793bb7dd19b5",
+      "serverSeedHash": "79c64fd7131c0715ee610277f0a07716022f8c6140a0ac88eaed9cd3da060dbb",
+      "clientSeed": "0839e2822da14c24f07b25e713cc68fb",
+      "shoeHash": "29257150a5e623378375ef29c48bc0fff6b5e2ee41cf8d516540a46c2cccb19b"
+    },
+    "_id": "1762727903007_eec1kzxda"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 500,
+    "result": "win",
+    "timestamp": "2025-11-09T22:38:25.064Z",
+    "provablyFair": {
+      "serverSeed": "7c175cd79df4e7089bb9aa6db452308c19dbcd203c7151dfcee556ae1f2e5381",
+      "serverSeedHash": "93e6fa662990b1070bc6304ee4cadc7b7cb6ceeb09d3f52aef349fd7ba04a7b7",
+      "clientSeed": "0839e2822da14c24f07b25e713cc68fb",
+      "shoeHash": "2d3a20fe3f6b43a6e12d2197f91eb88515f96cf84d9957751b4c2b5cdbd99336"
+    },
+    "_id": "1762727905073_c79wo5iga"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T22:38:29.199Z",
+    "provablyFair": {
+      "serverSeed": "9d7047b25bff0afd1095703ab498c7a3ff4c8b1511e80241176900eba9638267",
+      "serverSeedHash": "b2051d0ab0a01d22c37836521c6dede82412b8771a46b1545f3a171431d8d130",
+      "clientSeed": "0839e2822da14c24f07b25e713cc68fb",
+      "shoeHash": "9e52bc5dc3ac2c978bb649b8ba6187bec1341b7051d99472ee1d99d49dbe1670"
+    },
+    "_id": "1762727909204_vbitzgnep"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T22:38:38.717Z",
+    "provablyFair": {
+      "serverSeed": "08fda6fa4f65bdf36d6e39a1f0b50c6057c02193a03a88a30dccb0869f64f56e",
+      "serverSeedHash": "d51083a35c03826b137bdab6e2f51ad2f23f98a5c929f4961bcec4f1c234957f",
+      "clientSeed": "0839e2822da14c24f07b25e713cc68fb",
+      "shoeHash": "92221108f1fa2041d4c112d22fc2bf776dabf9b01d86124d6f0330c22d66a776"
+    },
+    "_id": "1762727918723_ix0wypzo8"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T22:45:00.378Z",
+    "provablyFair": {
+      "serverSeed": "b934a269c71408336dd11ea9a4a26f70b583f96d00518a9eb3c5561ed87e37e4",
+      "serverSeedHash": "82c079dc589b5383ac714294431a51a7f6f364919a58d030a1d0007e40e9ad35",
+      "clientSeed": "1ca5467e56742693f8b1764fbb7bcdf1",
+      "shoeHash": "8cf4948b838b47d897f676f4f71f4de0bf24b9e5f9f4a1ca689b8b74807d73a1"
+    },
+    "_id": "1762728300388_bsnwuuooe"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T22:53:29.187Z",
+    "provablyFair": {
+      "serverSeed": "80facad8fe49dbae0b3ea01ec56a1b560be2fa28003f8ac95d871d533c7ff137",
+      "serverSeedHash": "55ecee61250ab87b95250eca4f5e63904f5475a0c7a9736ba5e6a866bceda3c1",
+      "clientSeed": "fbf0ced141387a43746ed26f18c59615",
+      "shoeHash": "eec456d9a9c3a131a4c339df1b32aab66b12e2c7e7aed9de7184833a5e4c79f2"
+    },
+    "_id": "1762728809193_d46b2bcua"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 0,
+    "result": "loss",
+    "timestamp": "2025-11-09T22:53:34.492Z",
+    "provablyFair": {
+      "serverSeed": "ce29cb80757a259729d3007d75112145013d93112e2522a9473a01fa59165f66",
+      "serverSeedHash": "bc98ee546745537a6299eb6bc7201e4e8756ed65fe9e4b4a69afeaa6aff787a8",
+      "clientSeed": "fbf0ced141387a43746ed26f18c59615",
+      "shoeHash": "54301512c9a2429429509bb315eacb82eab710fe41cf3422ff1c93374418d202"
+    },
+    "_id": "1762728814496_g7j5d1dti"
+  },
+  {
+    "userId": "1762727593688_pecxndzux",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 200,
+    "result": "push",
+    "timestamp": "2025-11-09T22:53:46.878Z",
+    "provablyFair": {
+      "serverSeed": "9ee8c67b53b23363c096ff87fbc694e8cfb06d2e4fdaf6ec069fa159df76bfb1",
+      "serverSeedHash": "c3a523cc7d506d234a9ac2d0033182cb2c22712e305fdc77f16359b8f54d8223",
+      "clientSeed": "fbf0ced141387a43746ed26f18c59615",
+      "shoeHash": "c1378903e19aaeafe993630755037769054ca7199d706685aafaeafbc38bfe03"
+    },
+    "_id": "1762728826885_lxa6ktwx9"
+  },
+  {
+    "userId": "1762695020968_6dyli044t",
+    "gameType": "blackjack",
+    "betAmount": 200,
+    "winAmount": 400,
+    "result": "win",
+    "timestamp": "2025-11-09T22:57:21.196Z",
+    "provablyFair": {
+      "serverSeed": "544da489fc84ea9c3a06f4371cf54439cf6a849f0f922db42610267628157373",
+      "serverSeedHash": "4040d65e9ec7536abfe32e208fc2b17ee7b63c670b6c11d2f38e5a67c6ee3b03",
+      "clientSeed": "2e1b196523d6fb8565486664b9c7e664",
+      "shoeHash": "0f6f415e11c95e3c74a7486bd9c759af14184131e430e8c8e10ecbc9548c0393"
+    },
+    "_id": "1762729041204_rofpehyup"
   }
 ]
