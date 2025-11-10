@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Use relative path to take advantage of Vite proxy
 const api = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache, no-store, must-revalidate',

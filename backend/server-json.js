@@ -2338,7 +2338,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'CMX Platform API is running' });
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ JSON Database Server running on http://localhost:${PORT}`);
   console.log(`📊 Users: ${DB.users.findAll().length}`);
