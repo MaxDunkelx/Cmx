@@ -35,3 +35,5 @@ temp/
 coverage/
 *.test.js.snap
 
+
+firebase/backend-service-account.json
