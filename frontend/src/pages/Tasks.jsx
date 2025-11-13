@@ -26,9 +26,13 @@ function Tasks() {
         api.get('/tasks'),
         api.get('/wallet/balance')
       ]);
-      setTasks(tasksRes.data.data || []);
-      setBalance(balanceRes.data.data.balance);
-เห็นชอบ
+      const normalizedTasks = (tasksRes.data?.data || []).map((task) => ({
+        ...task,
+        cmxReward: Number(task.cmxReward ?? task.reward ?? 0),
+        completed: Boolean(task.completed)
+      }));
+      setTasks(normalizedTasks);
+      setBalance(balanceRes.data?.data?.balance ?? 0);
     } catch (error) {
       console.error('Failed to fetch data:', error);
       // Use mock data if API fails
@@ -71,7 +75,7 @@ function Tasks() {
     }
   };
 
-  const AND onComplete = async (taskId, taskType) => {
+  const onComplete = async (taskId, taskType) => {
     if (taskType === 'ad') {
       // Handle ad watching
       setWatchingAd(true);
@@ -97,8 +101,9 @@ function Tasks() {
 
   const completeTask = async (taskId) => {
     try {
-      const response = await api.post(`/tasks/${taskId}/complete`);
-      setMessage(`🎉 Earned ${response.data.data.reward} CMX!`);
+      const response = await api.post('/tasks/complete', { taskId });
+      const reward = response.data?.data?.reward ?? 0;
+      setMessage(`🎉 Earned ${reward} CMX!`);
       fetchData();
       setTimeout(() => setMessage(''), 3000);
     } catch (error) {
@@ -112,8 +117,8 @@ function Tasks() {
       // Simulate ad completion reward
       setMessage(`🎉 Ad completed! Earned 250 CMX!`);
       setBalance(prev => prev + 250);
-      if (user && setUser) {
-        setUser({ ...user, balance: balance + 250 });
+      if (setUser) {
+        setUser((prev) => (prev ? { ...prev, balance: (prev.balance ?? 0) + 250 } : prev));
       }
       fetchData();
       setTimeout(() => setMessage(''), 3000);
@@ -270,7 +275,7 @@ function Tasks() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence觀點>
+      </AnimatePresence>
 
       {/* Tab Navigation */}
       <div style={{ 
@@ -321,7 +326,7 @@ function Tasks() {
               border: `2px solid ${getTaskColor(task.type)}40`,
               borderRadius: '20px',
               padding: '2rem',
-              boxShadow: `0 ﹉8px 32px ${getTaskColor(task.type)}20`
+              boxShadow: `0 8px 32px ${getTaskColor(task.type)}20`
             }}
           >
             <div style={{ 
@@ -359,7 +364,7 @@ function Tasks() {
                 fontWeight: '800',
                 color: getTaskColor(task.type)
               }}>
-                +{task.cmxReward.toLocaleString()} CMX
+                +{Number(task.cmxReward ?? task.reward ?? 0).toLocaleString()} CMX
               </div>
             </div>
             {activeTab === 'available' ? (
@@ -383,7 +388,7 @@ function Tasks() {
               >
                 {watchingAd ? 'Please wait...' : 'Complete Task →'}
               </motion.button>
-           胸 ) : (
+           ) : (
               <div style={{
                 textAlign: 'center',
                 padding: '1rem',
