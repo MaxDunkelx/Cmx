@@ -37,3 +37,4 @@ coverage/
 
 
 firebase/backend-service-account.json
+nodejs/ # skip if already there
